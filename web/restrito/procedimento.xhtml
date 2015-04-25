@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="index.xhtml">
+
+        <ui:define name="main-content"> 
+
+
+            <h:form id="frmCadastro">
+
+                <p:focus/>
+
+                <h:inputHidden value="#{procedimentoMB.procedimento.id}"/>
+
+                <span class="title hidden">Cadastro</span>
+
+                <div class="row">	
+
+                    <div class="col-md-6">
+
+                        <div class="field-group pw15">
+                            <h:outputLabel class="col-sm-2 label-control">Procedimento</h:outputLabel>
+                            <div class="col-sm-10">
+                                <h:inputText id="nome" 
+                                             class="field-control"
+                                             required="true"
+                                             requiredMessage="Procedimento Obrigatório"
+                                             pt:placeholder="Nome do Procedimento"
+                                             onkeyup="this.value = this.value.toUpperCase();"
+                                             value="#{procedimentoMB.procedimento.nome}">
+                                </h:inputText>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="row pw15 ph10">
+                    <div class="col-sm-2">
+                        <h:commandLink
+                            class="btn btn-default blue font-clear"
+                            value="Novo" 
+                            immediate="true"
+                            action="#{procedimentoMB.novo}">
+                        </h:commandLink>
+                    </div>
+                    <div class="col-sm-2">
+                        <h:commandLink
+                            class="btn btn-default blue font-clear"
+                            value="Salvar / Alterar" 
+                            action="#{procedimentoMB.inserir}">
+                        </h:commandLink>
+                    </div>
+                </div>
+
+            </h:form>
+
+        </ui:define>
+
+    </ui:composition>
+
+</html>
+

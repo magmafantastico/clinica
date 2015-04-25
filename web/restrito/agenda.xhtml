@@ -1,0 +1,346 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+   <ui:composition template="/templates/principal.xhtml">
+
+      <ui:define name="search">
+         <h:form>
+            <p:commandLink class="link pull-left font-g444 hover-font-clear"
+                           action="#{agendaMB.novo}"
+                           oncomplete="$('#modalAgenda').modal('show'); addDatePicker();"
+                           update=":frmAgendamento">
+               <span class="icon-plus icon-label"></span> Nova consulta
+            </p:commandLink>
+         </h:form>
+      </ui:define>
+
+      <ui:define name="main-content"> 
+
+         <div class="modal fade" id="modalAgenda" tabindex="-1" role="dialog" aria-labelledby="modalAgendaLabel" aria-hidden="true">
+
+            <div class="modal-dialog">
+
+               <div class="modal-content">
+
+                  <h:form id="frmAgendamento" class="form form-horizontal">
+
+                     <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                           <span aria-hidden="true">&times;</span>
+                           <span class="sr-only">Fechar</span>
+                        </button>
+                        <h4 class="modal-title" id="modalAgendaLabel">Adicionar Consulta</h4>
+                     </div><!-- /.modal-header -->
+
+                     <div class="modal-body">
+
+                        <h:inputHidden value="#{agendaMB.agenda.id}"/>
+
+                        <div class="field-group pw15 ph05">
+                           <h:outputLabel class="col-sm-3 label-control" for="calender">Data</h:outputLabel>
+                           <div class="col-sm-9">
+                              <h:inputText id="calender" 
+                                           value="#{agendaMB.agenda.dtHrIniAg}"
+                                           autocomplete="off"
+                                           styleClass="datetimepicker-mask field-control">
+                                 <f:converter converterId="dataHoraConverter"/>
+                              </h:inputText>
+                           </div>
+                        </div>
+
+                        <div class="field-group pw15 ph05">
+                           <h:outputLabel class="col-sm-3 label-control" for="lenght">Duração</h:outputLabel>
+                           <div class="col-sm-9">
+                              <h:inputText id="lenght" 
+                                           value="#{agendaMB.lenght}"
+                                           autocomplete="off"
+                                           styleClass="datetimepicker-mask field-control">
+                              </h:inputText>
+                           </div>
+                        </div>
+
+                        <div class="field-group pw15 ph05">
+                           <h:outputLabel class="col-sm-3 label-control">Paciente</h:outputLabel>
+                           <div class="col-sm-9">
+                              <p:autoComplete id="pacienteauto"
+                                              class="field-control"
+                                              converter="pacienteConverter"
+                                              completeMethod="#{pacienteMB.completaNome}" 
+                                              itemLabel="#{p.nome}"
+                                              itemValue="#{p}" 
+                                              onkeyup="this.value = this.value.toUpperCase();"
+                                              pt:placeholder="Paciente"
+                                              required="true"
+                                              requiredMessage="FAVOR ESCOLHER UM PACIENTE"
+                                              value="#{agendaMB.paciente}"
+                                              var="p">
+                                 <p:ajax event="itemSelect" listener="#{agendaMB.conveniosPorPaciente}" update="convenios"></p:ajax>
+                              </p:autoComplete>
+                           </div>
+                        </div>
+
+                        <div class="field-group pw15 ph05">
+                           <h:outputLabel class="col-sm-3 label-control">Convênio</h:outputLabel>
+                           <div class="col-sm-9">
+                              <h:selectOneMenu id="convenios" 
+                                               class="field-control"
+                                               value="#{agendaMB.convenio}"
+                                               converter="agendaConvenioConverter">
+                                 <f:selectItem itemLabel="Convênio" itemValue=""></f:selectItem>
+                                 <f:selectItems value="#{agendaMB.convenios}" 
+                                                var="c" 
+                                                itemLabel="#{c.nomeFantasia}" 
+                                                itemValue="#{c}">
+                                 </f:selectItems>
+                              </h:selectOneMenu>
+                           </div>
+                        </div>
+
+                        <div class="field-group pw15 ph05">
+                           <h:outputLabel class="col-sm-3 label-control">Profissional</h:outputLabel>
+                           <div class="col-sm-9">
+                              <p:autoComplete id="profissionalauto"
+                                              class="field-control"
+                                              completeMethod="#{profissionalMB.completeNome}" 
+                                              converter="profissionalConverter"
+                                              itemLabel="#{pl.nome}"
+                                              itemValue="#{pl}" 
+                                              onkeyup="this.value = this.value.toUpperCase();"
+                                              pt:placeholder="Profissional"
+                                              required="true"
+                                              requiredMessage="FAVOR ESCOLHER UM PROFISSIONAL"
+                                              value="#{agendaMB.profissional}" 
+                                              var="pl">
+                                 <p:ajax event="itemSelect" listener="#{agendaMB.especialidadesPorProfissional}" update="especialidades"></p:ajax>
+                              </p:autoComplete>
+                           </div>
+                        </div>
+
+                        <div class="field-group pw15 ph05">
+                           <h:outputLabel class="col-sm-3 label-control">Especialidade</h:outputLabel>
+                           <div class="col-sm-9">
+                              <h:selectOneMenu id="especialidades"
+                                               class="field-control"
+                                               converter="agendaEspecialidadeConverter"
+                                               value="#{agendaMB.especialidade}">
+                                 <f:selectItem itemLabel="Especialidades" itemValue=""></f:selectItem>
+                                 <f:selectItems itemLabel="#{c.nome}"
+                                                itemValue="#{c}"
+                                                value="#{agendaMB.especialidades}"
+                                                var="c">
+                                 </f:selectItems>
+                              </h:selectOneMenu>
+                           </div>
+                        </div>
+
+                        <div class="field-group pw15 ph05">
+                           <h:outputLabel class="col-sm-3 label-control">Observação</h:outputLabel>
+                           <div class="col-sm-9">
+                              <h:inputTextarea id="notas" 
+                                               class="field-control"
+                                               onkeyup="this.value = this.value.toUpperCase();"
+                                               pt:placeholder="Notas do Agendamento"
+                                               value="#{agendaMB.agenda.notasAgenda}" >
+                              </h:inputTextarea>
+                           </div>
+                        </div>
+
+                     </div><!-- /.modal-body -->
+
+                     <div class="modal-footer">
+
+                        <h:commandLink 
+                           class="btn btn-primary pull-right"
+                           value="Salvar"
+                           action="#{agendaMB.inserir}">
+                        </h:commandLink>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                     </div><!-- /.modal-footer -->
+
+                  </h:form>
+               </div><!-- /.modal-content -->
+
+            </div><!-- /.modal-dialog -->
+
+         </div><!-- /.modal -->
+
+         <h:form id="frmProfissionalAgenda">
+
+            <h:selectOneMenu id="profissional"
+                             class="field-control"	
+                             label="Profissionais"
+                             valueChangeListener="#{agendaMB.agendaProfissional}">
+               <f:selectItem itemLabel="PROFISSIONAL (TODOS)" itemValue="0"></f:selectItem>
+               <f:selectItems value="#{profissionalMB.listarTodos}" 
+                              var="c"
+                              itemValue="#{c.id}"
+                              itemLabel="#{c.nome}">
+               </f:selectItems>
+               <f:ajax event="change" render="tblPacientes"></f:ajax>
+            </h:selectOneMenu>
+
+            <h:inputText id="dataFiltro" 
+                         autocomplete="off"
+                         value="#{agendaMB.dataSelecionada}"
+                         styleClass="datetimepicker-mask field-control">
+               <f:ajax event="valueChange" listener="#{agendaMB.agendaPorData}" render="tblPacientes"></f:ajax>
+            </h:inputText>
+
+            <h:dataTable id="tblPacientes"
+                         var="lista" 
+                         styleClass="table table-hover"
+                         value="#{agendaMB.listarPorProfissional}">
+
+               <h:inputHidden value="#{lista.id}"></h:inputHidden>
+
+               <f:facet name="header">
+                  LISTA DE AGENDAMENTOS
+               </f:facet>
+
+               <h:column>
+                  <f:facet name="header">
+                     <h:outputText value="Horário Inicio Agendamento"></h:outputText>
+                  </f:facet>
+                  <h:outputText value="#{lista.dtHrIniAg}">
+                     <f:converter converterId="dataHoraConverter"/>
+                  </h:outputText>
+               </h:column>
+
+               <h:column>
+                  <f:facet name="header">
+                     <h:outputText value="Horário Fim Agendamento"></h:outputText>
+                  </f:facet>
+                  <h:outputText value="#{lista.dtHrFimAg}">
+                     <f:converter converterId="dataHoraConverter"/>
+                  </h:outputText>
+               </h:column>
+
+               <h:column>
+                  <f:facet name="header">
+                     <h:outputText value="Horário Chegada"></h:outputText>
+                  </f:facet>
+                  <h:outputText value="#{lista.dtHrChegada}">
+                     <f:converter converterId="dataHoraConverter"/>
+                  </h:outputText>
+               </h:column>
+
+               <h:column>
+                  <f:facet name="header">
+                     <h:outputText value="Paciente"></h:outputText>
+                  </f:facet>
+                  <h:outputText value="#{lista.paciente.nome}">
+                  </h:outputText>
+               </h:column>
+
+               <h:column>
+                  <f:facet name="header">
+                     <h:outputText value="Convênio"></h:outputText>
+                  </f:facet>
+                  <h:outputText value="#{lista.convenio.nomeFantasia}">
+                  </h:outputText>
+               </h:column>
+
+               <h:column>
+                  <f:facet name="header">
+                     <h:outputText value="Profissional"></h:outputText>
+                  </f:facet>
+                  <h:outputText value="#{lista.profissional.nome}">
+                  </h:outputText>
+               </h:column>
+
+               <h:column>
+                  <f:facet name="header">
+                     <h:outputText value="Especialidade"></h:outputText>
+                  </f:facet>
+                  <h:outputText value="#{lista.especialidade.nome}">
+                  </h:outputText>
+               </h:column>
+
+               <h:column>
+                  <f:facet name="header">
+                     <h:outputText value="Notas do Agendamento"></h:outputText>
+                  </f:facet>
+                  <h:outputText value="#{lista.notasAgenda}"/>
+               </h:column>
+
+               <h:column>
+                  <f:facet name="header">
+                     <h:outputText value="Editar"></h:outputText>
+                  </f:facet>
+                  <p:commandLink title="Editar" 
+                                 action="#{agendaMB.carregaAgenda}" 
+                                 oncomplete="$('#modalAgenda').modal('show'); addDatePicker();"
+                                 update=":frmAgendamento">
+                     <center>
+                        <span class="icon-edit"></span>
+                     </center>
+                     <f:setPropertyActionListener target="#{agendaMB.agenda}" value="#{lista}"></f:setPropertyActionListener>
+                  </p:commandLink>
+               </h:column>
+
+               <h:column>
+                  <f:facet name="header">
+                     <h:outputText value="Chegou"></h:outputText>
+                  </f:facet>
+                  <h:commandLink title="Chegou" 
+                                 action="#{agendaMB.adicionarSalaEspera}">                                       
+                     <center>
+                        <span class="#{lista.statusChegada}"></span>
+                     </center>
+                     <f:setPropertyActionListener target="#{agendaMB.agenda}" value="#{lista}"></f:setPropertyActionListener>
+                     <f:ajax execute="@form" render="@form"/>
+                  </h:commandLink>
+               </h:column>
+
+            </h:dataTable> 
+
+         </h:form>
+         <script>
+            function addDatePicker() {
+               $(PrimeFaces.escapeClientId('frmAgendamento:calender')).datetimepicker({
+                  allowTimes: allowTimesAgenda,
+                  format: 'd/m/Y H:i',
+                  lang: 'pt',
+                  mask: '39/19/9999 29:59'
+               });
+
+               $(PrimeFaces.escapeClientId('frmAgendamento:lenght')).datetimepicker({
+                  allowTimes: allowTimesLenght,
+                  datepicker: false,
+                  format: 'H:i',
+                  lang: 'pt',
+                  mask: '29:59'
+               });
+            }
+
+            $(PrimeFaces.escapeClientId('frmProfissionalAgenda:dataFiltro')).datetimepicker({
+               format: 'd/m/Y',
+               lang: 'pt',
+               mask: '39/19/9999',
+               timepicker: false
+            });
+
+            function ajustAutocomplete(el) {
+               if (!$(".ui-autocomplete-input").hasClass('field-control')) {
+                  $(".ui-autocomplete-input").addClass('field-control');
+               }
+               $(PrimeFaces.escapeClientId(el)).css('display', 'block');
+               //$(PrimeFaces.escapeClientId(el+'_input')).css('padding', '6px 12px');
+               //$(PrimeFaces.escapeClientId(el+'_panel')).css('width', (PrimeFaces.escapeClientId(el)).width());
+            }
+
+            ajustAutocomplete('frmAgendamento:pacienteauto');
+
+            ajustAutocomplete('frmAgendamento:profissionalauto');
+
+         </script>
+      </ui:define>
+   </ui:composition>
+</html>
+

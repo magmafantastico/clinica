@@ -1,0 +1,30 @@
+<table>
+                        <tr class="linhas">
+                            <td>
+                                <h:selectOneMenu id="convenio" 
+                                                 label="Convenio"  
+                                                 value="#{pacienteMB.convenio.id}"
+                                                 valueChangeListener="#{pacienteMB.adicionaConvenio}">
+                                    <f:selectItem itemLabel="SELECIONE O CONVENIO" itemValue=""/>
+                                    <f:selectItems value="#{convenioMB.listarTodos}" 
+                                                   var="c" 
+                                                   itemValue="#{c.id}"
+                                                   itemLabel="#{c.nomeFantasia}"/>
+                                    <f:ajax event="change" render="convenio"/>
+<!--                                    <f:converter converterId="convenioConverter"/>-->
+                                </h:selectOneMenu> 
+                            </td>
+                            <td>
+                                <a href="#" class="removerCampo" title="Remover linha">
+                                    <img src="resources/imagens/excluir16.png"/>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="#" class="adicionarCampo" title="Adicionar item">
+                                    <img src="resources/imagens/adicionar12.png"/>
+                                </a>
+                            </td>
+                        </tr>
+                    </table>

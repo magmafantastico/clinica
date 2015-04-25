@@ -1,0 +1,192 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:sec="http://www.springframework.org/security/facelets/tags"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+   <h:head>
+      <title>Doctor</title>
+      <h:outputStylesheet library="css" name="dist.css" />
+      <h:outputStylesheet library="css" name="villa.css" />
+      <h:outputStylesheet library="css" name="villa-doctor.css" />
+      <h:outputScript library="js" name="jquery-ui.min.js" />
+      <h:outputScript library="js" name="jquery.datetimepicker.js" />
+      <h:outputScript library="js" name="jquery.inputmask.js"/>
+      <h:outputScript library="js" name="jquery.maskMoney.min.js" />
+      <h:outputScript library="js" name="dist.js" />
+      <link rel="icon" href="#{resource['img:favicon.ico']}" type="image/x-ico"/>
+   </h:head>
+
+   <script>sidebarIcon = true;</script>
+
+   <h:body class="clear">
+
+      <sec:ifAnyGranted roles="ROLE_ADMIN, ROLE_USER">
+
+         <h:outputText id="loginativo" value="#{request.userPrincipal.name}"/>
+
+         <h:outputLink onclick="document.location = '#{request.contextPath}/j_spring_security_logout'" title="Sair">
+            SAIR
+         </h:outputLink>
+
+         <div id="home-holder">
+
+            <div id="locked" class="full unselect ebony-clay font-white hidden">
+               <h1>Tela bloqueada</h1>
+               <p class="lead">Pressione ALT + L para desbloquear</p>
+            </div>
+
+            <div id="loader" class="full unselect ebony-clay font-white hidden">
+               <h1>Loading, wait please</h1>
+               <p class="lead">Pressione ALT + L para desbloquear</p>
+            </div>
+
+            <div class="maia white">
+
+               <div class="item start pull-left">
+                  <a href="./" class="link font-g444 hover-blue hover-font-clear" title="Clinica Alpha">
+                     <div class="item-content">
+                        <span class="magma-logo"></span>
+                     </div>
+                  </a>
+               </div>
+
+               <div class="item clock pull-left">
+                  <span class="clock-text link pull-right font-black" title="DoctorAlpha"></span>
+               </div>
+
+               <div class="item search pull-right hover-dark-dark">
+                  <ui:insert name="search"></ui:insert>
+               </div>
+
+            </div>
+
+            <div class="maia-container"></div>
+
+            <div class="sidebar unselect dodger-blue sidebar-icon-view">
+
+               <ul>
+
+                  <h:form>
+
+                     <li class="item-container">
+                        <h:outputLink class="item" value="start.xhtml">
+                           <span class="item-icon" title="Start">
+                              <span class="icon-dashboard"></span>
+                           </span>
+                           <span class="item-label">Start</span>
+                        </h:outputLink>
+                     </li>
+                     <li class="item-container">
+                        <h:outputLink class="item" value="paciente.xhtml">
+                           <span class="item-icon" title="Pacientes">
+                              <span class="icon-users"></span>
+                           </span>
+                           <span class="item-label">Pacientes</span>
+                        </h:outputLink>
+                     </li>
+                     <li class="item-container">
+                        <h:outputLink class="item" value="profissional.xhtml">
+                           <span class="item-icon" title="Profissionais">
+                              <span class="icon-user-md"></span>
+                           </span>
+                           <span class="item-label">Profissionais</span>
+                        </h:outputLink>
+                     </li>
+                     <li class="item-container">
+                        <h:outputLink class="item" value="convenio.xhtml">
+                           <span class="item-icon" title="Convênios">
+                              <span class="icon-link"></span>
+                           </span>
+                           <span class="item-label">Convênios</span>
+                        </h:outputLink>
+                     </li>
+                     <li class="item-container">
+                        <h:outputLink class="item" value="especialidade.xhtml">
+                           <span class="item-icon" title="Especialidades">
+                              <span class="icon-tags"></span>
+                           </span>
+                           <span class="item-label">Especialidades</span>
+                        </h:outputLink>
+                     </li>
+                     <li class="item-container">
+                        <h:outputLink class="item" value="procedimento.xhtml">
+                           <span class="item-icon" title="Procedimentos">
+                              <span class="icon-check-square-o"></span>
+                           </span>
+                           <span class="item-label">Procedimentos</span>
+                        </h:outputLink>
+                     </li>
+                     <li class="item-container">
+                        <sec:ifAnyGranted roles="ROLE_ADMIN">
+                           <h:outputLink class="item" value="anamnese.xhtml">
+                              <span class="item-icon" title="Anamnese">
+                                 <span class="icon-stethoscope"></span>
+                              </span>
+                              <span class="item-label">Anamnese</span>
+                           </h:outputLink>
+                        </sec:ifAnyGranted>
+                     </li>
+                     <li class="item-container">
+                        <h:outputLink class="item" value="agenda.xhtml">
+                           <span class="item-icon" title="Listagem">
+                              <span class="icon-list"></span>
+                           </span>
+                           <span class="item-label">Agenda - Listagem</span>
+                        </h:outputLink>
+                     </li>
+                     <li class="item-container">
+                        <h:outputLink class="item" value="agendaCalendario.xhtml">
+                           <span class="item-icon" title="Calendário">
+                              <span class="icon-calendar"></span>
+                           </span>
+                           <span class="item-label">Agenda - Calendário</span>
+                        </h:outputLink>
+                     </li>
+                     <li class="item-container">
+                        <h:outputLink class="item" value="backupRestore.xhtml">
+                           <span class="item-icon" title="Backup Restore">
+                              <span class="icon-check-square-o"></span>
+                           </span>
+                           <span class="item-label">Backup - Restore</span>
+                        </h:outputLink>
+                     </li>
+                     <li class="item-container">
+                        <h:outputLink class="item" value="teste.xhtml">
+                           <span class="item-icon" title="Sala de Espera">
+                              <span class="icon-check-square-o"></span>
+                           </span>
+                           <span class="item-label">Sala de Espera</span>
+                        </h:outputLink>
+                     </li>
+
+                  </h:form>
+
+               </ul>
+
+            </div>
+
+            <div class="main">
+               <div class="navbar white">
+                  <ui:insert name="navbar-content"></ui:insert>
+               </div>
+               <div id="content" class="item">
+                  <ui:insert name="main-content"></ui:insert>
+               </div>
+            </div>
+
+            <div id="bottom">
+               <ui:insert name="bottom"></ui:insert>
+            </div>
+
+            <p:growl id="growl"	showDetail="false" sticky="false" autoUpdate="true" life="2000"></p:growl>
+
+         </div>
+
+         <h:outputScript library="js" name="doctor.js" />
+
+      </sec:ifAnyGranted>
+   </h:body>
+</html>

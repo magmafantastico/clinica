@@ -1,0 +1,114 @@
+    <h:panelGrid id="telefones">
+                    <composite:contatos
+                        tipo="#{pacienteMB.contato.tipo}"
+                        codArea="#{pacienteMB.contato.codArea}"
+                        numero="#{pacienteMB.contato.numero}"
+                        observacao="#{pacienteMB.contato.observacao}"
+                        actionListener="#{pacienteMB.addContato}">
+                    </composite:contatos>
+                </h:panelGrid>
+
+
+ <h:selectOneMenu id="tipo" value="#{pacienteMB.contato.tipo}">
+                            <f:selectItem itemValue="0" itemLabel="TIPO"/>
+                            <f:selectItem itemValue="RESIDENCIAL" itemLabel="RESIDENCIAL"/>
+                            <f:selectItem itemValue="CELULAR" itemLabel="CELULAR"/>	
+                            <f:selectItem itemValue="COMERCIAL" itemLabel="COMERCIAL"/>	
+                            <f:selectItem itemValue="FAX" itemLabel="FAX"/>	
+                        </h:selectOneMenu>
+
+                        <br/>
+
+                        <p:inputMask id="codArea"
+                                     mask="99"
+                                     pt:placeholder="DDD"
+                                     value="#{pacienteMB.contato.codArea}">
+                        </p:inputMask>
+
+                        <br/>
+
+                        <p:inputMask id="numero"
+                                     mask="99999-9999"
+                                     pt:placeholder="Número"
+                                     value="#{pacienteMB.contato.numero}">
+                        </p:inputMask>
+
+                        <br/>
+
+                        <p:inputText id="observacao" 
+                                     pt:placeholder="Observação"
+                                     value="#{pacienteMB.contato.observacao}">
+                        </p:inputText>
+
+
+------------------ editar contatos
+ <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Editar"></h:outputText>
+                            </f:facet>
+                            <p:commandLink class="glyphcon glyphcon-edit" title="Editar" action="#{pacienteMB.editarContato}" onclick="PF('mContatos').show();">
+                                <f:ajax execute="@this" render=":testeContato"/>
+                                <center>
+                                    <h:graphicImage library="imagens" name="edit.png" width="16" height="16"/>
+                                </center>
+                                <f:setPropertyActionListener target="#{pacienteMB.contato}" value="#{contatos}"/>
+                            </p:commandLink>
+                        </p:column>
+----------------------------------------------------
+   <h:commandLink action="#{utilMB.exibirRegistroGeral}">
+                        <f:ajax execute="@this" render="registroGeral"/>
+                        <center>
+                            <h:graphicImage library="imagens" name="docs.png" width="16" height="16"/> Documentos (RG)
+                        </center>
+                    </h:commandLink>
+
+                    <h:panelGrid id="registroGeral">
+                        <br/>
+                        <composite:registroGeral
+                            exibir="#{utilMB.exibirRegistroGeral}"
+                            registroGeral="#{pacienteMB.paciente.rg}"
+                            dataEmissao="#{pacienteMB.paciente.dataEmissao}"
+                            orgaoEmissor="#{pacienteMB.paciente.orgaoEmissor}"
+                            ufEmissor="#{pacienteMB.paciente.ufEmissor}">
+                        </composite:registroGeral>
+                    </h:panelGrid>
+
+                    <h:commandLink action="#{utilMB.exibirEndereco}">
+                        <f:ajax execute="@this" render="enderecos"/>
+                        <center>
+                            <h:graphicImage library="imagens" name="home.png" width="16" height="16"/> Endereço
+                        </center>
+                    </h:commandLink>
+
+                    <h:panelGrid id="enderecos">
+                        <br/>
+                        <composite:endereco 
+                            exibir="#{utilMB.exibirEndereco}"
+                            tipoEndereco="#{pacienteMB.endereco.tipoEndereco}" 
+                            logradouro="#{pacienteMB.endereco.logradouro}"
+                            numero="#{pacienteMB.endereco.numero}" 
+                            bairro="#{pacienteMB.endereco.bairro}"
+                            cep="#{pacienteMB.endereco.cep}"
+                            estado="#{pacienteMB.endereco.estado}"
+                            municipio="#{pacienteMB.endereco.municipio}">
+                        </composite:endereco>
+                    </h:panelGrid>
+
+
+    <h:commandLink action="#{utilMB.exibirRegistroGeral}">
+                        <f:ajax execute="@this" render="registroGeral"/>
+                        <center>
+                            <h:graphicImage library="imagens" name="docs.png" width="16" height="16"/> Documentos (RG)
+                        </center>
+                    </h:commandLink>
+
+                    <h:panelGrid id="registroGeral">
+                        <br/>
+                        <composite:registroGeral
+                            exibir="#{utilMB.exibirRegistroGeral}"
+                            registroGeral="#{profissionalMB.profissional.rg}"
+                            dataEmissao="#{profissionalMB.profissional.dataEmissao}"
+                            orgaoEmissor="#{profissionalMB.profissional.orgaoEmissor}"
+                            ufEmissor="#{profissionalMB.profissional.ufEmissor}">
+                        </composite:registroGeral>
+                    </h:panelGrid>

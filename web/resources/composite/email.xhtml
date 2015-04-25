@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+  <cc:interface>
+    <cc:attribute name="codigo"></cc:attribute>
+    <cc:attribute name="tipo"></cc:attribute>
+    <cc:attribute name="email"></cc:attribute>
+    <cc:attribute name="botaoAddText"></cc:attribute>
+    <cc:attribute name="botaoAddAction" method-signature="java.lang.String action()"></cc:attribute>
+  </cc:interface>
+
+  <cc:implementation>
+    <div class="modal fade" id="modalEmail" tabindex="-1" role="dialog" aria-labelledby="modalEmailLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <h:form id="frmAddEmail" class="form form-horizontal">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">Fechar</span>
+              </button>
+              <h4 class="modal-title" id="modalEmailLabel">Adicionar E-mail</h4>
+            </div><!-- /.modal-header -->
+            <div class="modal-body">
+              <h:inputHidden value="#{cc.attrs.codigo}"/>
+              <div class="field-group pw15 ph05">
+                <h:outputLabel class="col-sm-3 label-control">Tipo</h:outputLabel>
+                <div class="col-sm-9">
+                  <h:selectOneMenu id="tipo"
+                                   class="field-control"
+                                   required="true"
+                                   requiredMessage="Tipo de E-mail Obrigatório"
+                                   value="#{cc.attrs.tipo}">
+                    <f:selectItem itemValue="" itemLabel="Tipo"></f:selectItem>
+                    <f:selectItem itemValue="Particular" itemLabel="Particular"></f:selectItem>
+                    <f:selectItem itemValue="Comercial" itemLabel="Comercial"></f:selectItem>
+                  </h:selectOneMenu>
+                </div>
+              </div>
+
+              <div class="field-group pw15 ph05">
+                <h:outputLabel class="col-sm-3 label-control">E-mail</h:outputLabel>
+                <div class="col-sm-9">
+                  <h:inputText id="email" 
+                               class="field-control"
+                               required="true"
+                               requiredMessage="Email Obrigatório"
+                               pt:placeholder="E-mail"
+                               onkeyup="this.value = this.value.toLowerCase();"
+                               value="#{cc.attrs.email}">
+                    <f:validator validatorId="emailValidator"></f:validator>
+                  </h:inputText>
+                </div>
+              </div>
+							<h:inputText class="hidden"></h:inputText>
+            </div><!-- /.modal-body -->
+            <div class="modal-footer">
+              <p:commandLink styleClass="btn btn-success" 
+                             action="#{cc.attrs.botaoAddAction}"
+                             value="#{cc.attrs.botaoAddText}"
+                             oncomplete="$('#modalEmail').modal('hide');"
+                             update=":frmCadastro:pnlEmails">
+              </p:commandLink>
+              <button type="button" class="btn btn-warning" data-dismiss="modal">Cancelar</button>
+            </div><!-- /.modal-footer -->
+          </h:form>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+  </cc:implementation>
+</html>

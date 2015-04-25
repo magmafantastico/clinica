@@ -1,0 +1,154 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="index.xhtml">
+
+	<ui:define name="navbar-content"> 
+		<div class="item">
+			<span class="title">Anamnese</span>
+		</div>
+		<h:form id="frmBtnComposites" class="pull-right"></h:form>
+	</ui:define>
+
+
+    <ui:define name="main-content"> 
+
+
+      <h:form id="frmCadastro" prependId="false" class="form form-horizontal">
+
+        <p:focus/>
+
+        <h:inputHidden value="#{anamneseMB.anamnese.codigo}"/>
+
+        <div class="row">	
+
+          <div class="col-md-12">
+
+            <div class="field-group pw15">
+              <h:outputLabel class="col-sm-3 label-control">Pergunta</h:outputLabel>
+              <div class="col-sm-9">
+                <h:inputText id="questao" 
+                             class="field-control"
+                             required="true"
+                             requiredMessage="Pergunta Obrigatória"
+                             pt:placeholder="Pergunta a ser Realizada"
+                             onkeyup="this.value = this.value.toUpperCase();"
+                             value="#{anamneseMB.anamnese.questao}" >
+                </h:inputText>
+              </div>
+            </div>
+
+            <div class="field-group pw15">
+              <h:outputLabel class="col-sm-3 label-control">Tipo de Resposta</h:outputLabel>
+              <div class="col-sm-9">
+                <h:selectOneMenu value="#{anamneseMB.anamnese.tipoResposta}"  class="field-control">
+                  <f:selectItem itemLabel="Selecione"/>
+                  <f:selectItem itemValue="SIM / NÃO" itemLabel="SIM / NÃO" />
+                  <f:selectItem itemValue="DESCRITIVO" itemLabel="DESCRITIVO"/>	
+                </h:selectOneMenu>	 
+              </div>
+            </div>
+
+            <div class="field-group pw15">
+              <h:outputLabel class="col-sm-3 label-control">Especialidade - Geral / Especifica</h:outputLabel>
+              <div class="col-sm-9">
+                <h:selectOneMenu value="#{anamneseMB.anamnese.especialidade}" class="field-control">
+                  <f:selectItem itemValue="GERAL" itemLabel="GERAL"/>
+                  <f:selectItem itemValue="GINECOLOGIA" itemLabel="GINECOLOGIA"/>
+                  <f:selectItem itemValue="MASTOLOGIA" itemLabel="MASTOLOGIA"/>
+                  <f:selectItem itemValue="ORTOPEDISTA" itemLabel="ORTOPEDISTA"/>
+                  <f:selectItem itemValue="PEDIATRIA" itemLabel="PEDIATRIA"/>	
+                </h:selectOneMenu>
+              </div>
+            </div>
+
+            <div class="field-group pw15">
+              <h:outputLabel class="col-sm-3 label-control">Resposta - Comum / Particular</h:outputLabel>
+              <div class="col-sm-9">
+                <h:selectOneMenu value="#{anamneseMB.anamnese.permissao}" class="field-control">
+                  <f:selectItem itemValue="COMUM" itemLabel="COMUM"/>
+                  <f:selectItem itemValue="PARTICULAR" itemLabel="PARTICULAR"/>
+                </h:selectOneMenu>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="row pw30 ph10">
+
+          <h:commandLink class="btn btn-link-o" 
+                         action="#{anamneseMB.novo}"
+                         immediate="true">
+            <span class="icon-plus"></span> Nova Pergunta
+          </h:commandLink>
+
+          <h:commandLink class="btn btn-primary pull-right" 
+                         value="Salvar / Alterar" 
+                         action="#{anamneseMB.inserir}">
+          </h:commandLink>
+
+        </div>
+
+      </h:form>
+
+
+      <h:form id="frmListagem">
+
+        <div class="table-responsive">
+          <h:dataTable id="tblQuestionarios"
+                       class="table table-bordered table-striped table-hover"
+                       var="objeto" 
+                       value="#{anamneseMB.listarTodos}"
+                       rendered="#{!empty anamneseMB.listarTodos}">  
+
+            <h:inputHidden value="#{objeto.codigo}"/>
+
+            <h:column>
+              <f:facet name="header">
+                <h:outputText value="Pergunta"></h:outputText>
+              </f:facet>
+              <h:outputText value="#{objeto.questao}"/>
+            </h:column>
+
+            <h:column>
+              <f:facet name="header">
+                <h:outputText value="Tipo Resposta"></h:outputText>
+              </f:facet>
+              <h:outputText value="#{objeto.tipoResposta}"/>
+            </h:column>
+
+            <h:column>
+              <f:facet name="header">
+                <h:outputText value="Especialidade"></h:outputText>
+              </f:facet>
+              <h:outputText value="#{objeto.especialidade}"/>
+            </h:column>
+
+            <h:column>
+              <f:facet name="header">
+                <h:outputText value="Editar"></h:outputText>
+              </f:facet>
+              <h:commandLink>
+                <h:graphicImage library="imagens" name="editar16.png" style="border:0"/>
+                <f:setPropertyActionListener target="#{anamneseMB.anamnese}" value="objeto"/>                       
+              </h:commandLink>
+            </h:column>
+          </h:dataTable> 
+        </div>
+
+      </h:form>
+
+    </ui:define>
+
+  </ui:composition>
+
+</html>
+

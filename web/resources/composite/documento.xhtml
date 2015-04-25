@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+  <cc:interface>
+    <cc:attribute name="codigo"></cc:attribute>
+    <cc:attribute name="registroGeral"></cc:attribute>
+    <cc:attribute name="dataEmissao"></cc:attribute>
+    <cc:attribute name="orgaoEmissor"></cc:attribute>
+    <cc:attribute name="ufEmissor"></cc:attribute>
+    <cc:attribute name="botaoAddText"></cc:attribute>
+    <cc:attribute name="botaoAddAction" method-signature="java.lang.String action()"></cc:attribute>
+  </cc:interface>
+
+  <cc:implementation>
+
+    <div class="modal fade" id="modalDocumento" tabindex="-1" role="dialog" aria-labelledby="modalDocumentoLabel" aria-hidden="true">
+
+      <div class="modal-dialog modal-lg">
+
+        <div class="modal-content">
+
+          <h:form id="frmAddDocumento" class="form form-horizontal">
+
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">Fechar</span>
+              </button>
+              <h4 class="modal-title" id="modalDocumentoLabel">Adicionar Documentos</h4>
+            </div><!-- /.modal-header -->
+
+            <div class="modal-body">
+
+              <h:inputHidden value="#{cc.attrs.codigo}"></h:inputHidden>
+
+              <div class="field-group pw15 ph05">
+                <h:outputLabel class="col-sm-3 label-control" for="rg">RG</h:outputLabel>
+                <div class="col-sm-9">
+                  <h:inputText id="rg" 
+                               class="field-control"
+                               pt:placeholder="RG"
+                               value="#{cc.attrs.registroGeral}" >
+                  </h:inputText>
+                </div>
+              </div>
+
+              <div class="field-group pw15 ph05">
+                <h:outputLabel class="col-sm-3 label-control" for="dataEmissao">Data de Emissão</h:outputLabel>
+                <div class="col-sm-9">
+                  <p:inputMask id="dataEmissao"
+                               class="field-control"
+                               mask="99/99/9999"
+                               value="#{cc.attrs.dataEmissao}" 
+                               pt:placeholder="Data de Emissão">
+                    <f:converter converterId="dataConverter"></f:converter>
+                  </p:inputMask>
+                </div>
+              </div>
+
+              <div class="field-group pw15 ph05">
+                <h:outputLabel class="col-sm-3 label-control" for="orgaoEmissor">Orgão Emissor</h:outputLabel>
+                <div class="col-sm-9">
+                  <h:inputText id="orgaoEmissor"
+                               class="field-control"
+                               pt:placeholder="Orgão Emissor"
+                               value="#{cc.attrs.orgaoEmissor}">
+                  </h:inputText>
+                </div>
+              </div>
+
+              <div class="field-group pw15 ph05">
+                <h:outputLabel class="col-sm-3 label-control" for="ufEmissor">Estado Emissor</h:outputLabel>
+                <div class="col-sm-9">
+                  <h:selectOneMenu id="ufEmissor" 
+                                   class="field-control"
+                                   value="#{cc.attrs.ufEmissor}">
+                    <f:selectItem itemLabel="UF Emissor" itemValue="0"></f:selectItem>
+                    <f:selectItems value="#{estadoMunicipioMB.listaEstados}" 
+                                   var="e" 
+                                   itemValue="#{e.id}"
+                                   itemLabel="#{e.sigla} - #{e.nome}">
+                    </f:selectItems>
+                  </h:selectOneMenu>
+                </div>
+              </div>
+
+            </div><!-- /.modal-body -->
+
+            <div class="modal-footer">
+              <p:commandLink styleClass="btn btn-success"
+                             action="#{cc.attrs.botaoAddAction}"
+                             value="#{cc.attrs.botaoAddText}"
+                             oncomplete="$('#modalDocumento').modal('hide');"
+                             update=":frmCadastro:pnlDocumentos">
+              </p:commandLink>
+              <button type="button" class="btn btn-warning" data-dismiss="modal">Cancelar</button>
+            </div><!-- /.modal-footer -->
+
+          </h:form>
+
+        </div><!-- /.modal-content -->
+
+      </div><!-- /.modal-dialog -->
+
+    </div><!-- /.modal -->
+
+  </cc:implementation>
+
+</html>

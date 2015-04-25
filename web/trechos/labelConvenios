@@ -1,0 +1,3 @@
+<h:outputLabel id="conveniosSelecionados" value="#{pacienteMB.convenios}">
+                                    <f:converter converterId="convenioConverter"/>
+                                </h:outputLabel>

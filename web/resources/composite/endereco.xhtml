@@ -1,0 +1,188 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+  <cc:interface>
+    <cc:attribute name="codigo"></cc:attribute>
+    <cc:attribute name="tipoEndereco"></cc:attribute>
+    <cc:attribute name="tipoLogradouro"></cc:attribute>
+    <cc:attribute name="logradouro"></cc:attribute>
+    <cc:attribute name="numero"></cc:attribute>
+    <cc:attribute name="bairro"></cc:attribute>
+    <cc:attribute name="cep"></cc:attribute>
+    <cc:attribute name="estado"></cc:attribute>
+    <cc:attribute name="municipio"></cc:attribute>
+    <cc:attribute name="botaoAddText"></cc:attribute>
+    <cc:attribute name="botaoAddAction" method-signature="java.lang.String action()"></cc:attribute>
+  </cc:interface>
+
+  <cc:implementation>
+
+    <div class="modal fade" id="modalEndereco" tabindex="-1" role="dialog" aria-labelledby="modalEnderecoLabel" aria-hidden="true">
+
+      <div class="modal-dialog modal-lg">
+
+        <div class="modal-content">
+
+          <h:form id="frmAddEndereco" class="form form-horizontal">
+
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">Close</span>
+              </button>
+              <h4 class="modal-title" id="modalEnderecoLabel">Adicionar Endereço</h4>
+            </div><!-- /.modal-header -->
+
+            <div class="modal-body">
+
+              <h:inputHidden value="#{cc.attrs.codigo}"></h:inputHidden>
+
+              <div class="field-group pw15 ph05">
+                <h:outputLabel class="col-sm-3 label-control" for="tipoEndereco">Tipo</h:outputLabel>
+                <div class="col-sm-9">
+                  <h:selectOneMenu id="tipoEndereco"
+                                   class="field-control"
+                                   value="#{cc.attrs.tipoEndereco}">
+                    <f:selectItem itemValue="RESIDENCIAL" itemLabel="Residencial"></f:selectItem>
+                    <f:selectItem itemValue="COMERCIAL" itemLabel="Comercial"></f:selectItem>
+                  </h:selectOneMenu>
+                </div>
+              </div>
+
+              <div class="field-group pw15 ph05">
+                <h:outputLabel class="col-sm-3 label-control" for="tipoLogradouro">Logradouro</h:outputLabel>
+                <div class="col-sm-9">
+                  <h:selectOneMenu id="tipoLogradouro"
+                                   class="field-control"
+                                   value="#{cc.attrs.tipoLogradouro}">
+
+                    <f:selectItem itemValue="RUA" itemLabel="Rua"></f:selectItem>
+                    <f:selectItem itemValue="AVENIDA" itemLabel="Avenida"></f:selectItem>
+                    <f:selectItem itemValue="PARQUE" itemLabel="Parque"></f:selectItem>
+                    <f:selectItem itemValue="VILA" itemLabel="Vila"></f:selectItem>
+                    <f:selectItem itemValue="ALAMEDA" itemLabel="Alameda"></f:selectItem>
+                    <f:selectItem itemValue="FAZENDA" itemLabel="Fazenda"></f:selectItem>
+                    <f:selectItem itemValue="ESTRADA" itemLabel="Estrada"></f:selectItem>
+
+                  </h:selectOneMenu>
+                </div>
+              </div>
+
+              <div class="field-group pw15 ph05">
+                <h:outputLabel class="col-sm-3 label-control" for="logradouro">Endereço</h:outputLabel>
+                <div class="col-sm-9">
+                  <h:inputText id="logradouro" 
+                               class="field-control"
+                               onkeyup="this.value = this.value.toUpperCase();"
+                               pt:placeholder="Endereço"
+                               required="true"
+                               requiredMessage="Endereço Obrigatório"
+                               value="#{cc.attrs.logradouro}">
+                  </h:inputText>
+                </div>
+              </div>
+
+              <div class="field-group pw15 ph05">
+                <h:outputLabel class="col-sm-3 label-control" for="numero">Número</h:outputLabel>
+                <div class="col-sm-9">
+                  <h:inputText id="numero"
+                               class="field-control"
+                               maxlength="6"
+                               onkeypress="return SomenteNumero(event)"
+                               onkeyup="this.value = this.value.toUpperCase();" 
+                               pt:placeholder="Número"
+                               value="#{cc.attrs.numero}">
+                  </h:inputText>
+                </div>
+              </div>
+
+              <div class="field-group pw15 ph05">
+                <h:outputLabel class="col-sm-3 label-control" for="bairro">Bairro</h:outputLabel>
+                <div class="col-sm-9">
+                  <h:inputText id="bairro" 
+                               class="field-control"
+                               onkeyup="this.value = this.value.toUpperCase();"
+                               pt:placeholder="Bairro"
+                               value="#{cc.attrs.bairro}">
+                  </h:inputText>
+                </div>
+              </div>
+
+              <div class="field-group pw15 ph05">
+                <h:outputLabel class="col-sm-3 label-control" for="cep">CEP</h:outputLabel>
+                <div class="col-sm-9">
+                  <p:inputMask id="cep" 
+                               class="field-control"
+                               mask="99999-999"
+                               placeholder="CEP"
+                               value="#{cc.attrs.cep}">
+                  </p:inputMask>
+                </div>
+              </div>
+
+              <div class="field-group pw15 ph05">
+                <h:outputLabel class="col-sm-3 label-control" for="estado">Estado</h:outputLabel>
+                <div class="col-sm-9">
+                  <h:selectOneMenu id="estado" 
+                                   class="field-control"
+                                   value="#{cc.attrs.estado}"
+                                   valueChangeListener="#{estadoMunicipioMB.carregaCidades}">
+                    <f:selectItem itemLabel="Estado" itemValue="0"></f:selectItem>
+                    <f:selectItems itemLabel="#{e.nome}"
+                                   itemValue="#{e.id}"
+                                   value="#{estadoMunicipioMB.listaEstados}" 
+                                   var="e">
+                    </f:selectItems>
+                    <f:ajax event="change" render="municipio"></f:ajax>
+                  </h:selectOneMenu>
+                </div>
+              </div>
+
+              <div class="field-group pw15 ph05">
+                <h:outputLabel class="col-sm-3 label-control" for="municipio">Múnicipio</h:outputLabel>
+                <div class="col-sm-9">
+                  <h:selectOneMenu id="municipio" 
+                                   class="field-control"
+                                   value="#{cc.attrs.municipio}">
+                    <f:selectItem itemLabel="Municipio" itemValue=""></f:selectItem>
+                    <f:selectItems itemLabel="#{m.nome}"
+                                   itemValue="#{m.id}"
+                                   value="#{estadoMunicipioMB.listaMunicipios}"
+                                   var="m">
+                    </f:selectItems>
+                  </h:selectOneMenu>
+                </div>
+              </div>
+
+            </div><!-- /.modal-body -->
+
+            <div class="modal-footer">
+
+              <p:commandLink styleClass="btn btn-success"
+                             action="#{cc.attrs.botaoAddAction}"
+                             value="#{cc.attrs.botaoAddText}"
+                             oncomplete="$('#modalEndereco').modal('hide');"
+                             update=":frmCadastro:pnlEnderecos">
+              </p:commandLink>
+
+              <button type="button" class="btn btn-warning" data-dismiss="modal">Cancelar</button>
+
+            </div><!-- /.modal-footer -->
+
+          </h:form>
+
+        </div><!-- /.modal-content -->
+
+      </div><!-- /.modal-dialog -->
+
+    </div><!-- /.modal -->
+
+  </cc:implementation>
+
+</html>

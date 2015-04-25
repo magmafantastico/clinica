@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:composition template="/template/template.xhtml">
+        <ui:define name="content"> 
+
+            <center>
+
+                <h:form id="frmCadastro" prependId="false">
+
+                    <p:focus/>
+
+                    <p:growl id="growl"
+                             showDetail="false" 
+                             sticky="false" 
+                             autoUpdate="true"
+                             life="3000"/>
+
+                    <h:inputHidden value="#{salaMB.sala.codigo}"/>
+
+                    <h:panelGrid id="panel" columns="4">    
+
+                        <h:selectOneMenu value="#{salaMB.sala.tipo}">
+                            <f:selectItem itemLabel="TIPO"/>
+                            <f:selectItem itemValue="SALA" itemLabel="SALA" />
+                            <f:selectItem itemValue="CONSULTORIO" itemLabel="CONSULTORIO" />	
+                            <f:selectItem itemValue="AMBULATORIO" itemLabel="AMBULATORIO" />	
+                            <f:selectItem itemValue="LEITO" itemLabel="LEITO" />	
+                        </h:selectOneMenu>
+
+                        <h:inputText id="descriao" 
+                                     required="true"
+                                     pt:placeholder="Descrição"
+                                     onkeyup="this.value = this.value.toUpperCase();"
+                                     value="#{salaMB.sala.descricao}" >
+                        </h:inputText> 
+
+                    </h:panelGrid>
+
+                    <br/>
+
+                    <h:commandButton 
+                        class="btn btn-default"
+                        value="Salvar / Alterar" 
+                        action="#{salaMB.inserir}">
+                    </h:commandButton>
+
+                </h:form>
+
+                <h:form>
+
+                    <h:commandButton 
+                        class="btn btn-default"
+                        value="Novo" 
+                        action="#{salaMB.novo}">
+                    </h:commandButton>
+
+                    <h:commandButton 
+                        class="btn btn-default"
+                        value="Excluir" 
+                        action="#{salaMB.excluir}">
+                    </h:commandButton>
+
+                </h:form>
+
+                <p/>
+
+                <h:form id="frmListagem">
+
+                    <div class="table-responsive">
+                        <h:dataTable id="tblSala"
+                                     class="table table-bordered table-striped table-hover"
+                                     var="c" 
+                                     value="#{salaMB.listarTodos}"
+                                     rendered="#{!empty salaMB.listarTodos}">  
+
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Código"></h:outputText>
+                                </f:facet>
+                                <h:outputText value="#{c.codigo}"/>
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Tipo Sala"></h:outputText>
+                                </f:facet>
+                                <h:outputText value="#{c.tipo}"/>
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Descrição"></h:outputText>
+                                </f:facet>
+                                <h:outputText value="#{c.descricao}"/>
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Editar"></h:outputText>
+                                </f:facet>
+                                <h:commandLink>
+                                    <h:graphicImage library="imagens" name="editar16.png" style="border:0"/>
+                                    <f:setPropertyActionListener target="#{salaMB.sala}" value="#{c}" />
+                                </h:commandLink>
+                            </h:column>
+                        </h:dataTable> 
+                    </div>
+                </h:form>
+
+            </center>
+        </ui:define>
+    </ui:composition>
+</html>

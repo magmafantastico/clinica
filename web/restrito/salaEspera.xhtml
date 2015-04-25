@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+   <ui:composition template="/templates/principal.xhtml">
+      <ui:define name="main-content">
+         <center>
+            <h:form>
+               <h:dataTable id="tblSalaEspera"
+                            var="lista"
+                            border="2"
+                            styleClass="table table-hover"
+                            value="#{salaEsperaMB.listarTodos}">
+
+                  <h:inputHidden value="#{lista.id}"></h:inputHidden>
+                  <f:facet name="header">
+                     SALA DE ESPERA
+                  </f:facet>
+                  <h:column>
+                     <f:facet name="header">
+                        <h:outputText value="Data/Hora Entrada"></h:outputText>
+                     </f:facet>
+                     <h:outputText value="#{lista.dataHoraEntrada}">
+                     </h:outputText>
+                  </h:column>
+                  <h:column>
+                     <f:facet name="header">
+                        <h:outputText value="PACIENTE"></h:outputText>
+                     </f:facet>
+                     <h:outputText value="#{lista.agenda.paciente.nome}">
+                     </h:outputText>
+                  </h:column>
+                  <h:column>
+                     <f:facet name="header">
+                        <h:outputText value="PROFISSIONAL"></h:outputText>
+                     </f:facet>
+                     <h:outputText value="#{lista.agenda.profissional.nome}">
+                     </h:outputText>
+                  </h:column>
+               </h:dataTable> 
+            </h:form>
+         </center>
+      </ui:define> 
+   </ui:composition>
+</html>
+

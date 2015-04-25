@@ -1,0 +1,131 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+  <cc:interface>
+    <cc:attribute name="codigo"></cc:attribute>
+    <cc:attribute name="tipo"></cc:attribute>
+    <cc:attribute name="codArea"></cc:attribute>
+    <cc:attribute name="numero"></cc:attribute>
+    <cc:attribute name="observacao"></cc:attribute>
+    <cc:attribute name="botaoAddText"></cc:attribute>
+    <cc:attribute name="botaoAddAction" method-signature="java.lang.String action()"></cc:attribute>
+  </cc:interface>
+
+  <cc:implementation>
+
+    <div class="modal fade" id="modalContato" tabindex="-1" role="dialog" aria-labelledby="modalContatoLabel" aria-hidden="true">
+
+      <div class="modal-dialog">
+
+        <div class="modal-content">
+
+          <h:form id="frmAddContato" class="form form-horizontal">
+
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">Fechar</span>
+              </button>
+              <h4 class="modal-title" id="modalContatoLabel">Adicionar Contato</h4>
+            </div><!-- /.modal-header -->
+
+            <div class="modal-body">
+
+              <h:inputHidden value="#{cc.attrs.codigo}"></h:inputHidden>
+
+              <div class="field-group pw15 ph05">
+                <h:outputLabel class="col-sm-3 label-control" for="tipo">Tipo</h:outputLabel>
+                <div class="col-sm-9">
+                  <h:selectOneMenu id="tipo" 
+                                   class="field-control"
+                                   required="true" 
+                                   requiredMessage="Tipo Obrigatório" 
+                                   value="#{cc.attrs.tipo}"
+                                   valueChangeListener="#{utilMB.selecionaTipo}">
+
+                    <f:selectItem itemLabel="Escolha o tipo" itemDisabled="true"></f:selectItem>
+                    <f:selectItem itemValue="RESIDENCIAL" itemLabel="Residencial"></f:selectItem>
+                    <f:selectItem itemValue="CELULAR" itemLabel="Celular"></f:selectItem>
+                    <f:selectItem itemValue="COMERCIAL" itemLabel="Comercial"></f:selectItem>
+                    <f:selectItem itemValue="FAX" itemLabel="Fax"></f:selectItem>
+                    <f:ajax event="change" render="nro observacao number"></f:ajax>
+
+                  </h:selectOneMenu>
+                </div>
+              </div>
+
+              <div class="field-group ph05">
+
+                <h:outputLabel class="col-sm-3 pw15 label-control" for="number">Número</h:outputLabel>
+
+                <div class="col-sm-2 pw15">
+                  <p:outputPanel id="number">  
+                    <p:inputMask id="codArea"
+                                 class="field-control"
+                                 mask="99"
+                                 pt:placeholder="DDD"
+                                 required="true"
+                                 requiredMessage="Código de Área Obrigatório"
+                                 value="#{cc.attrs.codArea}">
+                      <f:ajax event="keyup" listener="#{utilMB.maskContato(cc.attrs.codArea)}" render="nro"></f:ajax>
+                    </p:inputMask>
+                  </p:outputPanel>
+                </div>
+
+                <div class="col-sm-6">
+                  <p:outputPanel id="nro">  
+                    <p:inputMask id="numero"
+                                 class="field-control"
+                                 mask="#{utilMB.maskNroContato}"
+                                 pt:placeholder="Número"
+                                 required="true"
+                                 requiredMessage="Número do Contato Obrigatório"
+                                 value="#{cc.attrs.numero}">
+                    </p:inputMask>
+                  </p:outputPanel>
+                </div>
+
+              </div>
+
+              <div class="field-group pw15 ph05">
+                <h:outputLabel class="col-sm-3 pw15 label-control" for="observacao">Observação</h:outputLabel>
+                <div class="col-sm-9">
+                  <h:inputText id="observacao" 
+                               class="field-control"
+                               pt:placeholder="Tem alguma observação?"
+                               onkeyup="this.value = this.value.toUpperCase();"
+                               value="#{cc.attrs.observacao}">
+                  </h:inputText>
+                </div>
+              </div>
+
+            </div><!-- /.modal-body -->
+
+            <div class="modal-footer">
+              <p:commandLink styleClass="btn btn-success"
+                             action="#{cc.attrs.botaoAddAction}" 
+                             value="#{cc.attrs.botaoAddText}"
+                             oncomplete="$('#modalContato').modal('hide');"
+                             update=":frmCadastro:pnlContatos">
+              </p:commandLink>
+              <button type="button" class="btn btn-warning" data-dismiss="modal">Cancelar</button>
+            </div><!-- /.modal-footer -->
+
+          </h:form>
+
+        </div><!-- /.modal-content -->
+
+      </div><!-- /.modal-dialog -->
+
+    </div><!-- /.modal -->
+
+  </cc:implementation>
+
+</html>
+

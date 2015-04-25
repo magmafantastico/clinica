@@ -1,0 +1,232 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="content"> 
+
+            <center>
+
+                <h:form id="frmCadastro" prependId="false">
+
+                    <p:focus/>
+
+                    <p:growl id="growl"
+                             showDetail="false" 
+                             sticky="false" 
+                             autoUpdate="true"
+                             life="3000"/>
+
+                    <h:inputHidden value="#{empresaMB.empresa.codigo}"/>
+
+                    <h:panelGrid id="panel" columns="4">
+                        <h:inputText id="nome" 
+                                     required="true"
+                                     requiredMessage="Nome Obrigatório"
+                                     pt:placeholder="Nome Empresa"
+                                     onkeyup="this.value = this.value.toUpperCase();"
+                                     value="#{empresaMB.empresa.nomeEmpresa}" >
+                        </h:inputText>        
+
+                        <h:inputText id="nomeFantasia" 
+                                     pt:placeholder="Nome Fantasia"
+                                     value="#{empresaMB.empresa.nomeFantasia}" >
+                        </h:inputText>
+
+                        <h:inputText id="fonefixo" 
+                                     pt:placeholder="Telefone"
+                                     value="#{empresaMB.empresa.telefone}" >
+                        </h:inputText>
+
+                        <h:inputText id="observação" 
+                                     onkeyup="this.value = this.value.toUpperCase();"
+                                     pt:placeholder="Observação"
+                                     value="#{empresaMB.empresa.observacao}" >
+                        </h:inputText>
+
+                        <h:inputText id="email" 
+                                     pt:placeholder="E-mail"
+                                     value="#{empresaMB.empresa.email}" >
+                            <f:validator validatorId="emailValidator"/>
+                        </h:inputText>      
+
+                        <h:inputText id="cnpj" 
+                                     required="true"
+                                     requiredMessage="Cnpj Obrigatório"
+                                     pt:placeholder="CNPJ"
+                                     value="#{empresaMB.empresa.cnpj}" >
+
+                        </h:inputText>
+
+                        <h:inputText id="rgANS" 
+                                     pt:placeholder="Registro agencia nacional de saude"
+                                     value="#{empresaMB.empresa.regANS}" >
+                        </h:inputText> 
+
+                        <h:inputText id="inscEstadua" 
+                                     pt:placeholder="Registro inscrição estadual"
+                                     value="#{empresaMB.empresa.inscEstadual}" >
+                        </h:inputText>
+
+                        <h:inputText id="insMunicipal" 
+                                     pt:placeholder="Registro inscirção municipal"
+                                     value="#{empresaMB.empresa.insMunicipal}" >
+                        </h:inputText>     
+                        <h:inputText id="cnes" 
+                                     pt:placeholder="Registro cnes"
+                                     value="#{empresaMB.empresa.cnes}" >
+                        </h:inputText>     
+
+                        <h:inputTextarea id="urlWeb" 
+                                         onkeyup="this.value = this.value.toUpperCase();"
+                                         pt:placeholder="Webservice"
+                                         value="#{empresaMB.empresa.urlWeb}" >
+                        </h:inputTextarea>
+
+                    </h:panelGrid>
+
+                    <h:commandButton 
+                        class="btn btn-default"
+                        value="Salvar / Alterar" 
+                        action="#{empresaMB.inserir}">
+                    </h:commandButton>
+
+                </h:form>
+
+                <h:form>
+
+                    <h:commandButton 
+                        class="btn btn-default"
+                        value="Novo" 
+                        action="#{empresaMB.novo}">
+                    </h:commandButton>
+
+                    <h:commandButton 
+                        class="btn btn-default"
+                        value="Excluir" 
+                        action="#{empresaMB.excluir}">
+                    </h:commandButton>
+
+                </h:form>
+
+                <p/>
+
+                <h:form>
+                    <h:inputText id="nome" 
+                                 value="#{empresaMB.empresa.nomeEmpresa}"
+                                 size="250" 
+                                 maxlength="50"
+                                 onkeyup="this.value = this.value.toUpperCase();"
+                                 pt:placeholder="Nome do Empresa">
+                        <f:ajax event="keyup" render=":frmListagem" />          
+                    </h:inputText>
+                </h:form>
+
+                <h:form id="frmListagem">
+
+                    <div class="table-responsive">
+                        <h:dataTable id="tblConvenio"
+                                     class="table table-bordered table-striped table-hover"
+                                     var="c" 
+                                     value="#{empresaMB.listarTodos}"
+                                     rendered="#{!empty empresaMB.listarTodos}">  
+
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Código"></h:outputText>
+                                </f:facet>
+                                <h:outputText value="#{c.codigo}"/>
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Nome"></h:outputText>
+                                </f:facet>
+                                <h:outputText value="#{c.nomeEmpresa}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Nome Fantasia"></h:outputText>
+                                </f:facet>
+                                <h:outputText value="#{c.nomeFantasia}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Email"></h:outputText>
+                                </f:facet>
+                                <h:outputText value="#{c.email}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="CNPJ"></h:outputText>
+                                </f:facet>
+                                <h:outputText value="#{c.cnpj}">
+
+                                </h:outputText>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Telefone Fixo"></h:outputText>
+                                </f:facet>
+                                <h:outputText value="#{c.telefone}"/>
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Observações"></h:outputText>
+                                </f:facet>
+                                <h:outputText value="#{c.observacao}"/>
+                            </h:column>
+                            <h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="urlWeb"></h:outputText>
+                                    </f:facet>
+                                    <h:outputText value="#{c.urlWeb}"/>
+                                </h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="resANS"></h:outputText>
+                                </f:facet>
+                                <h:outputText value="#{c.regANS}"/>
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="insMunicipal"></h:outputText>
+                                </f:facet>
+                                <h:outputText value="#{c.insMunicipal}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="inscEstadual"></h:outputText>
+                                </f:facet>
+                                <h:outputText value="#{c.inscEstadual}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="cnes"></h:outputText>
+                                </f:facet>
+                                <h:outputText value="#{c.cnes}"/>
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Editar"></h:outputText>
+                                </f:facet>
+                                <h:commandLink>
+                                    <h:graphicImage library="imagens" name="editar16.png" style="border:0"/>
+                                    <f:setPropertyActionListener target="#{empresaMB.empresa}" value="#{c}" />
+                                </h:commandLink>
+                            </h:column>
+                        </h:dataTable> 
+                    </div>
+                </h:form>
+            </center>
+        </ui:define>
+    </ui:composition>
+</html>

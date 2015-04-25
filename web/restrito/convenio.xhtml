@@ -1,0 +1,473 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"      
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:composite="http://xmlns.jcp.org/jsf/composite/composite">
+
+    <ui:composition template="/templates/principal.xhtml">
+
+        <ui:define name="search">
+            <h:form>
+                <p:commandLink class="link pull-left font-g444 hover-font-clear"
+                               action="#{convenioMB.novo}"
+                               oncomplete="$('#modalPesquisar').modal('show');"
+                               update=":frmCadastro">
+                    <span class="icon-search icon-label"></span>
+                </p:commandLink>
+            </h:form>
+        </ui:define>
+
+        <ui:define name="navbar-content">
+            <div class="item">
+                <span class="title">Convênio</span>
+            </div>
+
+            <h:form id="frmBtnComposites" class="item pull-right">
+                <p:commandLink action="#{convenioMB.novoEndereco}"
+                               class="link"
+                               oncomplete="$('#modalEndereco').modal('show');"
+                               update=":cmpEndereco:frmAddEndereco">
+                    <span class="icon-home icon-label"></span>
+                    Adicionar Endereço
+                </p:commandLink>
+
+                <p:commandLink action="#{convenioMB.novoContato}"
+                               class="link"
+                               oncomplete="$('#modalContato').modal('show');"
+                               update=":cmpContato:frmAddContato">
+                    <span class="icon-phone icon-label"></span>
+                    Adicionar Contato
+                </p:commandLink>  
+
+                <p:commandLink action="#{convenioMB.novoEmail}"
+                               class="link" 
+                               oncomplete="$('#modalEmail').modal('show');"
+                               update=":cmpEmail:frmAddEmail">
+                    <span class="icon-at icon-label"></span>
+                    Adicionar E-mail
+                </p:commandLink>
+            </h:form>
+        </ui:define>
+
+        <ui:define name="main-content"> 
+
+            <h:form id="frmCadastro" prependId="false" class="form form-horizontal">
+
+                <p:focus></p:focus>
+
+                <h:inputHidden value="#{convenioMB.convenio.id}"/>
+
+                <div class="row">	
+
+                    <div class="col-md-6">
+
+                        <div class="field-group pw15 ph05">
+                            <h:outputLabel class="col-sm-3 label-control">Razão Social</h:outputLabel>
+                            <div class="col-sm-9">
+                                <h:inputText id="nome" 
+                                             class="field-control"
+                                             pt:placeholder="Razão Social da Empresa"
+                                             onkeyup="this.value = this.value.toUpperCase();"
+                                             value="#{convenioMB.convenio.razaoSocial}" >
+                                </h:inputText>  
+                            </div>
+                        </div>
+                        <div class="field-group pw15 ph05">
+                            <h:outputLabel class="col-sm-3 label-control">Nome Fantasia</h:outputLabel>
+                            <div class="col-sm-9">
+                                <h:inputText id="nomeFantasia" 
+                                             class="field-control"
+                                             required="true"
+                                             requiredMessage="Nome Fantasia Obrigatório"
+                                             pt:placeholder="Nome Fantasia"
+                                             onkeyup="this.value = this.value.toUpperCase();"
+                                             value="#{convenioMB.convenio.nomeFantasia}" >
+                                </h:inputText>
+                            </div>
+                        </div>
+                        <div class="field-group pw15 ph05">
+                            <h:outputLabel class="col-sm-3 label-control">CNPJ</h:outputLabel>
+                            <div class="col-sm-9">
+                                <p:inputMask id="cnpj"
+                                             class="field-control"
+                                             required="true"
+                                             requiredMessage="CNPJ Obrigatório"
+                                             mask="99.999.999/9999-99"
+                                             pt:placeholder="CNPJ"
+                                             value="#{convenioMB.convenio.cnpj}">
+                                    <f:converter converterId="cnpjConverter"/>
+                                    <f:validator validatorId="cnpjValidator"/>
+                                </p:inputMask>
+                            </div>
+                        </div>
+                        <div class="field-group pw15 ph05">
+                            <h:outputLabel class="col-sm-3 label-control">CNES</h:outputLabel>
+                            <div class="col-sm-9">
+                                <h:inputText id="cnes" 
+                                             class="field-control"
+                                             pt:placeholder="CNES"
+                                             onkeyup="this.value = this.value.toUpperCase();"
+                                             value="#{convenioMB.convenio.cnes}">
+                                    <f:convertNumber integerOnly="true" minIntegerDigits="1"/>
+                                </h:inputText>
+                            </div>
+                        </div>
+                        <div class="field-group pw15 ph05">
+                            <h:outputLabel class="col-sm-3 label-control">Registro ANS</h:outputLabel>
+                            <div class="col-sm-9">
+                                <h:inputText id="regANS" 
+                                             class="field-control"
+                                             pt:placeholder="Registro ANS"
+                                             value="#{convenioMB.convenio.regANS}">
+                                    <f:convertNumber integerOnly="true" minIntegerDigits="1"/>  
+                                </h:inputText>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <div class="field-group pw15 ph05">
+                            <h:outputLabel class="col-sm-3 label-control">Código Prestador</h:outputLabel>
+                            <div class="col-sm-9">
+                                <h:inputText id="codPrestador" 
+                                             class="field-control"
+                                             pt:placeholder="Código Prestador"
+                                             value="#{convenioMB.convenio.codPrestador}" >
+                                    <f:convertNumber integerOnly="true"/>
+                                </h:inputText>
+                            </div>
+                        </div>
+                        <div class="field-group pw15 ph05">
+                            <h:outputLabel class="col-sm-3 label-control">Dia de Faturamento</h:outputLabel>
+                            <div class="col-sm-9">
+                                <h:selectOneMenu value="#{convenioMB.convenio.diaFaturamento}" class="field-control">
+                                    <f:selectItem itemLabel="DIA DE FATURAMENTO"/>
+                                    <f:selectItem itemValue="01" itemLabel="01" />
+                                    <f:selectItem itemValue="02" itemLabel="02" />
+                                    <f:selectItem itemValue="03" itemLabel="03" />
+                                    <f:selectItem itemValue="04" itemLabel="04" />
+                                    <f:selectItem itemValue="05" itemLabel="05" />
+                                    <f:selectItem itemValue="06" itemLabel="06" />
+                                    <f:selectItem itemValue="07" itemLabel="07" />
+                                    <f:selectItem itemValue="08" itemLabel="08" />
+                                    <f:selectItem itemValue="09" itemLabel="09" />
+                                    <f:selectItem itemValue="10" itemLabel="10" />
+                                    <f:selectItem itemValue="11" itemLabel="11" />
+                                    <f:selectItem itemValue="12" itemLabel="12" />
+                                    <f:selectItem itemValue="13" itemLabel="13" />
+                                    <f:selectItem itemValue="14" itemLabel="14" />
+                                    <f:selectItem itemValue="15" itemLabel="15" />
+                                    <f:selectItem itemValue="16" itemLabel="16" />
+                                    <f:selectItem itemValue="17" itemLabel="17" />
+                                    <f:selectItem itemValue="18" itemLabel="18" />
+                                    <f:selectItem itemValue="19" itemLabel="19" />
+                                    <f:selectItem itemValue="20" itemLabel="20" />
+                                    <f:selectItem itemValue="21" itemLabel="21" />
+                                    <f:selectItem itemValue="22" itemLabel="22" />
+                                    <f:selectItem itemValue="23" itemLabel="23" />
+                                    <f:selectItem itemValue="24" itemLabel="24" />
+                                    <f:selectItem itemValue="25" itemLabel="25" />
+                                    <f:selectItem itemValue="26" itemLabel="26" />
+                                    <f:selectItem itemValue="27" itemLabel="27" />
+                                    <f:selectItem itemValue="28" itemLabel="28" />
+                                    <f:selectItem itemValue="29" itemLabel="29" />
+                                    <f:selectItem itemValue="30" itemLabel="30" />
+                                    <f:selectItem itemValue="31" itemLabel="31" />
+                                </h:selectOneMenu>
+                            </div>
+                        </div>
+                        <div class="field-group pw15 ph05">
+                            <h:outputLabel class="col-sm-3 label-control">Dias para Retorno</h:outputLabel>
+                            <div class="col-sm-9">
+                                <h:inputText id="diasRetorno"
+                                             class="field-control"
+                                             maxlength="6"
+                                             pt:placeholder="Dias para retorno"
+                                             value="#{convenioMB.convenio.qtdDiasRetorno}" >
+                                    <f:convertNumber integerOnly="true"/>
+                                </h:inputText>
+                            </div>
+                        </div>
+                        <div class="field-group pw15 ph05">
+                            <h:outputLabel class="col-sm-3 label-control">URL WebService</h:outputLabel>
+                            <div class="col-sm-9">
+                                <h:inputText id="urlWebService" 
+                                             class="field-control"
+                                             pt:placeholder="URL WebService"
+                                             onkeyup="this.value = this.value.toUpperCase();"
+                                             value="#{convenioMB.convenio.urlWebService}" >
+                                </h:inputText>  
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="row">
+                    <!--    ////////////////////////////// LISTAGEM DOS CONTATOS TELEFONICOS //////////////////////////   -->
+                    <div class="col-sm-3">
+                        <h:panelGrid id="pnlContatos">
+                            <h:dataTable id="tblContatos"
+                                         class="table table-bordered table-striped table-hover"
+                                         var="contato" 
+                                         value="#{convenioMB.contatos}"
+                                         rendered="#{!empty convenioMB.contatos}">  
+                                <h:inputHidden value="#{contato.id}"/>
+                                <f:facet name="header">
+                                    CONTATOS TELEFÔNICOS
+                                </f:facet>
+                                <h:column>
+                                    <h:outputText value="#{contato.tipo}"/>
+                                </h:column>
+                                <h:column>
+                                    <h:outputText value="(#{contato.codArea}) #{contato.numero}"/>
+                                </h:column>
+                                <h:column>
+                                    <p:commandLink id="btnEditarContato"
+                                                   oncomplete="$('#modalContato').modal('show');"
+                                                   update=":cmpContato:frmAddContato" 
+                                                   title="Editar"
+                                                   immediate="true">
+                                        <span class="icon-edit"></span>
+                                        <f:setPropertyActionListener target="#{convenioMB.contato}" value="#{contato}"/>
+                                    </p:commandLink>
+                                </h:column>
+                                <h:column>
+                                    <h:commandLink title="Excluir" 
+                                                   action="#{convenioMB.removeContato}">
+                                        <f:ajax execute="@this" render=":frmCadastro:pnlContatos"/>
+                                        <span class="icon-minus-square"></span>
+                                        <f:setPropertyActionListener target="#{convenioMB.contato}" value="#{contato}"/>
+                                    </h:commandLink>
+                                </h:column>
+                            </h:dataTable>
+                        </h:panelGrid>
+                    </div>
+                    <!--    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   -->
+
+                    <!--    /////////////////////////////////// LISTAGEM DOS ENDERECOS //////////////////////////   -->
+                    <div class="col-sm-3">
+                        <h:panelGrid id="pnlEnderecos">
+                            <h:dataTable id="tblEnderecos"
+                                         class="table table-bordered table-striped table-hover"
+                                         var="endereco" 
+                                         value="#{convenioMB.enderecos}"
+                                         rendered="#{!empty convenioMB.enderecos}"> 
+                                <h:inputHidden value="#{endereco.id}"/>
+                                <f:facet name="header">
+                                    ENDEREÇOS 
+                                </f:facet>
+                                <h:column>
+                                    <h:outputText value="#{endereco.tipoEndereco}"/>
+                                </h:column>
+                                <h:column>
+                                    <h:outputText value="#{endereco.logradouro}, Nº #{endereco.numero} / "/>
+                                </h:column>
+                                <h:column >
+                                    <p:commandLink id="btnEditarEndereco" 
+                                                   oncomplete="$('#modalEndereco').modal('show');"
+                                                   update=":cmpEndereco:frmAddEndereco"  
+                                                   title="Editar"
+                                                   immediate="true">
+                                        <span class="icon-edit"></span>
+                                        <f:setPropertyActionListener target="#{convenioMB.endereco}" value="#{endereco}"/>
+                                    </p:commandLink>
+                                </h:column>
+                                <h:column>
+                                    <h:commandLink title="Excluir" 
+                                                   action="#{convenioMB.removeEndereco}">
+                                        <f:ajax execute="@this" render=":frmCadastro:pnlEnderecos"/>
+                                        <span class="icon-minus-square"></span>
+                                        <f:setPropertyActionListener target="#{convenioMB.endereco}" value="#{endereco}"/>
+                                    </h:commandLink>
+                                </h:column>
+                            </h:dataTable>
+                        </h:panelGrid>
+                    </div>
+                    <!--    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   -->
+
+                    <!--    ////////////////////////////// LISTAGEM DOS EMAILS  //////////////////////////   -->
+                    <div class="col-sm-3">
+                        <h:panelGrid id="pnlEmails">
+                            <h:dataTable id="tblEmails"
+                                         class="table table-bordered table-striped table-hover"
+                                         var="email" 
+                                         value="#{convenioMB.emails}"
+                                         rendered="#{!empty convenioMB.emails}">  
+                                <h:inputHidden value="#{email.id}"/>
+                                <f:facet name="header">
+                                    EMAILS 
+                                </f:facet>
+                                <h:column>
+                                    <h:outputText value="#{email.tipo}"/>
+                                </h:column>
+                                <h:column>
+                                    <h:outputText value="#{email.email}"/>
+                                </h:column>
+                                <h:column>
+                                    <p:commandLink id="btnEditarEmail" 
+                                                   oncomplete="$('#modalEmail').modal('show');"
+                                                   update=":cmpEmail:frmAddEmail"  
+                                                   title="Editar"
+                                                   immediate="true">
+                                        <span class="icon-edit"></span>
+                                        <f:setPropertyActionListener target="#{convenioMB.email}" value="#{email}" />
+                                    </p:commandLink>
+                                </h:column>
+                                <h:column>
+                                    <h:commandLink title="Excluir"
+                                                   action="#{convenioMB.removeEmail}">
+                                        <f:ajax execute="@this" render=":frmCadastro:pnlEmails"/>
+                                        <span class="icon-minus-square"></span>
+                                        <f:setPropertyActionListener target="#{convenioMB.email}" value="#{email}"/>
+                                    </h:commandLink>
+                                </h:column>
+                            </h:dataTable>
+                        </h:panelGrid>
+                    </div>
+                    <!--    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   -->
+                </div>
+
+                <div class="row pw30 ph10">
+
+                    <h:commandLink class="btn btn-link-o" action="#{convenioMB.novo}" immediate="true"><span class="icon-plus"></span> Novo Convênio</h:commandLink>
+
+                    <h:commandLink class="btn btn-primary pull-right" value="Salvar / Alterar" action="#{convenioMB.inserir}"></h:commandLink>
+
+                </div>
+
+            </h:form>
+
+            <composite:contato id="cmpContato"
+                               codigo="#{convenioMB.contato.id}"
+                               tipo="#{convenioMB.contato.tipo}"
+                               codArea="#{convenioMB.contato.codArea}"
+                               numero="#{convenioMB.contato.numero}"
+                               observacao="#{convenioMB.contato.observacao}"
+                               botaoAddText="Adicionar"
+                               botaoAddAction="#{convenioMB.addContato}">
+            </composite:contato>
+
+            <composite:endereco id="cmpEndereco"
+                                codigo="#{convenioMB.endereco.id}"
+                                tipoEndereco="#{convenioMB.endereco.tipoEndereco}" 
+                                tipoLogradouro="#{convenioMB.endereco.tipoLogradouro}"
+                                logradouro="#{convenioMB.endereco.logradouro}"
+                                numero="#{convenioMB.endereco.numero}" 
+                                bairro="#{convenioMB.endereco.bairro}"
+                                cep="#{convenioMB.endereco.cep}"
+                                estado="#{convenioMB.endereco.estado}"
+                                municipio="#{convenioMB.endereco.municipio}"
+                                botaoAddText="Adicionar"
+                                botaoAddAction="#{convenioMB.addEndereco}">
+            </composite:endereco>   
+
+            <composite:email id="cmpEmail"
+                             codigo="#{convenioMB.email.id}"
+                             tipo="#{convenioMB.email.tipo}"
+                             email="#{convenioMB.email.email}"
+                             botaoAddText="Adicionar"
+                             botaoAddAction="#{convenioMB.addEmail}">
+            </composite:email>
+
+            <div class="modal fade" id="modalPesquisar" tabindex="-1" role="dialog" aria-labelledby="modalPesquisarLabel" aria-hidden="true">
+
+                <div class="modal-dialog modal-lg">
+
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">
+                                <span aria-hidden="true">&times;</span>
+                                <span class="sr-only">Fechar</span>
+                            </button>
+                            <h4 class="modal-title" id="modalPesquisarLabel">Pesquisar Convênios</h4>
+                        </div><!-- /.modal-header -->
+
+                        <div class="modal-body">
+
+                            <!--              <h:form id="frmNomePesquisa">
+                                              <p:focus context="frmNomePesquisa"/>
+                                              <h:inputText id="nome" 
+                                                           value="# {convenioMB.convenio.razaoSocial}"
+                                                           onkeyup="this.value = this.value.toUpperCase();"
+                                                           pt:placeholder="Nome do Empresa">
+                                                <f:ajax event="keyup" render=":frmListagem" />          
+                                              </h:inputText>
+                                            </h:form>-->
+
+                            <h:form id="frmListagem">
+                                <div>
+                                    <h:dataTable id="tblConvenio"
+                                                 class="table table-bordered table-striped table-hover"
+                                                 var="c" 
+                                                 styleClass="table"
+                                                 value="#{convenioMB.listarTodos}"
+                                                 rendered="#{!empty convenioMB.listarTodos}">  
+                                        <h:inputHidden value="#{c.id}"/>
+                                        <h:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="RAZÃO SOCIAL"></h:outputText>
+                                            </f:facet>
+                                            <h:outputText value="#{c.razaoSocial}"/>
+                                        </h:column>
+                                        <h:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="NOME FANTASIA"></h:outputText>
+                                            </f:facet>
+                                            <h:outputText value="#{c.nomeFantasia}"/>
+                                        </h:column>
+                                        <h:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="CNPJ"></h:outputText>
+                                            </f:facet>
+                                            <h:outputText value="#{c.cnpj}">
+                                                <f:converter converterId="cnpjConverter"/>
+                                            </h:outputText>
+                                        </h:column>
+                                        <h:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="DIA DE FATURAMENTO"></h:outputText>
+                                            </f:facet>
+                                            <h:outputText value="#{c.diaFaturamento}"/>
+                                        </h:column>
+                                        <h:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="EDITAR"></h:outputText>
+                                            </f:facet>
+                                            <h:commandLink title="EDITAR" action="#{convenioMB.editar}">
+                                                <center>
+                                                    <span class="icon-edit"></span>
+                                                </center>
+                                                <f:setPropertyActionListener target="#{convenioMB.convenio}" value="#{c}" />                                  
+                                            </h:commandLink>
+                                        </h:column>
+                                    </h:dataTable> 
+
+                                </div>
+
+                            </h:form>
+
+                        </div><!-- /.modal-body -->
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                        </div><!-- /.modal-footer -->
+
+                    </div><!-- /.modal-content -->
+
+                </div><!-- /.modal-dialog -->
+
+            </div><!-- /.modal -->
+
+        </ui:define>
+
+    </ui:composition>
+
+</html>

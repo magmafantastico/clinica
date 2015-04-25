@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+    <ui:composition template="/templates/template.xhtml">
+
+        <ui:define name="content">
+
+            <h:panelGroup rendered="#{!empty param.login_error}">
+                Erro ao efetuar o login
+                <br />
+                <br/>
+                Motivo: #{SPRING_SECURITY_LAST_EXCEPTION.message}
+            </h:panelGroup>
+
+            <style>
+                body {
+                    background-color: #34495e;
+                    font: message-box;
+                    padding-top: 80px;
+                    padding-left: 15px;
+                    padding-right: 15px;
+                }
+
+                #login {
+                    background-color: #f9f9f9;
+                    border-bottom: solid 5px #dddddd;
+                    color: #444;
+                    padding-top: 160px;
+                    padding-bottom: 80px;
+                    text-align: center;
+                    margin: 0 auto;
+                    max-width: 600px;
+                    min-width: 300px;
+                }
+
+                #login .field-control,
+                #login input[type="submit"] {
+                    font-size: 20px;
+                }
+
+                #login .field-control {
+                    border: none;
+                }
+
+                #login .field-control input[type="text"],
+                #login .field-control input[type="password"] {
+                    border: solid 1px #ddd;
+                    border-radius: 3px;
+                    padding: 12px;
+                }
+
+                #login .field-control ::-webkit-input-placeholder,
+                #login .field-control :-moz-placeholder,
+                #login .field-control ::-moz-placeholder,
+                #login .field-control :-ms-input-placeholder {
+                    color: 444;
+                }
+
+                #login input[type="submit"] {
+                    background: none;
+                    border: solid 2px #999;
+                    padding: 10px 45px;
+                    margin-top: 40px;
+                }
+
+                #login input[type="submit"]:hover {
+                    background-color: #999;
+                    color: #eeeeee;
+                }
+            </style>
+
+            <form id="login" method="post" action="${request.contextPath}/j_spring_security_check">
+                <div class="field-control">
+                    <label class="hidden">Login</label>                  
+                    <input type='text' name='j_username' placeholder="Usuário" />
+                </div>
+                <div class="field-control">
+                    <label class="hidden">Senha</label>
+                    <input type='password' name='j_password' placeholder="Senha" />
+                </div>
+                <div class="field-control">
+                    <input id="remember" type="checkbox" name="_spring_security_remember_me"/>
+                    <label for="remember">Entrar automaticamente</label>
+                </div>
+
+                <input type="submit" value="Entrar"/>
+
+                <script>
+                    document.getElementById("login").j_username.value = "#{SPRING_SECURITY_LAST_USERNAME}";
+                </script>
+
+            </form>
+        </ui:define>
+    </ui:composition>
+</html>

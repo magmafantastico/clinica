@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+   <session-factory>
+      <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+      <property name="hibernate.connection.datasource">java:/comp/env/jdbc/MagmaDoctorDB</property>
+      <property name="hibernate.current_session_context_class">thread</property>
+      <property name="hibernate.hbm2ddl.auto">update</property>
+      <property name="show_sql">true</property>
+      <property name="format_sql">true</property>
+      <mapping class="br.com.magmadoctor.modelo.paciente.Paciente"/>
+      <mapping class="br.com.magmadoctor.modelo.estadoMunicipio.Estado"/>
+      <mapping class="br.com.magmadoctor.modelo.estadoMunicipio.Municipio"/>
+      <mapping class="br.com.magmadoctor.modelo.procedimento.Procedimento"/>
+      <mapping class="br.com.magmadoctor.modelo.especialidade.Especialidade"/>
+      <mapping class="br.com.magmadoctor.modelo.endereco.Endereco"/>
+      <mapping class="br.com.magmadoctor.modelo.convenio.Convenio"/>
+      <mapping class="br.com.magmadoctor.modelo.profissional.Profissional"/>
+      <mapping class="br.com.magmadoctor.modelo.anamnese.Anamnese"/>
+      <mapping class="br.com.magmadoctor.modelo.sala.Sala"/>
+      <mapping class="br.com.magmadoctor.modelo.empresa.Empresa"/>
+      <mapping class="br.com.magmadoctor.modelo.agenda.Agenda"/>
+      <mapping class="br.com.magmadoctor.modelo.contato.Contato"/>
+      <mapping class="br.com.magmadoctor.modelo.email.Email"/>
+      <mapping class="br.com.magmadoctor.modelo.documento.Documento"/>
+      <mapping class="br.com.magmadoctor.modelo.usuario.Usuario"/>
+      <mapping class="br.com.magmadoctor.modelo.salaEspera.SalaEspera"/>
+   </session-factory>
+</hibernate-configuration>
+
+<!--        
+<property name="hibernate.query.factory_class">org.hibernate.hql.classic.ClassicQueryTranslatorFactory</property>
+-->
+ 
+<!--        
+<property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+<property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/clinica</property>
+<property name="hibernate.connection.username">postgres</property>
+<property name="hibernate.connection.password">postgres</property>
+-->
