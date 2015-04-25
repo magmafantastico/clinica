@@ -74,7 +74,7 @@ public class AgendaMB implements Serializable {
     public AgendaMB() {
         this.controlaAgenda = 0;
         this.lenght = "00:30";
-        this.pagina = "teste";
+        this.pagina = "agenda";
         this.iconeAusente = "icon-square-o";
         this.iconePresente = "icon-check-square-o";
         listarAgendaCompleta();
@@ -92,12 +92,12 @@ public class AgendaMB implements Serializable {
         } else {
             processSchedule();
             processEndDate();
-            agenda.setStatusChegada(getIconeAusente());
+            agenda.setStatusChegada(Boolean.FALSE);
             aRN.salvar(getAgenda());
             FacesMessage msg = new FacesMessage("CADASTRADO COM SUCESSO!!!");
             FacesContext.getCurrentInstance().addMessage(null, msg);
         }
-        return getPagina();
+        return getPagina();//getPagina();
     }
 
     public void novo() {
@@ -324,27 +324,12 @@ public class AgendaMB implements Serializable {
         AgendaRN aRN = new AgendaRN();
         carregaAgenda();
         agenda.setDtHrChegada(Calendar.getInstance().getTime());
-        if (agenda.getStatusChegada().equals(getIconeAusente())) {
-            agenda.setStatusChegada(getIconePresente());
+        if (agenda.getStatusChegada()) {
+            agenda.setStatusChegada(Boolean.FALSE);
         } else {
-            agenda.setStatusChegada(getIconeAusente());
+            agenda.setStatusChegada(Boolean.TRUE);
         }
         inserir();
-    }
-
-    public void salaEspera() {
-        AgendaRN aRN = new AgendaRN();
-        carregaAgenda();
-        agenda.setDtHrChegada(Calendar.getInstance().getTime());
-        if (agenda.getStatusChegada().equals(getIconeAusente())) {
-            agenda.setStatusChegada(getIconePresente());
-        } else {
-            agenda.setStatusChegada(getIconeAusente());
-        }
-        processSchedule();
-        processEndDate();
-        agenda.setStatusChegada(getIconeAusente());
-        aRN.salvar(getAgenda());
     }
 
     private void listarAgendaCompleta() {

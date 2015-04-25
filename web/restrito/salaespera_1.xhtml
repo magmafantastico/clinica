@@ -2,13 +2,34 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Facelet Title</title>
         <h:outputStylesheet library="css" name="villa-doctor.css" />
     </h:head>
     <h:body>
-        <h:form id="frmProfissionalAgenda">
+        <h:form id="frm">
+
+            <h:selectOneMenu id="profissional"
+                             class="field-control"	
+                             label="Profissionais"
+                             valueChangeListener="#{agendaMB.agendaProfissional}">
+                <f:selectItem itemLabel="PROFISSIONAL (TODOS)" itemValue="0"></f:selectItem>
+                <f:selectItems value="#{profissionalMB.listarTodos}" 
+                               var="c"
+                               itemValue="#{c.id}"
+                               itemLabel="#{c.nome}">
+                </f:selectItems>
+                <f:ajax event="change" render="tblPacientes"></f:ajax>
+            </h:selectOneMenu>
+
+            <h:inputText id="dataFiltro" 
+                         autocomplete="off"
+                         value="#{agendaMB.dataSelecionada}"
+                         styleClass="datetimepicker-mask field-control">
+                <f:ajax event="valueChange" listener="#{agendaMB.agendaPorData}" render="tblPacientes"></f:ajax>
+            </h:inputText>
 
             <h:dataTable id="tblPacientes"
                          var="lista" 
@@ -92,12 +113,12 @@
                         <h:outputText value="Chegou"></h:outputText>
                     </f:facet>
                     <h:commandLink title="Chegou" 
-                                   action="#{agendaMB.salaEspera}">                                       
+                                   action="#{agendaMB.adicionarSalaEspera}">                                       
                         <center>
                             <span class="#{lista.statusChegada}"></span>
                         </center>
                         <f:setPropertyActionListener target="#{agendaMB.agenda}" value="#{lista}"></f:setPropertyActionListener>
-                        <f:ajax execute="@form" render="@form"/>
+<!--                        <f:ajax execute="@form" render="@form"/>-->
                     </h:commandLink>
                 </h:column>
 
