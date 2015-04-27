@@ -53,6 +53,8 @@ Rotinas de usuário
 				<(db) Pesquisa registros de profissionais
 			<(api) Entrega registros de profissionais
 			<(i) Renderiza lista de profissionais
+		>(u) Escolhe profisisonal
+		
 
 	Ações
 		>: Entrada
