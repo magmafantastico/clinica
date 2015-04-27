@@ -31,7 +31,7 @@ Tabelas
 			Recebe ID e timestamp.
 			Deve receber registros de presença de paciente no consultório.
 
-Rotinas de usuário
+Rotinas
 	Inserção na agenda
 		>(u) Ir para tela de agenda
 			>(api) Verificar registros na agenda
@@ -45,16 +45,21 @@ Rotinas de usuário
 				<(db) Pesquisa registros de pacientes
 			<(api) Entrega registros de pacientes
 			<(i) Renderiza lista de pacientes
-		>(u) Escolhe paciente
-		>(u) Escolhe data
-		>(u) Escolhe tempo de consulta
-		>(u) Insere nome de profissional
+		>(u) Escolhe paciente (paciente_id)
+		>(u) Escolhe data (agenda_inicio)
+		>(u) Escolhe tempo de consulta (agenda_inicio + tempo)
+		>(u) Insere nome de profissional (profissional_id)
 			>(api) Verifica registro de profissionais
 				<(db) Pesquisa registros de profissionais
 			<(api) Entrega registros de profissionais
 			<(i) Renderiza lista de profissionais
 		>(u) Escolhe profisisonal
-		
+		>(u) Adiciona registro
+			>(i) Entrega informações do registro para API
+				>(api) Faz requisição de inserção de registro
+					>(db) Insere registro na tabela Agenda
+				<(api) Entrega status de inserção
+			<(i) Informa ao usuário status de inserção
 
 	Ações
 		>: Entrada
