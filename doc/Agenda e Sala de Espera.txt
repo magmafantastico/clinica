@@ -18,7 +18,7 @@ Tabelas
 			Recebe ID e timestamp.
 			Deve receber registros sobre eventos clinicos.
 
-	salaDeEspera
+	salaDeEspera (ou sala_de_espera)
 		atributos
 			salaDeEspera_id
 			agenda_id
@@ -79,17 +79,16 @@ Rotinas
 			>(u) Escolhe paciente (paciente_id)
 			>(u) Clica em 'Adicionar a sala de espera'
 				>(c) Abre tela de vinculação de agenda
-					>(i) Verifica registro na agenda
+					>(i) Verifica registro na agenda vinculado a paciente
 						<(db) Pesquisa registros na agenda
 					<(i) Retorna registros na agenda (JSON)
-				<(c) Renderiza lista da agenda
-
+					<(c) Renderiza lista da agenda
+				>(u) Escolhe ou não uma consulta na agenda para vincular (agenda_id)
 					>(c) Envia informações do registro para API
 						>(i) Faz requisição de inserção de registro
-							>(db) Insere registro na tablea Sala de Epsera
+							>(db) Insere registro na tabela Sala de Epsera
 						<(i) Retorna status de inserção (JSON)
 						<(c) Informa ao usuário status de inserção
-
 
 	Ações
 		>: Entrada
