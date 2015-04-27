@@ -33,33 +33,39 @@ Tabelas
 
 Rotinas
 	Inserção na agenda
-		>(u) Ir para tela de agenda
+		via Agenda
+			>(u) Ir para tela de agenda
+				>(api) Verificar registros na agenda
+					<(db) Pesquisa registros na agenda
+				<(api) Retorna registros na agenda (JSON)
+				<(i) Renderiza registros na agenda
+			>(u) Selecionar data
+				>(i) Abre tela de inserção de consulta
+					>(u) Insere nome de paciente
+						>(api) Verifica registro de pacientes
+							<(db) Pesquisa registros de pacientes
+						<(api) Retorna registros de pacientes (JSON)
+						<(i) Renderiza lista de pacientes
+					>(u) Escolhe paciente (paciente_id)
+					>(u) Escolhe data (agenda_inicio)
+					>(u) Escolhe tempo de consulta (agenda_inicio + tempo)
+					>(u) Insere nome de profissional (profissional_id)
+						>(api) Verifica registro de profissionais
+							<(db) Pesquisa registros de profissionais
+						<(api) Retorna registros de profissionais (JSON)
+						<(i) Renderiza lista de profissionais
+					>(u) Escolhe profisisonal
+					>(u) Adiciona registro
+						>(i) Envia informações do registro para API
+							>(api) Faz requisição de inserção de registro
+								>(db) Insere registro na tabela Agenda
+							<(api) Retorna status de inserção (JSON)
+						<(i) Informa ao usuário status de inserção
+				<(i) Finaliza tela de inserção de consulta
 			>(api) Verificar registros na agenda
 				<(db) Pesquisa registros na agenda
 			<(api) Retorna registros na agenda (JSON)
 			<(i) Renderiza registros na agenda
-		>(u) Selecionar data
-			>(i) Abre tela de inserção de consulta
-		>(u) Insere nome de paciente
-			>(api) Verifica registro de pacientes
-				<(db) Pesquisa registros de pacientes
-			<(api) Retorna registros de pacientes (JSON)
-			<(i) Renderiza lista de pacientes
-		>(u) Escolhe paciente (paciente_id)
-		>(u) Escolhe data (agenda_inicio)
-		>(u) Escolhe tempo de consulta (agenda_inicio + tempo)
-		>(u) Insere nome de profissional (profissional_id)
-			>(api) Verifica registro de profissionais
-				<(db) Pesquisa registros de profissionais
-			<(api) Retorna registros de profissionais (JSON)
-			<(i) Renderiza lista de profissionais
-		>(u) Escolhe profisisonal
-		>(u) Adiciona registro
-			>(i) Envia informações do registro para API
-				>(api) Faz requisição de inserção de registro
-					>(db) Insere registro na tabela Agenda
-				<(api) Retorna status de inserção (JSON)
-			<(i) Informa ao usuário status de inserção
 
 	Inserção na sala de espera
 		via Interface da sala de espera
@@ -70,15 +76,20 @@ Rotinas
 				<(i) Renderiza registros ativos na sala de espera
 			>(u)
 		via Agenda
+			>(u)
 		via Paciente
 			>(u) Ir para tela do paciente
 				>(api) Verificar informações do paciente
 					<(db) Pesquisa registros do paciente
 				<(api) Retorna registros do paciente (JSON)
 				<(i) Renderiza tela do paciente
+			>(u) Escolhe paciente (paciente_id)
 			>(u) Clica em 'Adicionar a sala de espera'
+				>(i) Abre tela de vinculação de agenda
 				>(i) Envia informações do registro para API
 					>(api) Faz requisição de inserção de registro
+						>(db) Insere registro na tablea Sala de Epsera
+					<(api) Retorna status de inserção (JSON)
 
 	Ações
 		>: Entrada
