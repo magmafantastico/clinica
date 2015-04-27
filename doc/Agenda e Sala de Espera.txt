@@ -35,67 +35,67 @@ Rotinas
 	Inserção na agenda
 		via Agenda
 			>(u) Ir para tela de agenda
-				>(api) Verificar registros na agenda
+				>(i) Verificar registros na agenda
 					<(db) Pesquisa registros na agenda
-				<(api) Retorna registros na agenda (JSON)
-				<(i) Renderiza registros na agenda
+				<(i) Retorna registros na agenda (JSON)
+				<(c) Renderiza registros na agenda
 			>(u) Selecionar data
-				>(i) Abre tela de inserção de consulta
+				>(c) Abre tela de inserção de consulta
 					>(u) Insere nome de paciente
-						>(api) Verifica registro de pacientes
+						>(i) Verifica registro de pacientes
 							<(db) Pesquisa registros de pacientes
-						<(api) Retorna registros de pacientes (JSON)
-						<(i) Renderiza lista de pacientes
+						<(i) Retorna registros de pacientes (JSON)
+						<(c) Renderiza lista de pacientes
 					>(u) Escolhe paciente (paciente_id)
 					>(u) Escolhe data (agenda_inicio)
 					>(u) Escolhe tempo de consulta (agenda_inicio + tempo)
 					>(u) Insere nome de profissional (profissional_id)
-						>(api) Verifica registro de profissionais
+						>(i) Verifica registro de profissionais
 							<(db) Pesquisa registros de profissionais
-						<(api) Retorna registros de profissionais (JSON)
-						<(i) Renderiza lista de profissionais
+						<(i) Retorna registros de profissionais (JSON)
+						<(c) Renderiza lista de profissionais
 					>(u) Escolhe profisisonal
 					>(u) Adiciona registro
-						>(i) Envia informações do registro para API
-							>(api) Faz requisição de inserção de registro
+						>(c) Envia informações do registro para API
+							>(i) Faz requisição de inserção de registro
 								>(db) Insere registro na tabela Agenda
-							<(api) Retorna status de inserção (JSON)
-						<(i) Informa ao usuário status de inserção
-				<(i) Finaliza tela de inserção de consulta
-			>(api) Verificar registros na agenda
+							<(i) Retorna status de inserção (JSON)
+						<(c) Informa ao usuário status de inserção
+				<(c) Finaliza tela de inserção de consulta
+			>(i) Verificar registros na agenda
 				<(db) Pesquisa registros na agenda
-			<(api) Retorna registros na agenda (JSON)
-			<(i) Renderiza registros na agenda
+			<(i) Retorna registros na agenda (JSON)
+			<(c) Renderiza registros na agenda
 
 	Inserção na sala de espera
-		via Interface da sala de espera
-			>(u) Ir para tela de sala de espera
-				>(api) Verificar registros ativos da sala de espera
-					<(db) Pesquisa registros ativos na sala de espera
-				<(api) Retorna registros ativos na sala de espera (JSON)
-				<(i) Renderiza registros ativos na sala de espera
-			>(u)
 		via Agenda
 			>(u)
 		via Paciente
 			>(u) Ir para tela do paciente
-				>(api) Verificar informações do paciente
+				>(i) Verificar informações do paciente
 					<(db) Pesquisa registros do paciente
-				<(api) Retorna registros do paciente (JSON)
-				<(i) Renderiza tela do paciente
+				<(i) Retorna registros do paciente (JSON)
+				<(c) Renderiza tela do paciente
 			>(u) Escolhe paciente (paciente_id)
 			>(u) Clica em 'Adicionar a sala de espera'
-				>(i) Abre tela de vinculação de agenda
-				>(i) Envia informações do registro para API
-					>(api) Faz requisição de inserção de registro
-						>(db) Insere registro na tablea Sala de Epsera
-					<(api) Retorna status de inserção (JSON)
+				>(c) Abre tela de vinculação de agenda
+					>(i) Verifica registro na agenda
+						<(db) Pesquisa registros na agenda
+					<(i) Retorna registros na agenda (JSON)
+				<(c) Renderiza lista da agenda
+
+					>(c) Envia informações do registro para API
+						>(i) Faz requisição de inserção de registro
+							>(db) Insere registro na tablea Sala de Epsera
+						<(i) Retorna status de inserção (JSON)
+						<(c) Informa ao usuário status de inserção
+
 
 	Ações
 		>: Entrada
 		<: Saída
 		=: Processamento
 		(u): Usuário
-		(i): Interface
-		(api): API
+		(c): Cliente
+		(i): API
 		(db): Registro no banco de dados
