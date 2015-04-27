@@ -1,0 +1,64 @@
+Descrição do Design
+	Agenda e sala de espera são coisas diferentes que devem ser tratadas como coisas diferentes no banco de dados.
+	Agenda deve receber tudo aquilo que for referente a marcações de eventos clinicos focados em paciente/profisional.
+	Por outro lado, a sala de espera é algo independente, focado apenas em registrar interações com o espaço de espera do consultório.
+	Em alguns casos, a adĩção de um registro na sala de espera deverá acarretar (trigger) a um registro na agenda.
+	Um registro na agenda poderá ser vinculado a um registro da sala de espera.
+
+Tabelas
+	agenda
+		atributos
+			agenda_id
+			paciente_id
+			profissional_id
+			data_inicio
+			data_fim
+			timestamp
+		descrição
+			Recebe ID e timestamp.
+			Deve receber registros sobre eventos clinicos.
+
+	salaDeEspera
+		atributos
+			salaDeEspera_id
+			agenda_id
+			paciente_id
+			profissional_id
+			data_entrada
+			data_fim
+			timestamp
+		descrição
+			Recebe ID e timestamp.
+			Deve receber registros de presença de paciente no consultório.
+
+Rotinas de usuário
+	Inserção na agenda
+		>(u) Ir para tela de agenda
+			>(api) Verificar registros na agenda
+				<(db) Pesquisa registros na agenda
+			<(api) Entrega registros na agenda (JSON)
+			<(i) Renderiza registros na agenda
+		>(u) Selecionar data
+			>(i) Abre tela de inserção de consulta
+		>(u) Insere nome de paciente
+			>(api) Verifica registro de pacientes
+				<(db) Pesquisa registros de pacientes
+			<(api) Entrega registros de pacientes
+			<(i) Renderiza lista de pacientes
+		>(u) Escolhe paciente
+		>(u) Escolhe data
+		>(u) Escolhe tempo de consulta
+		>(u) Insere nome de profissional
+			>(api) Verifica registro de profissionais
+				<(db) Pesquisa registros de profissionais
+			<(api) Entrega registros de profissionais
+			<(i) Renderiza lista de profissionais
+
+	Ações
+		>: Entrada
+		<: Saída
+		=: Processamento
+		(u): Usuário
+		(i): Interface
+		(api): API
+		(db): Registro no banco de dados
