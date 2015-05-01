@@ -6,12 +6,13 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:sec="http://www.springframework.org/security/facelets/tags">
 	<h:head>
-		<title>Doctor</title>
+		<title>Doctor - SECUNDARIO</title>
 		<h:outputScript library="js" name="villa.js" />
 		<h:outputStylesheet library="css" name="dist.css" />
 		<h:outputStylesheet library="css" name="villa-foundation.css" />
 		<h:outputStylesheet library="css" name="villa-grid.css" />
 		<h:outputStylesheet library="css" name="polar-font.css" />
+		<h:outputStylesheet library="css" name="villa-doctor.css" />
 		<h:outputStylesheet library="css" name="villa.css" />
 		<h:outputStylesheet library="css" name="polar.css" />
 		<h:outputScript library="js" name="jquery-ui.min.js" />
@@ -28,139 +29,163 @@
 
 		<sec:ifAnyGranted roles="ROLE_ADMIN, ROLE_USER">
 
-			<h:outputText id="loginativo" value="#{request.userPrincipal.name}"/>
+<!--			<h:outputText id="loginativo" value="#{request.userPrincipal.name}"/>
 
 			<h:outputLink onclick="document.location = '#{request.contextPath}/j_spring_security_logout'" title="Sair">
 				SAIR
-			</h:outputLink>
+			</h:outputLink>-->
 
-			<div id="home-holder" class="height-window bg-active bg-cover">
+			<div id="home-holder" class="height-window bg-cover" style="background-image: url('#{resource['img:wall02.jpg']}')">
 
 				<div class="workspace">
 					<div class="window grey-200 maximized">
 						<header class="border-grey-400">
-							<span class="title">Pacientes</span>
+							<ui:insert name="navbar-content"></ui:insert>
 						</header>
 						<div class="content">
-							<ui:insert name="main-content"></ui:insert>
+							<form action="">
+								<ui:insert name="main-content"></ui:insert>
+							</form>
 						</div>
 					</div>
 				</div>
 
-				<div class="maia white">
+				<div class="maia grey-800 font-grey-400">
 
-					<div class="item start pull-left">
-						<a href="./" class="link font-g444 hover-blue hover-font-clear" title="Clinica Alpha">
-							<div class="item-content">
+					<header>
+						<div id="start" class="item">
+							<a href="./principal.jsf">
 								<span class="magma-logo"></span>
-							</div>
-						</a>
-					</div>
+							</a>
+						</div>
+					</header>
 
-					<div class="item clock pull-left">
-						<span class="clock-text link pull-right font-black" title="DoctorAlpha"></span>
-					</div>
+					<footer>
+						<ul class="notification-bar">
 
-					<div class="item search pull-right hover-dark-dark">
-						<ui:insert name="search"></ui:insert>
-					</div>
+							<li class="item sign" data-toggle="modal" data-target="#myModal">
+								<a href="#">
+									<span class="sign-off"></span>
+									<span class="icon-list-ul"></span>
+								</a>
+							</li>
+
+							<li class="item sign" data-toggle="modal" data-target="#myModal">
+								<a href="#">
+									<span class="sign-on"></span>
+									<span class="icon-desktop"></span>
+								</a>
+							</li>
+
+							<li class="item"><span class="clock-text"></span></li>
+							<li class="item"><a href="#"><span class="notification-bar-name">Eduardo Barros</span></a></li>
+
+							<li class="item sign">
+								<a href="#">
+									<span class="sign-off"></span>
+									<span class="icon-th-large"></span>
+								</a>
+							</li>
+
+						</ul>
+					</footer>
 
 				</div>
 
-				<div class="maia-container"></div>
-
-				<div class="sidebar unselect dodger-blue sidebar-icon-view">
+				<div class="launcher height-window grey-600">
 
 					<ul>
 
 						<h:form>
 
-							<li class="item-container">
-								<h:outputLink class="item" value="start.xhtml">
-									<span class="item-icon" title="Start">
+							<li class="item">
+								<h:outputLink value="start.xhtml">
+									<span class="icon" title="Start">
 										<span class="icon-dashboard"></span>
 									</span>
-									<span class="item-label">Start</span>
+									<span class="title">Start</span>
 								</h:outputLink>
 							</li>
-							<li class="item-container">
-								<h:outputLink class="item" value="paciente.xhtml">
-									<span class="item-icon" title="Pacientes">
+							<li class="item">
+								<h:outputLink value="paciente.xhtml">
+									<span class="icon" title="Pacientes">
 										<span class="icon-users"></span>
 									</span>
-									<span class="item-label">Pacientes</span>
+									<span class="title">Pacientes</span>
 								</h:outputLink>
 							</li>
-							<li class="item-container">
-								<h:outputLink class="item" value="profissional.xhtml">
-									<span class="item-icon" title="Profissionais">
+							<li class="item">
+								<h:outputLink value="profissional.xhtml">
+									<span class="icon" title="Profissionais">
 										<span class="icon-user-md"></span>
 									</span>
-									<span class="item-label">Profissionais</span>
+									<span class="title">Profissionais</span>
 								</h:outputLink>
 							</li>
-							<li class="item-container">
-								<h:outputLink class="item" value="convenio.xhtml">
-									<span class="item-icon" title="Convênios">
+							<li class="item">
+								<h:outputLink value="convenio.xhtml">
+									<span class="icon" title="Convênios">
 										<span class="icon-link"></span>
 									</span>
-									<span class="item-label">Convênios</span>
+									<span class="title">Convênios</span>
 								</h:outputLink>
 							</li>
-							<li class="item-container">
-								<h:outputLink class="item" value="especialidade.xhtml">
-									<span class="item-icon" title="Especialidades">
+							<li class="item">
+								<h:outputLink value="especialidade.xhtml">
+									<span class="icon" title="Especialidades">
 										<span class="icon-tags"></span>
 									</span>
-									<span class="item-label">Especialidades</span>
+									<span class="title">Especialidades</span>
 								</h:outputLink>
 							</li>
-							<li class="item-container">
-								<h:outputLink class="item" value="procedimento.xhtml">
-									<span class="item-icon" title="Procedimentos">
+							<li class="item">
+								<h:outputLink value="procedimento.xhtml">
+									<span class="icon" title="Procedimentos">
 										<span class="icon-check-square-o"></span>
 									</span>
-									<span class="item-label">Procedimentos</span>
+									<span class="title">Procedimentos</span>
 								</h:outputLink>
 							</li>
-							<li class="item-container">
-								<h:outputLink class="item" value="anamnese.xhtml">
-									<span class="item-icon" title="Anamnese">
-										<span class="icon-stethoscope"></span>
-									</span>
-									<span class="item-label">Anamnese</span>
-								</h:outputLink>
+							<li class="item">
+								<sec:ifAnyGranted roles="ROLE_ADMIN">
+									<h:outputLink value="anamnese.xhtml">
+										<span class="icon" title="Anamnese">
+											<span class="icon-stethoscope"></span>
+										</span>
+										<span class="title">Anamnese</span>
+									</h:outputLink>
+								</sec:ifAnyGranted>
 							</li>
-							<li class="item-container">
-								<h:outputLink class="item" value="agenda.xhtml">
-									<span class="item-icon" title="Listagem">
+							<li class="item">
+								<h:outputLink value="agenda.xhtml">
+									<span class="icon" title="Listagem">
 										<span class="icon-list"></span>
 									</span>
-									<span class="item-label">Agenda - Listagem</span>
+									<span class="title">Agenda - Listagem</span>
 								</h:outputLink>
 							</li>
-							<li class="item-container">
-								<h:outputLink class="item" value="agendaCalendario.xhtml">
-									<span class="item-icon" title="Calendário">
+							<li class="item">
+								<h:outputLink value="agendaCalendario.xhtml">
+									<span class="icon" title="Calendário">
 										<span class="icon-calendar"></span>
 									</span>
-									<span class="item-label">Agenda - Calendário</span>
+									<span class="title">Agenda - Calendário</span>
 								</h:outputLink>
 							</li>
-							<li class="item-container">
-								<h:outputLink class="item" value="backupRestore.xhtml">
-									<span class="item-icon" title="Backup Restore">
+							<li class="item">
+								<h:outputLink value="backupRestore.xhtml">
+									<span class="icon" title="Backup Restore">
 										<span class="icon-check-square-o"></span>
 									</span>
-									<span class="item-label">Backup - Restore</span>
+									<span class="title">Backup - Restore</span>
 								</h:outputLink>
 							</li>
-							<li class="item-container">
-								<h:outputLink class="item" value="salaespera_1.xhtml">
-									<span class="item-icon" title="Sala de Espera">
+							<li class="item">
+								<h:outputLink value="salaespera_1.xhtml">
+									<span class="icon" title="Sala de Espera">
 										<span class="icon-check-square-o"></span>
 									</span>
-									<span class="item-label">Sala de Espera</span>
+									<span class="title">Sala de Espera</span>
 								</h:outputLink>
 							</li>
 
@@ -168,19 +193,6 @@
 
 					</ul>
 
-				</div>
-
-				<div class="main">
-					<div class="navbar white">
-						<ui:insert name="navbar-content"></ui:insert>
-					</div>
-					<div id="content" class="item">
-						<ui:insert name="main-content"></ui:insert>
-					</div>
-				</div>
-
-				<div id="bottom">
-					<ui:insert name="bottom"></ui:insert>
 				</div>
 
 				<p:growl id="growl"	showDetail="false" sticky="false" autoUpdate="true" life="2000"></p:growl>

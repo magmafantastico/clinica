@@ -7,7 +7,7 @@
       xmlns:sec="http://www.springframework.org/security/facelets/tags"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 	<h:head>
-		<title>Doctor</title>
+		<title>Doctor - PRIMARIO</title>
 		<h:outputScript library="js" name="villa.js" />
 		<h:outputStylesheet library="css" name="dist.css" />
 		<h:outputStylesheet library="css" name="villa-foundation.css" />
@@ -38,11 +38,15 @@
 
 			<div id="home-holder" class="height-window bg-cover" style="background-image: url('#{resource['img:wall02.jpg']}')">
 
+				<div class="workspace">
+					
+				</div>
+
 				<div class="maia grey-800 font-grey-400">
 
 					<header>
 						<div id="start" class="item">
-							<a href="#">
+							<a href="./principal.jsf">
 								<span class="magma-logo"></span>
 							</a>
 						</div>
@@ -185,19 +189,6 @@
 
 					</ul>
 
-				</div>
-
-				<div class="main">
-					<div class="navbar white">
-						<ui:insert name="navbar-content"></ui:insert>
-					</div>
-					<div id="content" class="item">
-						<ui:insert name="main-content"></ui:insert>
-					</div>
-				</div>
-
-				<div id="bottom">
-					<ui:insert name="bottom"></ui:insert>
 				</div>
 
 				<p:growl id="growl"	showDetail="false" sticky="false" autoUpdate="true" life="2000"></p:growl>
