@@ -246,6 +246,10 @@ body {
 	font-size: 1.5em;
 }
 
+.launcher .item > a .title {
+	display: none;
+}
+
 
 
 
