@@ -8,8 +8,11 @@
    <h:head>
       <title>Doctor</title>
       <h:outputStylesheet library="css" name="dist.css" />
-      <h:outputStylesheet library="css" name="villa.css" />
-      <h:outputStylesheet library="css" name="villa-doctor.css" />
+      <h:outputStylesheet library="css" name="villa-foundation.css" />
+	  <h:outputStylesheet library="css" name="villa-grid.css" />
+	  <h:outputStylesheet library="css" name="polar-font.css" />
+	  <h:outputStylesheet library="css" name="villa.css" />
+      <h:outputStylesheet library="css" name="polar.css" />
       <h:outputScript library="js" name="jquery-ui.min.js" />
       <h:outputScript library="js" name="jquery.datetimepicker.js" />
       <h:outputScript library="js" name="jquery.inputmask.js"/>
@@ -30,17 +33,7 @@
             SAIR
          </h:outputLink>
 
-         <div id="home-holder">
-
-            <div id="locked" class="full unselect ebony-clay font-white hidden">
-               <h1>Tela bloqueada</h1>
-               <p class="lead">Pressione ALT + L para desbloquear</p>
-            </div>
-
-            <div id="loader" class="full unselect ebony-clay font-white hidden">
-               <h1>Loading, wait please</h1>
-               <p class="lead">Pressione ALT + L para desbloquear</p>
-            </div>
+         <div id="home-holder" class="height-window bg-active bg-cover">
 
             <div class="maia white">
 
