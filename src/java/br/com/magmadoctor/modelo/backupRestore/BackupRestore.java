@@ -3,7 +3,6 @@ package br.com.magmadoctor.modelo.backupRestore;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -41,8 +40,8 @@ public class BackupRestore {
         SimpleDateFormat formatData = new SimpleDateFormat("ddMMyyyy-HHmmss");
         Date horario = Calendar.getInstance().getTime();
         String dataAtual = "c:\\clinicaBackup-" + formatData.format(horario) + ".backup";
-        comandos.add(dataAtual);   
-        comandos.add("clinica");
+        comandos.add(dataAtual);
+        comandos.add("MagmaDoctor");
 
         ProcessBuilder pb = new ProcessBuilder(comandos);
 
