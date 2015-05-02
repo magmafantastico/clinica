@@ -128,15 +128,13 @@
 
 							<div class="field">
 								<h:outputLabel for="cmbSexo">Sexo</h:outputLabel>
-								<h:selectOneMenu id="cmbSexo"
-												 value="#{pacienteMB.paciente.sexo}"
-												 class=""
-												 required="true"
-												 requiredMessage="Sexo Obrigatório">
-									<f:selectItem itemLabel="Sexo" itemDisabled="true"/>
+								<h:selectOneRadio id="cmbSexo"
+												  value="#{pacienteMB.paciente.sexo}"
+												  required="true"
+												  requiredMessage="Sexo Obrigatório">
 									<f:selectItem itemValue="Feminino" itemLabel="Feminino"/>
 									<f:selectItem itemValue="Masculino" itemLabel="Masculino"/>
-								</h:selectOneMenu>
+								</h:selectOneRadio>
 							</div>
 
 							<div class="field">
