@@ -940,6 +940,8 @@ function addInputColorItem(ref, color, type) {
 }
 
 $.fn.inputColor = function(input, colorList) {
+
+  console.log('hehe');
   
   for (var i = 0; i < inputColorList.length; i++) {
     addInputColorItem(this, colorList[i], 'span');

@@ -337,6 +337,14 @@ form .field > * {
 	/*width: 100%;*/
 }
 
+select {
+	background: none;
+	border: none;
+	border-bottom: solid 1px #bdbdbd;
+	font-size: .875em;
+	width: 100%;
+}
+
 input {
 	background: none;
 	border: none;

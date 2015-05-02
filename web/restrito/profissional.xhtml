@@ -23,9 +23,9 @@
 
         <ui:define name="main-content">
 
-			<div class="window grey-800" style="max-height: 600px; height: 80%; min-width: 420px">
+		<div class="window" style="max-height: 600px; height: 80%; min-width: 420px">
 
-				<header class="font-grey-400 border-grey-400">
+				<header class="grey-800 font-grey-400 border-grey-400">
 
 					<span class="title">Profissional</span>
 
@@ -35,41 +35,53 @@
 
 							<li class="item">
 								<p:commandLink action="#{profissionalMB.novoEndereco}"
-											   class="link"
 											   oncomplete="$('#modalEndereco').modal('show');"
 											   update=":cmpEndereco:frmAddEndereco">
-									<span class="icon-home icon-label"></span>
-									Adicionar Endereço
+									<span class="title">Adicionar Endereço</span>
+									<span>
+										<span class="function">+</span>
+										<span class="icon-home icon-label"></span>
+									</span>
+
 								</p:commandLink>
 							</li>
 
 							<li class="item">
 								<p:commandLink action="#{profissionalMB.novoContato}"
-											   class="link"
 											   oncomplete="$('#modalContato').modal('show');"
 											   update=":cmpContato:frmAddContato">
-									<span class="icon-phone icon-label"></span>
-									Adicionar Contato
+									<span class="title">Adicionar Contato</span>
+									<span>
+										<span class="function">+</span>
+										<span class="icon-phone icon-label"></span>
+									</span>
+
 								</p:commandLink>
 							</li>
 
 							<li class="item">
 								<p:commandLink action="#{profissionalMB.novoEmail}"
-											   class="link"
 											   oncomplete="$('#modalEmail').modal('show');"
 											   update=":cmpContato:frmAddContato">
-									<span class="icon-at icon-label"></span>
-									Adicionar E-mail
+									<span class="title">Adicionar E-mail</span>
+									<span>
+										<span class="function">+</span>
+										<span class="icon-at icon-label"></span>
+									</span>
+
 								</p:commandLink>
 							</li>
 
 							<li class="item">
 								<p:commandLink action="#{profissionalMB.novoDocumento}"
-											   class="link"
 											   oncomplete="$('#modalDocumento').modal('show');"
 											   update=":cmpDocumento:frmAddDocumento">
-									<span class="icon-file-o icon-label"></span>
-									Adicionar Documentos
+									<span class="title">Adicionar Documentos</span>
+									<span>
+										<span class="function">+</span>
+										<span class="icon-file-o icon-label"></span>
+									</span>
+
 								</p:commandLink>
 							</li>
 
@@ -78,529 +90,513 @@
 					</h:form>
 				</header>
 
+				<div class="content grey-100">
+
+					<!--<div class="flex-1"></div>-->
+
+					<div class="flex-1">
 
 
-				<h:form id="frmCadastro" prependId="false" class="form form-horizontal">
+						<h:form id="frmCadastro" prependId="false" class="form form-horizontal">
 
-					<p:focus/>
+							<p:focus/>
 
-					<h:inputHidden value="#{profissionalMB.profissional.id}"/>
+							<h:inputHidden value="#{profissionalMB.profissional.id}"></h:inputHidden>
 
-					<div class="row">	
-
-						<div class="col-md-6">
-
-							<div class="field-group pw15 ph05">
-								<h:outputLabel class="col-sm-3 label-control">Nome</h:outputLabel>
-								<div class="col-sm-9">
-									<h:inputText id="nome" 
-												 class="field-control"
-												 required="true"
-												 requiredMessage="Nome Obrigatório"
-												 pt:placeholder="Nome Profissional"
-												 onkeyup="this.value = this.value.toUpperCase();"
-												 value="#{profissionalMB.profissional.nome}" >
-									</h:inputText>    
-								</div>
+							<div class="field">
+								<h:outputLabel>Nome</h:outputLabel>
+								<h:inputText id="nome"
+											 class="font-large"
+											 required="true"
+											 requiredMessage="Nome Obrigatório"
+											 pt:placeholder="Nome Profissional"
+											 onkeyup="this.value = this.value.toUpperCase();"
+											 value="#{profissionalMB.profissional.nome}" >
+								</h:inputText>    
 							</div>
 
-							<div class="field-group pw15 ph05">
-								<h:outputLabel class="col-sm-3 label-control">CPF</h:outputLabel>
-								<div class="col-sm-9">
-									<h:inputText id="cpf" 
-												 class="field-control"
-												 required="true"
-												 requiredMessage="CPF Obrigatório"
-												 pt:placeholder="CPF"
-												 value="#{profissionalMB.profissional.cpf}" >
-										<f:converter converterId="cpfConverter"/>
-										<f:validator validatorId="cpfValidator"/>
-									</h:inputText>
-								</div>
+							<div class="field">
+								<h:outputLabel>CPF</h:outputLabel>
+								<h:inputText id="cpf"
+											 class=""
+											 required="true"
+											 requiredMessage="CPF Obrigatório"
+											 pt:placeholder="CPF"
+											 value="#{profissionalMB.profissional.cpf}" >
+									<f:converter converterId="cpfConverter"></f:converter>
+									<f:validator validatorId="cpfValidator"></f:validator>
+								</h:inputText>
 							</div>
 
-							<div class="field-group pw15 ph05">
-								<h:outputLabel class="col-sm-3 label-control">Sexo</h:outputLabel>
-								<div class="col-sm-9">
-									<h:selectOneMenu value="#{profissionalMB.profissional.sexo}"
-													 class="field-control"
-													 pt:placeholder="Sexo">
-										<f:selectItem itemLabel="Sexo" itemDisabled="true"></f:selectItem>
-										<f:selectItem itemValue="FEMININO" itemLabel="Feminino"></f:selectItem>
-										<f:selectItem itemValue="MASCULINO" itemLabel="Masculino"></f:selectItem>
-									</h:selectOneMenu>	
-								</div>
+							<div class="field">
+								<h:outputLabel>Sexo</h:outputLabel>
+								<h:selectOneMenu value="#{profissionalMB.profissional.sexo}"
+												 class=""
+												 pt:placeholder="Sexo">
+									<f:selectItem itemLabel="Sexo" itemDisabled="true"></f:selectItem>
+									<f:selectItem itemValue="FEMININO" itemLabel="Feminino"></f:selectItem>
+									<f:selectItem itemValue="MASCULINO" itemLabel="Masculino"></f:selectItem>
+								</h:selectOneMenu>	
 							</div>
 
-							<div class="field-group pw15 ph05">
-								<h:outputLabel class="col-sm-3 label-control">Nascimento</h:outputLabel>
-								<div class="col-sm-9">
-									<h:inputText id="dataNascimento" 
-												 class="field-control"
-												 value="#{profissionalMB.profissional.dataNascimento}" 
-												 pt:placeholder="Data de Nascimento">
-										<f:converter converterId="dataConverter"/>
-									</h:inputText>
-								</div>
-							</div>                       
-
-							<div class="field-group pw15 ph05">
-								<h:outputLabel class="col-sm-3 label-control">Especialidades</h:outputLabel>
-								<div class="col-sm-9">
-									<h:panelGroup id="especialidadesEscolhidas">
-										<h:selectOneMenu id="especialidade" 
-														 class="field-control"
-														 required="true"
-														 requiredMessage="Especialidade Obrigatória"
-														 label="Especialidade"  
-														 value="#{profissionalMB.especialidade.id}"
-														 valueChangeListener="#{profissionalMB.adicionaEspecialidade}">
-											<f:selectItem itemLabel="ESPECIALIDADE" itemValue="0"/>
-											<f:selectItems value="#{especialidadeMB.listaTodos}" 
-														   var="c"  
-														   itemLabel="#{c.nome}"
-														   itemValue="#{c.id}"/>
-											<f:ajax event="change" render="especialidadesEscolhidas"/>
-										</h:selectOneMenu> 
-										<h:dataTable id="tblc"
-													 var="c" 
-													 class="table"
-													 value="#{profissionalMB.especialidades}"
-													 rendered="#{!empty profissionalMB.especialidades}">  
-											<h:inputHidden value="#{profissionalMB.especialidade.id}"/>
-											<p:column>
-												<h:outputText value="#{c.nome}"/>
-											</p:column>
-											<p:column>
-												<h:commandLink title="Excluir" action="#{profissionalMB.removeEspecialidade}">
-													<f:ajax execute="@this" render=":frmCadastro:especialidadesEscolhidas"/>
-													<center>
-														<span class="icon-minus-square"></span>
-													</center>
-													<f:setPropertyActionListener target="#{profissionalMB.especialidade}" value="#{c}"/>
-												</h:commandLink>
-											</p:column>
-										</h:dataTable> 
-									</h:panelGroup>
-								</div>
+							<div class="field">
+								<h:outputLabel>Nascimento</h:outputLabel>
+								<h:inputText id="dataNascimento"
+											 class=""
+											 value="#{profissionalMB.profissional.dataNascimento}" 
+											 pt:placeholder="Data de Nascimento">
+									<f:converter converterId="dataConverter"/>
+								</h:inputText>
 							</div>
-							<div class="field-group pw15 ph05">
-								<h:outputLabel class="col-sm-3 label-control">Cor</h:outputLabel>
-								<div class="col-sm-9">
-									<div class="field-control input-color-container">
-										<h:inputText id="cor" 
-													 class="input-color-text hidden"
+
+							<div class="field">
+								<h:outputLabel>Especialidades</h:outputLabel>
+								<h:panelGroup id="especialidadesEscolhidas">
+									<h:selectOneMenu id="especialidade" 
+													 class=""
 													 required="true"
-													 requiredMessage="Selecione uma cor"
-													 value="#{profissionalMB.profissional.color}">
-										</h:inputText>
-										<div class="input-color"></div>
-									</div>
-								</div>
+													 requiredMessage="Especialidade Obrigatória"
+													 label="Especialidade"  
+													 value="#{profissionalMB.especialidade.id}"
+													 valueChangeListener="#{profissionalMB.adicionaEspecialidade}">
+										<f:selectItem itemLabel="ESPECIALIDADE" itemValue="0"/>
+										<f:selectItems value="#{especialidadeMB.listaTodos}" 
+													   var="c"  
+													   itemLabel="#{c.nome}"
+													   itemValue="#{c.id}"/>
+										<f:ajax event="change" render="especialidadesEscolhidas"/>
+									</h:selectOneMenu> 
+									<h:dataTable id="tblc"
+												 var="c" 
+												 class="table"
+												 value="#{profissionalMB.especialidades}"
+												 rendered="#{!empty profissionalMB.especialidades}">  
+										<h:inputHidden value="#{profissionalMB.especialidade.id}"/>
+										<p:column>
+											<h:outputText value="#{c.nome}"/>
+										</p:column>
+										<p:column>
+											<h:commandLink title="Excluir" action="#{profissionalMB.removeEspecialidade}">
+												<f:ajax execute="@this" render=":frmCadastro:especialidadesEscolhidas"/>
+												<center>
+													<span class="icon-minus-square"></span>
+												</center>
+												<f:setPropertyActionListener target="#{profissionalMB.especialidade}" value="#{c}"/>
+											</h:commandLink>
+										</p:column>
+									</h:dataTable> 
+								</h:panelGroup>
 							</div>
-
-						</div>
-
-						<div class="col-md-6">
-
-							<div class="field-group pw15 ph05">
-								<h:outputLabel class="col-sm-3 label-control">Data Cadastro</h:outputLabel>
-								<div class="col-sm-9">
-									<h:inputText id="dataCadastro"
-												 class="field-control"
-												 value="#{profissionalMB.profissional.dataCadastro}" 
-												 pt:placeholder="Data de Cadastro">
-										<f:converter converterId="dataConverter"></f:converter>
-									</h:inputText>
-								</div>
-							</div>
-
-							<div class="field-group pw15 ph05">
-								<h:outputLabel class="col-sm-3 label-control">CNS</h:outputLabel>
-								<div class="col-sm-9">
-									<h:inputText id="cns" 
-												 class="field-control"
-												 pt:placeholder="CNS"
-												 value="#{profissionalMB.profissional.cns}" >
-									</h:inputText>
-								</div>
-							</div>
-
-							<div class="field-group pw15 ph05">
-								<h:outputLabel class="col-sm-3 label-control">Conselho</h:outputLabel>
-								<div class="col-sm-9">
-									<h:selectOneMenu value="#{profissionalMB.profissional.conselho}"
-													 class="field-control">
-										<f:selectItem itemLabel="CONSELHO" itemValue=""/>
-										<f:selectItem itemValue="CRAS" itemLabel="CRAS - Conselho Regional de Assistência Social"/>
-										<f:selectItem itemValue="COREN" itemLabel="COREN - Conselho Regional de Enfermagem"/>	
-										<f:selectItem itemValue="CRF" itemLabel="CRF - Conselho Regional de Farmácia"/>	
-										<f:selectItem itemValue="CRFA" itemLabel="CRFA - Conselho Regional de Fonoaudiologia"/>
-										<f:selectItem itemValue="CREFITO" itemLabel="CREFITO - Conselho Regional de Fisioterapia e Terapia Ocupacional"/>
-										<f:selectItem itemValue="CRM" itemLabel="CRM - Conselho Regional de Medicina"/>
-										<f:selectItem itemValue="CRN" itemLabel="CRN - Conselho Regional de Nutrição"/>
-										<f:selectItem itemValue="CRP" itemLabel="CRP - Conselho Regional de Psicologia"/>
-										<f:selectItem itemValue="OUT" itemLabel="OUT - Outros Conselhos"/>
-										<f:selectItem itemValue="CRFA" itemLabel="CRO - Conselho Regional de Odontologia"/>
-										<f:selectItem itemValue="CRFA" itemLabel="ABPp - Associação Brasileira de Psicopedagocia"/>
-									</h:selectOneMenu>
-								</div>
-							</div>
-
-							<div class="field-group pw15 ph05">
-								<h:outputLabel class="col-sm-3 label-control">Nº Registro</h:outputLabel>
-								<div class="col-sm-9">
-									<h:inputText id="registro" 
-												 class="field-control"
+							<div class="field">
+								<h:outputLabel>Cor</h:outputLabel>
+								<div class=" input-color-container">
+									<h:inputText id="cor" 
+												 class="input-color-text hidden"
 												 required="true"
-												 requiredMessage="Nº de Registro Obrigatório"
-												 onkeyup="this.value = this.value.toUpperCase();"
-												 pt:placeholder="Registro"
-												 value="#{profissionalMB.profissional.registro}" >
+												 requiredMessage="Selecione uma cor"
+												 value="#{profissionalMB.profissional.color}">
 									</h:inputText>
-								</div>
-							</div>
-
-							<div class="field-group pw15 ph05">
-								<h:outputLabel class="col-sm-3 label-control">UF Registro</h:outputLabel>
-								<div class="col-sm-9">
-									<h:selectOneMenu id="estados" 
-													 class="field-control"
-													 value="#{profissionalMB.profissional.estadoRegistroCRM}">
-										<f:selectItem itemLabel="Selecione o estado" itemValue="0"/>
-										<f:selectItems value="#{estadoMunicipioMB.listaEstados}" 
-													   var="e" 
-													   itemValue="#{e.id}"
-													   itemLabel="#{e.sigla} - #{e.nome}"/>
-									</h:selectOneMenu>  
+									<div class="input-color"></div>
 								</div>
 							</div>
 
 
-						</div>
 
-					</div>
+							<div class="field">
+								<h:outputLabel>Data Cadastro</h:outputLabel>
+								<h:inputText id="dataCadastro"
+											 class=""
+											 value="#{profissionalMB.profissional.dataCadastro}" 
+											 pt:placeholder="Data de Cadastro">
+									<f:converter converterId="dataConverter"></f:converter>
+								</h:inputText>
+							</div>
 
-					<div class="row">
-						<!--    ////////////////////////////// LISTAGEM DOS CONTATOS TELEFONICOS  //////////////////////////   -->
-						<div class="col-sm-3">
-							<h:panelGrid id="pnlContatos">
-								<h:dataTable id="tblContatos"
-											 class="table table-bordered table-striped table-hover"
-											 var="contato" 
-											 value="#{profissionalMB.contatos}"
-											 rendered="#{!empty profissionalMB.contatos}">  
-									<h:inputHidden value="#{contato.id}"/>
-									<f:facet name="header">
-										CONTATOS TELEFÔNICOS
-									</f:facet>
-									<h:column>
-										<h:outputText value="#{contato.tipo}"/>
-									</h:column>
-									<h:column>
-										<h:outputText value="(#{contato.codArea}) #{contato.numero}"/>
-									</h:column>
-									<h:column>
-										<p:commandLink oncomplete="$('#modalContato').modal('show');"
-													   update=":cmpContato:frmAddContato" 
-													   title="Editar"
-													   immediate="true">
-											<span class="icon-edit"></span>
-											<f:setPropertyActionListener target="#{profissionalMB.contato}" value="#{contato}"/>
-										</p:commandLink>
-									</h:column>
-									<h:column>
-										<h:commandLink title="Excluir"
-													   action="#{profissionalMB.removeContato}">
-											<f:ajax execute="@this" render=":frmCadastro:pnlContatos"/>
-											<span class="icon-minus-square"></span>
-											<f:setPropertyActionListener target="#{profissionalMB.contato}" value="#{contato}"/>
-										</h:commandLink>
-									</h:column>
-								</h:dataTable>
-							</h:panelGrid>
-						</div>
-						<!--    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   -->
-						<!--    /////////////////////////////////// LISTAGEM DOS ENDERECOS ADICIONADOS //////////////////////////   -->
-						<div class="col-sm-3">
-							<h:panelGrid id="pnlEnderecos">
-								<h:dataTable id="tblEnderecos"
-											 class="table table-bordered table-striped table-hover"
-											 var="endereco" 
-											 value="#{profissionalMB.enderecos}"
-											 rendered="#{!empty profissionalMB.enderecos}"> 
-									<h:inputHidden value="#{endereco.id}"/>
-									<f:facet name="header">
-										ENDEREÇOS 
-									</f:facet>
-									<h:column>
-										<h:outputText value="#{endereco.tipoEndereco}"/>
-									</h:column>
-									<h:column>
-										<h:outputText value="#{endereco.logradouro}, Nº #{endereco.numero} "/>
-									</h:column>
-									<h:column>
-										<p:commandLink id="btnEditarEndereco" 
-													   oncomplete="$('#modalEndereco').modal('show');"
-													   update=":cmpEndereco:frmAddEndereco"  
-													   title="Editar"
-													   immediate="true">
-											<span class="icon-edit"></span>
-											<f:setPropertyActionListener target="#{profissionalMB.endereco}" value="#{endereco}"/>
-										</p:commandLink>
-									</h:column>
-									<h:column>
-										<h:commandLink title="Excluir" 
-													   action="#{profissionalMB.removeEndereco}">
-											<f:ajax execute="@this" render=":frmCadastro:pnlEnderecos"/>
-											<span class="icon-minus-square"></span>
-											<f:setPropertyActionListener target="#{profissionalMB.endereco}" value="#{endereco}"/>
-										</h:commandLink>
-									</h:column>
-								</h:dataTable>
-							</h:panelGrid>
-						</div>
-						<!--    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   -->
-						<!--    ////////////////////////////// LISTAGEM DOS EMAILS ADICIONADOS //////////////////////////   -->
-						<div class="col-sm-3">
-							<h:panelGrid id="pnlEmails">
-								<h:dataTable id="tblEmails"
-											 class="table table-bordered table-striped table-hover"
-											 var="email" 
-											 value="#{profissionalMB.emails}"
-											 rendered="#{!empty profissionalMB.emails}">  
-									<h:inputHidden value="#{email.id}"/>
-									<f:facet name="header">
-										EMAILS 
-									</f:facet>
-									<h:column>
-										<h:outputText value="#{email.tipo}"/>
-									</h:column>
-									<h:column>
-										<h:outputText value="#{email.email}"/>
-									</h:column>
-									<h:column>
-										<p:commandLink id="btnEditarEmail" 
-													   oncomplete="$('#modalEmail').modal('show');"
-													   update=":cmpEmail:frmAddEmail"  
-													   title="Editar"
-													   immediate="true">
-											<span class="icon-edit"></span>
-											<f:setPropertyActionListener target="#{profissionalMB.email}" value="#{email}" />
-										</p:commandLink>
-									</h:column>
-									<h:column>
-										<h:commandLink title="Excluir" 
-													   action="#{profissionalMB.removeEmail}">
-											<f:ajax execute="@this" render=":frmCadastro:pnlEmails"/>
-											<span class="icon-minus-square"></span>
-											<f:setPropertyActionListener target="#{profissionalMB.email}" value="#{email}"/>
-										</h:commandLink>
-									</h:column>
-								</h:dataTable>
-							</h:panelGrid>
-						</div>
-						<!--    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   -->
-						<!--    ////////////////////////////// LISTAGEM DOS DOCUMENTOS ADICIONADOS ////////////////////////   -->
-						<div class="col-sm-3">
-							<h:panelGrid id="pnlDocumentos">
-								<h:dataTable id="tblDocumentos"
-											 class="table table-bordered table-striped table-hover"
-											 var="documento" 
-											 value="#{profissionalMB.documentos}"
-											 rendered="#{!empty profissionalMB.documentos}">  
-									<h:inputHidden value="#{documento.id}"/>
-									<f:facet name="header">
-										DOCUMENTOS 
-									</f:facet>
-									<h:column>
-										<h:outputText value="#{documento.rg}"/>
-									</h:column>
-									<h:column>
-										<p:commandLink id="btnEditarDocumento"
-													   oncomplete="$('#modalDocumento').modal('show');"
-													   update=":cmpDocumento:frmAddDocumento"  
-													   title="Editar"
-													   immediate="true">Prime
-											<span class="icon-cancel-circled"></span>
-											<f:setPropertyActionListener target="#{profissionalMB.documento}" value="#{documento}" />
-										</p:commandLink>
-									</h:column>
-									<!--                            <h:column>
-																	<h:commandLink title="Excluir" 
-																				   action="# {profissionalMB.removeDocumento}">
-																		<f:ajax execute="@this" render=":frmCadastro:pnlDocumentos"/>
-																		<h:graphicImage library="imagens" name="remove.png" width="16" height="16"/>
-																		<f:setPropertyActionListener target="# {profissionalMB.documento}" value="# {documento}"/>
-																	</h:commandLink>
-																</h:column>-->
-								</h:dataTable>
-							</h:panelGrid>
-						</div>
-						<!--    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   -->
-					</div>
+							<div class="field">
+								<h:outputLabel>CNS</h:outputLabel>
+								<h:inputText id="cns"
+											 class=""
+											 pt:placeholder="CNS"
+											 value="#{profissionalMB.profissional.cns}" >
+								</h:inputText>
+							</div>
 
-					<div class="row pw30 ph10">
+							<div class="field">
+								<!--
+									TODO - Problema com tamanho da linha na opção CREFITO
+									Era "CREFITO - Conselho Regional de Fisioterapia e Terapia Ocupaciona"
+								-->
+								<h:outputLabel>Conselho</h:outputLabel>
+								<h:selectOneMenu value="#{profissionalMB.profissional.conselho}"
+												 class="">
+									<f:selectItem itemLabel="CONSELHO" itemValue=""/>
+									<f:selectItem itemValue="CRAS" itemLabel="CRAS - Conselho Regional de Assistência Social"/>
+									<f:selectItem itemValue="COREN" itemLabel="COREN - Conselho Regional de Enfermagem"/>	
+									<f:selectItem itemValue="CRF" itemLabel="CRF - Conselho Regional de Farmácia"/>	
+									<f:selectItem itemValue="CRFA" itemLabel="CRFA - Conselho Regional de Fonoaudiologia"/>
+									<f:selectItem itemValue="CREFITO" itemLabel="CREFITO - Conselho Regional de Fisioterapia e ..."/>
+									<f:selectItem itemValue="CRM" itemLabel="CRM - Conselho Regional de Medicina"/>
+									<f:selectItem itemValue="CRN" itemLabel="CRN - Conselho Regional de Nutrição"/>
+									<f:selectItem itemValue="CRP" itemLabel="CRP - Conselho Regional de Psicologia"/>
+									<f:selectItem itemValue="OUT" itemLabel="OUT - Outros Conselhos"/>
+									<f:selectItem itemValue="CRFA" itemLabel="CRO - Conselho Regional de Odontologia"/>
+									<f:selectItem itemValue="CRFA" itemLabel="ABPp - Associação Brasileira de Psicopedagocia"/>
+								</h:selectOneMenu>
+							</div>
 
-						<h:commandLink class="btn btn-link-o" 
-									   action="#{profissionalMB.novo}" 
-									   immediate="true">
-							<span class="icon-plus"></span> Novo Profissional
-						</h:commandLink>
+							<div class="field">
+								<h:outputLabel>Nº Registro</h:outputLabel>
+								<h:inputText id="registro"
+											 class=""
+											 required="true"
+											 requiredMessage="Nº de Registro Obrigatório"
+											 onkeyup="this.value = this.value.toUpperCase();"
+											 pt:placeholder="Registro"
+											 value="#{profissionalMB.profissional.registro}" >
+								</h:inputText>
+							</div>
 
-						<h:commandLink class="btn btn-primary pull-right" value="Salvar / Alterar" action="#{profissionalMB.inserir}"></h:commandLink>
+							<div class="field">
+								<h:outputLabel>UF Registro</h:outputLabel>
+								<h:selectOneMenu id="estados"
+												 class=""
+												 value="#{profissionalMB.profissional.estadoRegistroCRM}">
+									<f:selectItem itemLabel="Selecione o estado" itemValue="0"/>
+									<f:selectItems value="#{estadoMunicipioMB.listaEstados}" 
+												   var="e" 
+												   itemValue="#{e.id}"
+												   itemLabel="#{e.sigla} - #{e.nome}"/>
+								</h:selectOneMenu>  
+							</div>
 
-					</div>
 
-					<!--                    <h:commandLink 
-											class="btn btn-default"
-											value="Excluir" 
-											immediate="true"
-											action="# {profissionalMB.excluir}">
-										</h:commandLink>-->
-				</h:form>
 
-				<composite:contato id="cmpContato"
-								   codigo="#{profissionalMB.contato.id}"
-								   tipo="#{profissionalMB.contato.tipo}"
-								   codArea="#{profissionalMB.contato.codArea}"
-								   numero="#{profissionalMB.contato.numero}"
-								   observacao="#{profissionalMB.contato.observacao}"
-								   botaoAddText="Adicionar"
-								   botaoAddAction="#{profissionalMB.addContato}">
-				</composite:contato>
 
-				<composite:endereco id="cmpEndereco"
-									codigo="#{profissionalMB.endereco.id}"
-									tipoEndereco="#{profissionalMB.endereco.tipoEndereco}" 
-									tipoLogradouro="#{profissionalMB.endereco.tipoLogradouro}"
-									logradouro="#{profissionalMB.endereco.logradouro}"
-									numero="#{profissionalMB.endereco.numero}" 
-									bairro="#{profissionalMB.endereco.bairro}"
-									cep="#{profissionalMB.endereco.cep}"
-									estado="#{profissionalMB.endereco.estado}"
-									municipio="#{profissionalMB.endereco.municipio}"
-									botaoAddText="Adicionar"
-									botaoAddAction="#{profissionalMB.addEndereco}">
-				</composite:endereco>  
-
-				<composite:documento id="cmpDocumento"
-									 codigo="#{profissionalMB.documento.id}"
-									 registroGeral="#{profissionalMB.documento.rg}"
-									 botaoAddText="Adicionar"
-									 botaoAddAction="#{profissionalMB.addDocumento}">
-				</composite:documento>
-
-				<composite:email id="cmpEmail"
-								 codigo="#{profissionalMB.email.id}"
-								 tipo="#{profissionalMB.email.tipo}"
-								 email="#{profissionalMB.email.email}"
-								 botaoAddText="Adicionar"
-								 botaoAddAction="#{profissionalMB.addEmail}">
-				</composite:email>
-
-				<div class="modal fade" id="modalPesquisar" tabindex="-1" role="dialog" aria-labelledby="modalPesquisarLabel" aria-hidden="true">
-
-					<div class="modal-dialog modal-lg">
-
-						<div class="modal-content">
-
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal">
-									<span aria-hidden="true">&times;</span>
-									<span class="sr-only">Fechar</span>
-								</button>
-								<h4 class="modal-title" id="modalPesquisarLabel">Pesquisar Profissionais</h4>
-							</div><!-- /.modal-header -->
-
-							<div class="modal-body">
-
-								<h:form id="frmNomePesquisa">
-									<p:focus context="frmNomePesquisa"></p:focus>
-									<h:inputText id="nome" 
-												 onkeyup="this.value = this.value.toUpperCase();"
-												 value="#{profissionalMB.profissional.nome}"
-												 styleClass="field-control"
-												 pt:placeholder="Nome do Profissional">
-										<f:ajax event="keyup" render=":frmListagem" />          
-									</h:inputText>
-								</h:form>
-
-								<h:form id="frmListagem">
-									<div class="table-responsive">
-										<h:dataTable id="tblProfissionais"
+							<div class="row">
+								<!--    ////////////////////////////// LISTAGEM DOS CONTATOS TELEFONICOS  //////////////////////////   -->
+								<div class="col-sm-3">
+									<h:panelGrid id="pnlContatos">
+										<h:dataTable id="tblContatos"
 													 class="table table-bordered table-striped table-hover"
-													 styleClass="table"
-													 var="c" 
-													 value="#{profissionalMB.listarPorNome}"
-													 rendered="#{!empty profissionalMB.listarPorNome}">  >  
-											<h:inputHidden value="#{c.id}"/>
+													 var="contato" 
+													 value="#{profissionalMB.contatos}"
+													 rendered="#{!empty profissionalMB.contatos}">  
+											<h:inputHidden value="#{contato.id}"/>
+											<f:facet name="header">
+												CONTATOS TELEFÔNICOS
+											</f:facet>
 											<h:column>
-												<f:facet name="header">
-													<h:outputText value="Profissional"></h:outputText>
-												</f:facet>
-												<h:outputText value="#{c.nome}"/>
+												<h:outputText value="#{contato.tipo}"/>
 											</h:column>
 											<h:column>
-												<f:facet name="header">
-													<h:outputText value="CPF"></h:outputText>
-												</f:facet>
-												<h:outputText value="#{c.cpf}">
-													<f:converter  converterId="cpfConverter"/>
-												</h:outputText>
+												<h:outputText value="(#{contato.codArea}) #{contato.numero}"/>
 											</h:column>
 											<h:column>
-												<f:facet name="header">
-													<h:outputText value="CRM"></h:outputText>
-												</f:facet>
-												<h:outputText value="#{c.conselho}"/>
+												<p:commandLink oncomplete="$('#modalContato').modal('show');"
+															   update=":cmpContato:frmAddContato" 
+															   title="Editar"
+															   immediate="true">
+													<span class="icon-edit"></span>
+													<f:setPropertyActionListener target="#{profissionalMB.contato}" value="#{contato}"/>
+												</p:commandLink>
 											</h:column>
 											<h:column>
-												<f:facet name="header">
-													<h:outputText value="Especialidades"></h:outputText>
-												</f:facet>
-												<h:outputText value="#{c.especialidades}">
-													<f:converter converterId="especialidadeConverter"/>
-												</h:outputText>
-											</h:column>
-											<h:column>
-												<f:facet name="header">
-													<h:outputText value="Nº CRM"></h:outputText>
-												</f:facet>
-												<h:outputText value="#{c.registro}"/>
-											</h:column>
-											<h:column>
-												<f:facet name="header">
-													<h:outputText value="EDITAR"></h:outputText>
-												</f:facet>
-												<h:commandLink title="Editar" action="#{profissionalMB.editar}">
-													<center>
-														<span class="icon-edit"></span>
-													</center>
-													<f:setPropertyActionListener target="#{profissionalMB.profissional}" value="#{c}" />
+												<h:commandLink title="Excluir"
+															   action="#{profissionalMB.removeContato}">
+													<f:ajax execute="@this" render=":frmCadastro:pnlContatos"/>
+													<span class="icon-minus-square"></span>
+													<f:setPropertyActionListener target="#{profissionalMB.contato}" value="#{contato}"/>
 												</h:commandLink>
 											</h:column>
+										</h:dataTable>
+									</h:panelGrid>
+								</div>
+								<!--    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   -->
+								<!--    /////////////////////////////////// LISTAGEM DOS ENDERECOS ADICIONADOS //////////////////////////   -->
+								<div class="col-sm-3">
+									<h:panelGrid id="pnlEnderecos">
+										<h:dataTable id="tblEnderecos"
+													 class="table table-bordered table-striped table-hover"
+													 var="endereco" 
+													 value="#{profissionalMB.enderecos}"
+													 rendered="#{!empty profissionalMB.enderecos}"> 
+											<h:inputHidden value="#{endereco.id}"/>
+											<f:facet name="header">
+												ENDEREÇOS 
+											</f:facet>
+											<h:column>
+												<h:outputText value="#{endereco.tipoEndereco}"/>
+											</h:column>
+											<h:column>
+												<h:outputText value="#{endereco.logradouro}, Nº #{endereco.numero} "/>
+											</h:column>
+											<h:column>
+												<p:commandLink id="btnEditarEndereco" 
+															   oncomplete="$('#modalEndereco').modal('show');"
+															   update=":cmpEndereco:frmAddEndereco"  
+															   title="Editar"
+															   immediate="true">
+													<span class="icon-edit"></span>
+													<f:setPropertyActionListener target="#{profissionalMB.endereco}" value="#{endereco}"/>
+												</p:commandLink>
+											</h:column>
+											<h:column>
+												<h:commandLink title="Excluir" 
+															   action="#{profissionalMB.removeEndereco}">
+													<f:ajax execute="@this" render=":frmCadastro:pnlEnderecos"/>
+													<span class="icon-minus-square"></span>
+													<f:setPropertyActionListener target="#{profissionalMB.endereco}" value="#{endereco}"/>
+												</h:commandLink>
+											</h:column>
+										</h:dataTable>
+									</h:panelGrid>
+								</div>
+								<!--    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   -->
+								<!--    ////////////////////////////// LISTAGEM DOS EMAILS ADICIONADOS //////////////////////////   -->
+								<div class="col-sm-3">
+									<h:panelGrid id="pnlEmails">
+										<h:dataTable id="tblEmails"
+													 class="table table-bordered table-striped table-hover"
+													 var="email" 
+													 value="#{profissionalMB.emails}"
+													 rendered="#{!empty profissionalMB.emails}">  
+											<h:inputHidden value="#{email.id}"/>
+											<f:facet name="header">
+												EMAILS 
+											</f:facet>
+											<h:column>
+												<h:outputText value="#{email.tipo}"/>
+											</h:column>
+											<h:column>
+												<h:outputText value="#{email.email}"/>
+											</h:column>
+											<h:column>
+												<p:commandLink id="btnEditarEmail" 
+															   oncomplete="$('#modalEmail').modal('show');"
+															   update=":cmpEmail:frmAddEmail"  
+															   title="Editar"
+															   immediate="true">
+													<span class="icon-edit"></span>
+													<f:setPropertyActionListener target="#{profissionalMB.email}" value="#{email}" />
+												</p:commandLink>
+											</h:column>
+											<h:column>
+												<h:commandLink title="Excluir" 
+															   action="#{profissionalMB.removeEmail}">
+													<f:ajax execute="@this" render=":frmCadastro:pnlEmails"/>
+													<span class="icon-minus-square"></span>
+													<f:setPropertyActionListener target="#{profissionalMB.email}" value="#{email}"/>
+												</h:commandLink>
+											</h:column>
+										</h:dataTable>
+									</h:panelGrid>
+								</div>
+								<!--    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   -->
+								<!--    ////////////////////////////// LISTAGEM DOS DOCUMENTOS ADICIONADOS ////////////////////////   -->
+								<div class="col-sm-3">
+									<h:panelGrid id="pnlDocumentos">
+										<h:dataTable id="tblDocumentos"
+													 class="table table-bordered table-striped table-hover"
+													 var="documento" 
+													 value="#{profissionalMB.documentos}"
+													 rendered="#{!empty profissionalMB.documentos}">  
+											<h:inputHidden value="#{documento.id}"/>
+											<f:facet name="header">
+												DOCUMENTOS 
+											</f:facet>
+											<h:column>
+												<h:outputText value="#{documento.rg}"/>
+											</h:column>
+											<h:column>
+												<p:commandLink id="btnEditarDocumento"
+															   oncomplete="$('#modalDocumento').modal('show');"
+															   update=":cmpDocumento:frmAddDocumento"  
+															   title="Editar"
+															   immediate="true">Prime
+													<span class="icon-cancel-circled"></span>
+													<f:setPropertyActionListener target="#{profissionalMB.documento}" value="#{documento}" />
+												</p:commandLink>
+											</h:column>
+											<!--                            <h:column>
+																			<h:commandLink title="Excluir" 
+																						   action="# {profissionalMB.removeDocumento}">
+																				<f:ajax execute="@this" render=":frmCadastro:pnlDocumentos"/>
+																				<h:graphicImage library="imagens" name="remove.png" width="16" height="16"/>
+																				<f:setPropertyActionListener target="# {profissionalMB.documento}" value="# {documento}"/>
+																			</h:commandLink>
+																		</h:column>-->
+										</h:dataTable>
+									</h:panelGrid>
+								</div>
+								<!--    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   -->
+							</div>
 
-										</h:dataTable> 
-									</div>
-								</h:form>
+							<div class="row pw30 ph10">
 
-							</div><!-- /.modal-body -->
+								<h:commandLink class="btn btn-link-o" 
+											   action="#{profissionalMB.novo}" 
+											   immediate="true">
+									<span class="icon-plus"></span> Novo Profissional
+								</h:commandLink>
 
-							<div class="modal-footer">
-								<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-							</div><!-- /.modal-footer -->
+								<h:commandLink class="btn btn-primary pull-right" value="Salvar / Alterar" action="#{profissionalMB.inserir}"></h:commandLink>
 
-						</div><!-- /.modal-content -->
+							</div>
 
-					</div><!-- /.modal-dialog -->
+							<!--                    <h:commandLink 
+													class="btn btn-default"
+													value="Excluir" 
+													immediate="true"
+													action="# {profissionalMB.excluir}">
+												</h:commandLink>-->
+						</h:form>
 
-				</div><!-- /.modal -->
+						<composite:contato id="cmpContato"
+										   codigo="#{profissionalMB.contato.id}"
+										   tipo="#{profissionalMB.contato.tipo}"
+										   codArea="#{profissionalMB.contato.codArea}"
+										   numero="#{profissionalMB.contato.numero}"
+										   observacao="#{profissionalMB.contato.observacao}"
+										   botaoAddText="Adicionar"
+										   botaoAddAction="#{profissionalMB.addContato}">
+						</composite:contato>
 
-				<script>
-					$('.input-color').inputColor('#cor', inputColorList);
-				</script>
+						<composite:endereco id="cmpEndereco"
+											codigo="#{profissionalMB.endereco.id}"
+											tipoEndereco="#{profissionalMB.endereco.tipoEndereco}" 
+											tipoLogradouro="#{profissionalMB.endereco.tipoLogradouro}"
+											logradouro="#{profissionalMB.endereco.logradouro}"
+											numero="#{profissionalMB.endereco.numero}" 
+											bairro="#{profissionalMB.endereco.bairro}"
+											cep="#{profissionalMB.endereco.cep}"
+											estado="#{profissionalMB.endereco.estado}"
+											municipio="#{profissionalMB.endereco.municipio}"
+											botaoAddText="Adicionar"
+											botaoAddAction="#{profissionalMB.addEndereco}">
+						</composite:endereco>  
+
+						<composite:documento id="cmpDocumento"
+											 codigo="#{profissionalMB.documento.id}"
+											 registroGeral="#{profissionalMB.documento.rg}"
+											 botaoAddText="Adicionar"
+											 botaoAddAction="#{profissionalMB.addDocumento}">
+						</composite:documento>
+
+						<composite:email id="cmpEmail"
+										 codigo="#{profissionalMB.email.id}"
+										 tipo="#{profissionalMB.email.tipo}"
+										 email="#{profissionalMB.email.email}"
+										 botaoAddText="Adicionar"
+										 botaoAddAction="#{profissionalMB.addEmail}">
+						</composite:email>
+
+						<div class="modal fade" id="modalPesquisar" tabindex="-1" role="dialog" aria-labelledby="modalPesquisarLabel" aria-hidden="true">
+
+							<div class="modal-dialog modal-lg">
+
+								<div class="modal-content">
+
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal">
+											<span aria-hidden="true">&times;</span>
+											<span class="sr-only">Fechar</span>
+										</button>
+										<h4 class="modal-title" id="modalPesquisarLabel">Pesquisar Profissionais</h4>
+									</div><!-- /.modal-header -->
+
+									<div class="modal-body">
+
+										<h:form id="frmNomePesquisa">
+											<p:focus context="frmNomePesquisa"></p:focus>
+											<h:inputText id="nome" 
+														 onkeyup="this.value = this.value.toUpperCase();"
+														 value="#{profissionalMB.profissional.nome}"
+														 styleClass=""
+														 pt:placeholder="Nome do Profissional">
+												<f:ajax event="keyup" render=":frmListagem" />          
+											</h:inputText>
+										</h:form>
+
+										<h:form id="frmListagem">
+											<div class="table-responsive">
+												<h:dataTable id="tblProfissionais"
+															 class="table table-bordered table-striped table-hover"
+															 styleClass="table"
+															 var="c" 
+															 value="#{profissionalMB.listarPorNome}"
+															 rendered="#{!empty profissionalMB.listarPorNome}">  >  
+													<h:inputHidden value="#{c.id}"/>
+													<h:column>
+														<f:facet name="header">
+															<h:outputText value="Profissional"></h:outputText>
+														</f:facet>
+														<h:outputText value="#{c.nome}"/>
+													</h:column>
+													<h:column>
+														<f:facet name="header">
+															<h:outputText value="CPF"></h:outputText>
+														</f:facet>
+														<h:outputText value="#{c.cpf}">
+															<f:converter  converterId="cpfConverter"/>
+														</h:outputText>
+													</h:column>
+													<h:column>
+														<f:facet name="header">
+															<h:outputText value="CRM"></h:outputText>
+														</f:facet>
+														<h:outputText value="#{c.conselho}"/>
+													</h:column>
+													<h:column>
+														<f:facet name="header">
+															<h:outputText value="Especialidades"></h:outputText>
+														</f:facet>
+														<h:outputText value="#{c.especialidades}">
+															<f:converter converterId="especialidadeConverter"/>
+														</h:outputText>
+													</h:column>
+													<h:column>
+														<f:facet name="header">
+															<h:outputText value="Nº CRM"></h:outputText>
+														</f:facet>
+														<h:outputText value="#{c.registro}"/>
+													</h:column>
+													<h:column>
+														<f:facet name="header">
+															<h:outputText value="EDITAR"></h:outputText>
+														</f:facet>
+														<h:commandLink title="Editar" action="#{profissionalMB.editar}">
+															<center>
+																<span class="icon-edit"></span>
+															</center>
+															<f:setPropertyActionListener target="#{profissionalMB.profissional}" value="#{c}" />
+														</h:commandLink>
+													</h:column>
+
+												</h:dataTable> 
+											</div>
+										</h:form>
+
+									</div><!-- /.modal-body -->
+
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+									</div><!-- /.modal-footer -->
+
+								</div><!-- /.modal-content -->
+
+							</div><!-- /.modal-dialog -->
+
+						</div><!-- /.modal -->
+
+					</div>
+				</div>
+
 			</div>
+
+			<script type="text/javascript">
+				$('.input-color').inputColor('#cor', inputColorList);
+			</script>
+
         </ui:define>
     </ui:composition>
 </html>
