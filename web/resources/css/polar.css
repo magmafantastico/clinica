@@ -286,12 +286,11 @@ form {
 	display: -webkit-flex;
 	display: flex;
 	flex-direction: column;
-	padding: 0 1em;
 	align-items: stretch;
 }
 
 form .field {
-	margin: 1em 0 .5em;
+	margin: 1em 1em .5em;
 	display: -webkit-box;
 	display: -moz-box;
 	display: -ms-flexbox;
