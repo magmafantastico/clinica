@@ -67,16 +67,10 @@ public class AgendaMB implements Serializable {
 
     private String lenght;
 
-    private String iconePresente;
-
-    private String iconeAusente;
-
     public AgendaMB() {
         this.controlaAgenda = 0;
         this.lenght = "00:30";
         this.pagina = "agenda";
-        this.iconeAusente = "icon-square-o";
-        this.iconePresente = "icon-check-square-o";
         listarAgendaCompleta();
         inicializar();
     }
@@ -459,22 +453,6 @@ public class AgendaMB implements Serializable {
 
     public void setLenght(String lenght) {
         this.lenght = lenght;
-    }
-
-    public String getIconePresente() {
-        return iconePresente;
-    }
-
-    public void setIconePresente(String iconePresente) {
-        this.iconePresente = iconePresente;
-    }
-
-    public String getIconeAusente() {
-        return iconeAusente;
-    }
-
-    public void setIconeAusente(String iconeAusente) {
-        this.iconeAusente = iconeAusente;
     }
 
 }
