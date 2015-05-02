@@ -1,672 +1,610 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui"
       xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:composite="http://xmlns.jcp.org/jsf/composite/composite"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-
-   <ui:composition template="/templates/principal.xhtml">
-
-      <ui:define name="search">
-         <h:form>
-            <p:commandLink action="#{pacienteMB.novo}"
-                           class="link pull-left font-g444 hover-font-clear"
-                           oncomplete="$('#modalPesquisar').modal('show');"
-                           update=":frmCadastro :frmNomePesquisa :frmListagem">
-               <span class="icon-search icon-label"></span>
-            </p:commandLink>
-         </h:form>
-      </ui:define>
-
-      <ui:define name="navbar-content">
-
-         <div class="item">
-            <span class="title">Paciente</span>
-         </div>
-
-         <h:form id="frmBtnComposites" class="item pull-right">
-
-            <div class="item">
-               <p:commandLink action="#{pacienteMB.novoEndereco}"
-                              class="link"
-                              oncomplete="$('#modalEndereco').modal('show');"
-                              update=":cmpEndereco:frmAddEndereco">
-                  <span class="icon-home icon-label"></span>
-                  Adicionar Endereço
-               </p:commandLink>
-            </div>
-
-            <div class="item">
-               <p:commandLink action="#{pacienteMB.novoContato}"
-                              class="link"
-                              oncomplete="$('#modalContato').modal('show');"
-                              update=":cmpContato:frmAddContato">
-                  <span class="icon-phone icon-label"></span>
-                  Adicionar Contato
-               </p:commandLink>
-            </div>  
-
-            <div class="item">
-               <p:commandLink action="#{pacienteMB.novoEmail}"
-                              class="link"
-                              oncomplete="$('#modalEmail').modal('show');"
-                              update=":cmpContato:frmAddContato">
-                  <span class="icon-at icon-label"></span>
-                  Adicionar E-mail
-               </p:commandLink>
-            </div>
-
-            <div class="item">
-               <p:commandLink action="#{pacienteMB.novoDocumento}"
-                              class="link" 
-                              oncomplete="$('#modalDocumento').modal('show');"
-                              update=":cmpDocumento:frmAddDocumento">
-                  <span class="icon-file-o icon-label"></span>
-                  Adicionar Documentos
-               </p:commandLink>
-            </div>
-
-         </h:form>
-
-      </ui:define>
-
-      <ui:define name="main-content">
-
-         <h:form id="frmCadastro" prependId="false" class="form form-horizontal">
-
-            <p:focus></p:focus>
-
-            <h:inputHidden value="#{pacienteMB.paciente.id}"/>
-
-            <div class="row">	
-
-               <div class="col-md-6">
-
-                  <div class="field-group pw15 ph05">
-                     <h:outputLabel class="col-sm-3 label-control" for="nome">Nome</h:outputLabel>
-                     <div class="col-sm-9">
-                        <h:inputText id="nome" 
-                                     class="field-control"
-                                     required="true"
-                                     requiredMessage="Nome Obrigatório"
-                                     pt:placeholder="Nome do Paciente"
-                                     onkeyup="this.value = this.value.toUpperCase();"
-                                     value="#{pacienteMB.paciente.nome}" >
-                        </h:inputText>
-                     </div>
-                  </div>
-
-                  <div class="field-group pw15 ph05">
-                     <h:outputLabel class="col-sm-3 label-control" for="cpf">CPF</h:outputLabel>
-                     <div class="col-sm-9">
-                        <h:inputText id="cpf" 
-                                     class="field-control"
-                                     required="true"
-                                     requiredMessage="CPF Obrigatório"
-                                     pt:placeholder="CPF"
-                                     value="#{pacienteMB.paciente.cpf}" >
-                           <f:converter converterId="cpfConverter"/>
-                           <f:validator validatorId="cpfValidator"/>
-                        </h:inputText>
-                     </div>
-                  </div>
-
-                  <div class="field-group pw15 ph05">
-                     <h:outputLabel class="col-sm-3 label-control" for="cmbSexo">Sexo</h:outputLabel>
-                     <div class="col-sm-9">
-                        <h:selectOneMenu id="cmbSexo" 
-                                         value="#{pacienteMB.paciente.sexo}"
-                                         class="field-control"
-                                         required="true"
-                                         requiredMessage="Sexo Obrigatório">
-                           <f:selectItem itemLabel="Sexo" itemDisabled="true" />
-                           <f:selectItem itemValue="Feminino" itemLabel="Feminino" />
-                           <f:selectItem itemValue="Masculino" itemLabel="Masculino" />	
-                        </h:selectOneMenu>
-                     </div>
-                  </div>
-
-                  <div class="field-group pw15 ph05">
-                     <h:outputLabel class="col-sm-3 label-control" for="dataNascimento">Nascimento</h:outputLabel>
-                     <div class="col-sm-9">
-                        <h:inputText id="dataNascimento"
-                                     class="field-control"
-                                     required="true"
-                                     requiredMessage="Data de Nascimento Obrigatório"
-                                     value="#{pacienteMB.paciente.dataNascimento}" 
-                                     pt:placeholder="Data do Nascimento">
-                           <f:converter converterId="dataConverter"></f:converter>
-                        </h:inputText>
-                     </div>
-                  </div>
-
-                  <div class="field-group pw15 ph05">
-                     <h:outputLabel class="col-sm-3 label-control" for="naturalidade">Naturalidade</h:outputLabel>
-                     <div class="col-sm-9">
-                        <h:inputText id="naturalidade"
-                                     class="field-control"
-                                     required="true"
-                                     requiredMessage="Naturalidade Obrigatório"
-                                     pt:placeholder="Natural de"
-                                     onkeyup="this.value = this.value.toUpperCase();"
-                                     value="#{pacienteMB.paciente.naturalidade}" >
-                        </h:inputText>
-                     </div>
-                  </div>
-
-                  <div class="field-group pw15 ph05">
-                     <h:outputLabel class="col-sm-3 label-control" for="prontuario">Prontuário</h:outputLabel>
-                     <div class="col-sm-9">
-                        <h:inputText id="prontuario"
-                                     class="field-control"
-                                     required="true"
-                                     requiredMessage="Prontuário Obrigatório"
-                                     pt:placeholder="Prontuário"
-                                     value="#{pacienteMB.paciente.prontuario}"
-                                     onkeypress="return SomenteNumero(event)">
-                        </h:inputText>
-                     </div>
-                  </div>
-
-                  <div class="field-group pw15 ph05">
-                     <h:outputLabel class="col-sm-3 label-control" for="religiao">Religião</h:outputLabel>
-                     <div class="col-sm-9">
-                        <h:inputText id="religiao" 
-                                     class="field-control"
-                                     required="true"
-                                     requiredMessage="Religião Obrigatório"
-                                     pt:placeholder="Religião"
-                                     onkeyup="this.value = this.value.toUpperCase();"
-                                     value="#{pacienteMB.paciente.religiao}">
-                        </h:inputText>
-                     </div>
-                  </div>
-
-                  <div class="field-group pw15 ph05">
-                     <h:outputLabel class="col-sm-3 label-control" for="pacienteEtnia">Etnia</h:outputLabel>
-                     <div class="col-sm-9">
-                        <h:selectOneMenu id="pacienteEtnia" value="#{pacienteMB.paciente.etnia}" class="field-control">
-                           <f:selectItem itemLabel="Etnia"/>
-                           <f:selectItem itemValue="Branco" itemLabel="Branco" />
-                           <f:selectItem itemValue="Negro" itemLabel="Negro" />	
-                           <f:selectItem itemValue="Pardo" itemLabel="Pardo" />	
-                           <f:selectItem itemValue="Cafuzo" itemLabel="Cafuzo" />	
-                        </h:selectOneMenu>
-                     </div>
-                  </div>
-
-                  <div class="field-group pw15 ph05">
-                     <h:outputLabel class="col-sm-3 label-control" for="dataCadastro">Cadastro</h:outputLabel>
-                     <div class="col-sm-9">
-                        <h:inputText id="dataCadastro"
-                                     class="field-control"
-                                     value="#{pacienteMB.paciente.dataCadastro}" 
-                                     pt:placeholder="Data do Cadastro">
-                           <f:converter converterId="dataConverter"/>
-                        </h:inputText>
-                     </div>
-                  </div>
-
-               </div>
-
-               <div class="col-md-6">
-
-                  <div class="field-group pw15 ph05">
-                     <h:outputLabel class="col-sm-3 label-control" for="profissao">Profissão</h:outputLabel>
-                     <div class="col-sm-9">
-                        <h:inputText id="profissao" 
-                                     class="field-control"
-                                     onkeyup="this.value = this.value.toUpperCase();"
-                                     pt:placeholder="Profissão"
-                                     value="#{pacienteMB.paciente.profissao}" >
-                        </h:inputText>
-                     </div>
-                  </div>
-
-                  <div class="field-group pw15 ph05">
-                     <h:outputLabel class="col-sm-3 label-control" for="convenio">Convênios</h:outputLabel>
-                     <div class="col-sm-9">
-                        <h:panelGroup id="conveniosEscolhidos">
-                           <h:selectOneMenu id="convenio" 
-                                            class="field-control"
-                                            label="Convenio"  
-                                            value="#{pacienteMB.convenio.id}"
-                                            valueChangeListener="#{pacienteMB.adicionaConvenio}">
-                              <f:selectItem itemLabel="CONVENIO" itemValue="0"/>
-                              <f:selectItems value="#{convenioMB.listarTodos}" 
-                                             var="convenio"  
-                                             itemLabel="#{convenio.nomeFantasia}"
-                                             itemValue="#{convenio.id}"/>
-                              <f:ajax execute="@this" event="change" render="conveniosEscolhidos"/>
-                           </h:selectOneMenu> 
-                           <h:dataTable id="tblc"
-                                        class="table"
-                                        var="convenio" 
-                                        value="#{pacienteMB.convenios}"
-                                        rendered="#{!empty pacienteMB.convenios}">  
-                              <h:inputHidden value="#{convenioMB.convenio.id}"/>
-                              <h:column>
-                                 <h:outputText value="#{convenio.nomeFantasia}"/>
-                              </h:column>
-                              <h:column>
-                                 <h:commandLink class="glyphcon glyphcon-remove" title="Excluir" action="#{pacienteMB.removeConvenio}">
-                                    <f:ajax execute="@this" render=":frmCadastro:conveniosEscolhidos"/>
-                                    <center>
-                                       <span class="icon-minus-square"></span>
-                                    </center>
-                                    <f:setPropertyActionListener target="#{pacienteMB.convenio}" value="#{convenio}"/>
-                                 </h:commandLink>
-                              </h:column>
-                           </h:dataTable> 
-                        </h:panelGroup>
-                     </div>
-                  </div>
-
-                  <div class="field-group pw15 ph05">
-                     <h:outputLabel class="col-sm-3 label-control" for="matricula">Nº Convênio</h:outputLabel>
-                     <div class="col-sm-9">
-                        <h:inputText id="matricula" 
-                                     class="field-control"
-                                     pt:placeholder="Nº Carteira do Convênio"
-                                     value="#{pacienteMB.paciente.matricula}" >
-                        </h:inputText>
-                     </div>
-                  </div>
-
-                  <div class="field-group pw15 ph05">
-                     <h:outputLabel class="col-sm-3 label-control" for="pacienteCivil">Estado Cívil</h:outputLabel>
-                     <div class="col-sm-9">
-                        <h:selectOneMenu id="pacienteCivil" value="#{pacienteMB.paciente.estadoCivil}" class="field-control">
-                           <f:selectItem itemLabel="Estado Civil"/>
-                           <f:selectItem itemValue="Solteiro" itemLabel="Solteiro" />
-                           <f:selectItem itemValue="Casado" itemLabel="Casado" />	
-                           <f:selectItem itemValue="Divorciado" itemLabel="Divorciado" />	
-                           <f:selectItem itemValue="Viuvo" itemLabel="Viuvo" />	
-                        </h:selectOneMenu>	  
-                     </div>
-                  </div>
-
-                  <div class="field-group pw15 ph05">
-                     <h:outputLabel class="col-sm-3 label-control" for="nacionalidade">Nacionalidade</h:outputLabel>
-                     <div class="col-sm-9">
-                        <h:inputText id="nacionalidade" 
-                                     class="field-control"
-                                     pt:placeholder="Nacionalidade"
-                                     onkeyup="this.value = this.value.toUpperCase();"
-                                     value="#{pacienteMB.paciente.nacionalidade}" >
-                        </h:inputText>
-                     </div>
-                  </div>
-
-                  <div class="field-group pw15 ph05">
-                     <h:outputLabel class="col-sm-3 label-control" for="indicacao">Indicação</h:outputLabel>
-                     <div class="col-sm-9">
-                        <h:inputText id="indicacao" 
-                                     class="field-control"
-                                     pt:placeholder="Indicado por"
-                                     onkeyup="this.value = this.value.toUpperCase();"
-                                     value="#{pacienteMB.paciente.indicacao}" >
-                        </h:inputText>
-                     </div>
-                  </div>
-
-                  <div class="field-group pw15 ph05">
-                     <h:outputLabel class="col-sm-3 label-control" for="observacao">Observações</h:outputLabel>
-                     <div class="col-sm-9">
-                        <h:inputTextarea id="observacao" 
-                                         class="field-control"
-                                         validatorMessage="Observações -> Limite de 250 Caracteres"
-                                         rows="2"
-                                         onkeyup="this.value = this.value.toUpperCase();"
-                                         pt:placeholder="Observações"
-                                         value="#{pacienteMB.paciente.observacoes}" >
-                           <f:validateLength maximum="240" />
-                        </h:inputTextarea>
-                     </div>
-                  </div>
-               </div>
-            </div>
-
-            <div class="row">
-               <!--    ////////////////////////////// LISTAGEM DOS CONTATOS TELEFONICOS  //////////////////////////   -->
-               <div class="col-sm-3">
-
-                  <h:panelGrid id="pnlContatos">
-                     <h:dataTable id="tblContatos"
-                                  class="table table-bordered table-striped table-hover"
-                                  var="contato" 
-                                  value="#{pacienteMB.contatos}"
-                                  rendered="#{!empty pacienteMB.contatos}">  
-                        <h:inputHidden value="#{contato.id}"></h:inputHidden>
-
-                        <f:facet name="header">
-                           Contatos Telefônicos
-                        </f:facet>
-
-                        <h:column>
-                           <h:outputText value="#{contato.tipo}"></h:outputText>
-                        </h:column>
-
-                        <h:column>
-                           <h:outputText value="(#{contato.codArea}) #{contato.numero}"></h:outputText>
-                        </h:column>
-
-                        <h:column>
-                           <p:commandLink id="btnEditarContato" 
-                                          update=":cmpContato:frmAddContato"
-                                          oncomplete="$('#modalContato').modal('show');"
-                                          title="Editar"
-                                          immediate="true">
-                              <span class="icon-edit"></span>
-                              <f:setPropertyActionListener target="#{pacienteMB.contato}" value="#{contato}"/>
-                           </p:commandLink>
-                        </h:column>
-
-                        <h:column>
-                           <h:commandLink title="Excluir" 
-                                          action="#{pacienteMB.removeContato}">
-                              <f:ajax execute="@this" render=":frmCadastro:pnlContatos"/>
-                              <span class="icon-minus-square"></span>
-                              <f:setPropertyActionListener target="#{pacienteMB.contato}" value="#{contato}"/>
-                           </h:commandLink>
-                        </h:column>
-
-                     </h:dataTable>
-                  </h:panelGrid>
-
-               </div>
-               <!--    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   -->
-               <!--    /////////////////////////////////// LISTAGEM DOS ENDERECOS ADICIONADOS //////////////////////////   -->
-               <div class="col-sm-3">
-                  <h:panelGrid id="pnlEnderecos">
-                     <h:dataTable id="tblEnderecos"
-                                  class="table table-bordered table-striped table-hover"
-                                  var="endereco" 
-                                  value="#{pacienteMB.enderecos}"
-                                  rendered="#{!empty pacienteMB.enderecos}"> 
-                        <h:inputHidden value="#{endereco.id}"/>
-                        <f:facet name="header">
-                           Endereço
-                        </f:facet>
-                        <h:column>
-                           <h:outputText value="#{endereco.tipoEndereco}"/>
-                        </h:column>
-                        <h:column>
-                           <h:outputText value="#{endereco.logradouro}, Nº #{endereco.numero} "/>
-                        </h:column>
-                        <h:column>
-                           <p:commandLink immediate="true"
-                                          oncomplete="$('#modalEndereco').modal('show');"
-                                          update=":cmpEndereco:frmAddEndereco">
-                              <span class="icon-edit"></span>
-                              <f:setPropertyActionListener target="#{pacienteMB.endereco}" value="#{endereco}"/>
-                           </p:commandLink>
-                        </h:column>
-                        <h:column>
-                           <h:commandLink title="Excluir" 
-                                          action="#{pacienteMB.removeEndereco}">
-                              <f:ajax execute="@this" render=":frmCadastro:pnlEnderecos"/>
-                              <span class="icon-minus-square"></span>
-                              <f:setPropertyActionListener target="#{pacienteMB.endereco}" value="#{endereco}"/>
-                           </h:commandLink>
-                        </h:column>
-                     </h:dataTable>
-                  </h:panelGrid>
-               </div>
-               <!--    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   -->
-               <!--    ////////////////////////////// LISTAGEM DOS EMAILS ADICIONADOS //////////////////////////   -->
-               <div class="col-sm-3">
-                  <h:panelGrid id="pnlEmails">
-                     <h:dataTable id="tblEmails"
-                                  class="table table-bordered table-striped table-hover"
-                                  var="email" 
-                                  value="#{pacienteMB.emails}"
-                                  rendered="#{!empty pacienteMB.emails}">  
-                        <h:inputHidden value="#{email.id}"/>
-                        <f:facet name="header">
-                           E-mail
-                        </f:facet>
-                        <h:column>
-                           <h:outputText value="#{email.tipo}"/>
-                        </h:column>
-                        <h:column>
-                           <h:outputText value="#{email.email}"/>
-                        </h:column>
-                        <h:column>
-                           <p:commandLink immediate="true"
-                                          oncomplete="$('#modalEmail').modal('show');" 
-                                          title="Editar" 
-                                          update=":cmpEmail:frmAddEmail">
-                              <span class="icon-edit"></span>
-                              <f:setPropertyActionListener target="#{pacienteMB.email}" value="#{email}" />
-                           </p:commandLink>
-                        </h:column>
-                        <h:column>
-                           <h:commandLink title="Excluir" 
-                                          action="#{pacienteMB.removeEmail}">
-                              <f:ajax execute="@this" render=":frmCadastro:pnlEmails"/>
-                              <span class="icon-minus-square"></span>
-                              <f:setPropertyActionListener target="#{pacienteMB.email}" value="#{email}"/>
-                           </h:commandLink>
-                        </h:column>
-                     </h:dataTable>
-                  </h:panelGrid>
-               </div>
-               <!--    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   -->
-               <!--    ////////////////////////////// LISTAGEM DOS DOCUMENTOS ADICIONADOS //////////////////////////   -->
-               <div class="col-sm-3">
-                  <h:panelGrid id="pnlDocumentos">
-
-                     <h:dataTable id="tblDocumentos"
-                                  class="table table-bordered table-striped table-hover"
-                                  var="documento" 
-                                  value="#{pacienteMB.documentos}"
-                                  rendered="#{!empty pacienteMB.documentos}">  
-                        <h:inputHidden value="#{documento.id}"/>
-                        <f:facet name="header">
-                           DOCUMENTOS 
-                        </f:facet>
-                        <h:column>
-                           <h:outputText value="#{documento.rg}"/>
-                        </h:column>
-                        <h:column>
-                           <p:commandLink update=":cmpDocumento:frmAddDocumento:modalDocumento" 
-                                          oncomplete="PF('mDocumento').show();" 
-                                          title="Editar" 
-                                          immediate="true">
-                              <span class="icon-minus-edit"></span>
-                              <f:setPropertyActionListener target="#{pacienteMB.documento}" value="#{documento}"></f:setPropertyActionListener>
-                           </p:commandLink>
-                        </h:column>
-                     </h:dataTable>
-
-                  </h:panelGrid>
-               </div>
-            </div>
-
-            <div class="row pw30 ph10">
-
-               <h:commandLink class="btn btn-link-o" action="#{pacienteMB.novo}" immediate="true"><span class="icon-plus"></span> Novo Paciente</h:commandLink>
-
-               <h:commandLink class="btn btn-primary pull-right" value="Salvar / Alterar" action="#{pacienteMB.inserir}"></h:commandLink>
-
-            </div>
-
-         </h:form>
-
-         <composite:contato id="cmpContato"
-                            codigo="#{pacienteMB.contato.id}"
-                            tipo="#{pacienteMB.contato.tipo}"
-                            codArea="#{pacienteMB.contato.codArea}"
-                            numero="#{pacienteMB.contato.numero}"
-                            observacao="#{pacienteMB.contato.observacao}"
-                            botaoAddText="Adicionar"
-                            botaoAddAction="#{pacienteMB.addContato}">
-         </composite:contato>
-
-         <composite:endereco id="cmpEndereco"
-                             codigo="#{pacienteMB.endereco.id}"
-                             tipoEndereco="#{pacienteMB.endereco.tipoEndereco}" 
-                             tipoLogradouro="#{pacienteMB.endereco.tipoLogradouro}"
-                             logradouro="#{pacienteMB.endereco.logradouro}"
-                             numero="#{pacienteMB.endereco.numero}" 
-                             bairro="#{pacienteMB.endereco.bairro}"
-                             cep="#{pacienteMB.endereco.cep}"
-                             estado="#{pacienteMB.endereco.estado}"
-                             municipio="#{pacienteMB.endereco.municipio}"
-                             botaoAddText="Adicionar"
-                             botaoAddAction="#{pacienteMB.addEndereco}">
-         </composite:endereco> 
-
-         <composite:documento id="cmpDocumento"
-                              codigo="#{pacienteMB.documento.id}"
-                              registroGeral="#{pacienteMB.documento.rg}"
-                              botaoAddText="Adicionar"
-                              botaoAddAction="#{pacienteMB.addDocumento}">
-         </composite:documento>
-
-         <composite:email id="cmpEmail"
-                          codigo="#{pacienteMB.email.id}"
-                          tipo="#{pacienteMB.email.tipo}"
-                          email="#{pacienteMB.email.email}"
-                          botaoAddText="Adicionar"
-                          botaoAddAction="#{pacienteMB.addEmail}">
-         </composite:email>
-
-         <div class="modal fade" id="modalPesquisar" tabindex="-1" role="dialog" aria-labelledby="modalPesquisarLabel" aria-hidden="true">
-
-            <div class="modal-dialog modal-lg">
-
-               <div class="modal-content">
-
-                  <div class="modal-header">
-                     <button type="button" class="close" data-dismiss="modal">
-                        <span aria-hidden="true">&times;</span>
-                        <span class="sr-only">Fechar</span>
-                     </button>
-                     <h4 class="modal-title" id="modalPesquisarLabel">Pesquisar Pacientes</h4>
-                  </div><!-- /.modal-header -->
-
-                  <div class="modal-body">
-
-                     <h:form id="frmNomePesquisa">
-                        <p:focus context="frmNomePesquisa"></p:focus>
-
-                        <h:inputText id="nome" 
-                                     onkeyup="this.value = this.value.toUpperCase();"
-                                     pt:placeholder="Nome do Paciente"
-                                     styleClass="field-control"
-                                     value="#{pacienteMB.paciente.nome}">
-                           <f:ajax event="keyup" render=":frmListagem"></f:ajax>
-                        </h:inputText>
-
-                     </h:form>
-
-                     <h:form id="frmListagem">
-                        <div>
-                           <h:dataTable id="tblPacientes"
-                                        class="table table-bordered table-striped table-hover"
-                                        var="c"
-                                        styleClass="table"
-                                        rendered="#{!empty pacienteMB.listarPorNome}"
-                                        value="#{pacienteMB.listarPorNome}">
-
-                              <h:inputHidden value="#{c.id}"></h:inputHidden>
-
-                              <h:column>
-                                 <f:facet name="header">
-                                    <h:outputText value="Nome"></h:outputText>
-                                 </f:facet>
-                                 <h:outputText value="#{c.nome}"></h:outputText>
-                              </h:column>
-
-                              <!--         <h:column>
-                                           <f:facet name="header">
-                                              <h:outputText value="CPF"></h:outputText>
-                                           </f:facet>
-                                           <h:outputText value="# {c.cpf}">
-                                              <f:converter  converterId="cpfConverter"></f:converter>
-                                           </h:outputText>
-                                        </h:column>
-          
-                                        <h:column>
-                                           <f:facet name="header">
-                                              <h:outputText value="Prontuário"></h:outputText>
-                                           </f:facet>
-                                           <h:outputText value="# {c.prontuario}"></h:outputText>
-                                        </h:column>-->
-
-                              <!--                              <h:column>
-                                                               <f:facet name="header">
-                                                                  <h:outputText value="Convênio"></h:outputText>
-                                                               </f:facet>
-                                                               <h:outputText value="# {c.convenios}">
-                                                                  <f:converter  converterId="convenioConverter"></f:converter>
-                                                               </h:outputText>
-                                                            </h:column>-->
-
-                              <h:column>
-                                 <f:facet name="header">
-                                    <h:outputText value="Editar"></h:outputText>
-                                 </f:facet>
-                                 <h:commandLink title="Editar" action="#{pacienteMB.editar}">
-                                    <center>
-                                       <span class="icon-edit"></span>
-                                    </center>
-                                    <f:setPropertyActionListener target="#{pacienteMB.paciente}" value="#{c}"></f:setPropertyActionListener>
-                                 </h:commandLink>
-                              </h:column>
-
-                           </h:dataTable>
-
-                        </div>
-
-                     </h:form>
-
-                  </div><!-- /.modal-body -->
-
-                  <div class="modal-footer">
-                     <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                  </div><!-- /.modal-footer -->
-
-               </div><!-- /.modal-content -->
-
-            </div><!-- /.modal-dialog -->
-
-         </div><!-- /.modal -->
-
-         <!--         <h:panelGrid columns="4">
-                     <h:form id="impressao">
-                        <h:commandLink>
-                           <f:setPropertyActionListener target="# {pacienteMB.tipoRelatorio}" value="1" />
-                           <p:fileDownload value="# {pacienteMB.arquivoRetorno}" />
-                           <h:graphicImage library="imagens" name="pdf.png" title="Imprimir PDF" />
-                        </h:commandLink>
-                        <h:commandLink>
-                           <f:setPropertyActionListener target="# {pacienteMB.tipoRelatorio}" value="2" />
-                           <p:fileDownload value="# {pacienteMB.arquivoRetorno}" />
-                           <h:graphicImage library="imagens" name="excel.png" title="Imprimir Excel" />
-                        </h:commandLink>
-                        <h:commandLink>
-                           <f:setPropertyActionListener target="# {pacienteMB.tipoRelatorio}" value="3" />
-                           <p:fileDownload value="# {pacienteMB.arquivoRetorno}" />
-                           <h:graphicImage library="imagens" name="html.png" title="Imprimir HTML" />
-                        </h:commandLink>
-                        <h:commandLink>
-                           <f:setPropertyActionListener target="# {pacienteMB.tipoRelatorio}" value="4" />
-                           <p:fileDownload value="# {pacienteMB.arquivoRetorno}" />
-                           <h:graphicImage library="imagens" name="ods.png" title="Imprimir Planilha Open Office" />
-                        </h:commandLink>
-         
-                        <h:commandButton value="Exportar PDF" actionListener="# {pacienteMB.exportarPDF}"/>
-                     </h:form>
-                  </h:panelGrid>-->
-
-      </ui:define>
-
-   </ui:composition>
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns="http://www.w3.org/1999/xhtml">
+
+	<ui:composition template="/templates/principal.xhtml">
+
+		<ui:define name="search">
+			<h:form>
+				<p:commandLink action="#{pacienteMB.novo}"
+							   class="link pull-left font-g444 hover-font-clear"
+							   oncomplete="$('#modalPesquisar').modal('show');"
+							   update=":frmCadastro :frmNomePesquisa :frmListagem">
+					<span class="icon-search icon-label"></span>
+				</p:commandLink>
+			</h:form>
+		</ui:define>
+
+        <ui:define name="main-content">
+
+			<div class="window grey-200" style="max-height: 600px; height: 80%; min-width: 380px">
+
+				<header class="grey-800 font-grey-200 border-grey-400">
+
+                    <span class="title">Paciente</span>
+
+					<h:form id="frmBtnComposites" class="item">
+
+                        <ul>
+
+                            <li class="item">
+                                <p:commandLink action="#{pacienteMB.novoEndereco}"
+                                               oncomplete="$('#modalEndereco').modal('show');"
+                                               update=":cmpEndereco:frmAddEndereco">
+                                    <span class="title">Endereço</span>
+                                    <span class="icon">
+                                        <span class="function">+</span>
+                                        <span class="icon-home icon-label"></span>
+                                    </span>
+                                </p:commandLink>
+                            </li>
+
+                            <li class="item">
+                                <p:commandLink action="#{pacienteMB.novoContato}"
+                                               oncomplete="$('#modalContato').modal('show');"
+                                               update=":cmpContato:frmAddContato">
+                                    <span class="title">Contato</span>
+                                    <span class="icon">
+                                        <span class="function">+</span>
+                                        <span class="icon-phone icon-label"></span>
+                                    </span>
+                                </p:commandLink>
+                            </li>
+
+                            <li class="item">
+                                <p:commandLink action="#{pacienteMB.novoEmail}"
+                                               oncomplete="$('#modalEmail').modal('show');"
+                                               update=":cmpContato:frmAddContato">
+                                    <span class="title">E-mail</span>
+                                    <span class="icon">
+                                        <span class="function">+</span>
+                                        <span class="icon-at icon-label"></span>
+                                    </span>
+                                </p:commandLink>
+                            </li>
+
+                            <li class="item">
+                                <p:commandLink action="#{pacienteMB.novoDocumento}"
+                                               oncomplete="$('#modalDocumento').modal('show');"
+                                               update=":cmpDocumento:frmAddDocumento">
+                                    <span class="title">Documentos</span>
+                                    <span class="icon">
+                                        <span class="function">+</span>
+                                        <span class="icon-file-o icon-label"></span>
+                                    </span>
+                                </p:commandLink>
+                            </li>
+
+                        </ul>
+
+					</h:form>
+
+				</header>
+
+				<div class="content">
+
+					<h:form id="frmCadastro" prependId="false" class="form form-horizontal">
+
+						<p:focus></p:focus>
+
+						<h:inputHidden value="#{pacienteMB.paciente.id}"/>
+
+
+						<div class="field">
+							<h:outputLabel for="nome">Nome</h:outputLabel>
+							<h:inputText id="nome"
+										 class="font-large"
+										 required="true"
+										 requiredMessage="Nome Obrigatório"
+										 pt:placeholder="Nome do Paciente"
+										 onkeyup="this.value = this.value.toUpperCase();"
+										 value="#{pacienteMB.paciente.nome}">
+							</h:inputText>
+						</div>
+
+						<div class="field">
+							<h:outputLabel for="cpf">CPF</h:outputLabel>
+							<h:inputText id="cpf"
+										 class=""
+										 required="true"
+										 requiredMessage="CPF Obrigatório"
+										 pt:placeholder="CPF"
+										 value="#{pacienteMB.paciente.cpf}">
+								<f:converter converterId="cpfConverter"/>
+								<f:validator validatorId="cpfValidator"/>
+							</h:inputText>
+						</div>
+
+						<div class="field">
+							<h:outputLabel for="cmbSexo">Sexo</h:outputLabel>
+							<h:selectOneMenu id="cmbSexo"
+											 value="#{pacienteMB.paciente.sexo}"
+											 class=""
+											 required="true"
+											 requiredMessage="Sexo Obrigatório">
+								<f:selectItem itemLabel="Sexo" itemDisabled="true"/>
+								<f:selectItem itemValue="Feminino" itemLabel="Feminino"/>
+								<f:selectItem itemValue="Masculino" itemLabel="Masculino"/>
+							</h:selectOneMenu>
+						</div>
+
+						<div class="field">
+							<h:outputLabel for="dataNascimento">Nascimento</h:outputLabel>
+							<h:inputText id="dataNascimento"
+										 class=""
+										 required="true"
+										 requiredMessage="Data de Nascimento Obrigatório"
+										 value="#{pacienteMB.paciente.dataNascimento}"
+										 pt:placeholder="Data do Nascimento">
+								<f:converter converterId="dataConverter"></f:converter>
+							</h:inputText>
+						</div>
+
+						<div class="field">
+							<h:outputLabel for="naturalidade">Naturalidade</h:outputLabel>
+							<h:inputText id="naturalidade"
+										 class=""
+										 required="true"
+										 requiredMessage="Naturalidade Obrigatório"
+										 pt:placeholder="Natural de"
+										 onkeyup="this.value = this.value.toUpperCase();"
+										 value="#{pacienteMB.paciente.naturalidade}">
+							</h:inputText>
+						</div>
+
+						<div class="field">
+							<h:outputLabel for="prontuario">Prontuário</h:outputLabel>
+							<h:inputText id="prontuario"
+										 class=""
+										 required="true"
+										 requiredMessage="Prontuário Obrigatório"
+										 pt:placeholder="Prontuário"
+										 value="#{pacienteMB.paciente.prontuario}"
+										 onkeypress="return SomenteNumero(event)">
+							</h:inputText>
+						</div>
+
+						<div class="field">
+							<h:outputLabel for="religiao">Religião</h:outputLabel>
+							<h:inputText id="religiao"
+										 class=""
+										 required="true"
+										 requiredMessage="Religião Obrigatório"
+										 pt:placeholder="Religião"
+										 onkeyup="this.value = this.value.toUpperCase();"
+										 value="#{pacienteMB.paciente.religiao}">
+							</h:inputText>
+						</div>
+
+						<div class="field">
+							<h:outputLabel for="pacienteEtnia">Etnia</h:outputLabel>
+							<h:selectOneMenu id="pacienteEtnia" value="#{pacienteMB.paciente.etnia}" class="">
+								<f:selectItem itemLabel="Etnia"/>
+								<f:selectItem itemValue="Branco" itemLabel="Branco"/>
+								<f:selectItem itemValue="Negro" itemLabel="Negro"/>
+								<f:selectItem itemValue="Pardo" itemLabel="Pardo"/>
+								<f:selectItem itemValue="Cafuzo" itemLabel="Cafuzo"/>
+							</h:selectOneMenu>
+						</div>
+
+						<div class="field">
+							<h:outputLabel for="dataCadastro">Cadastro</h:outputLabel>
+							<h:inputText id="dataCadastro"
+										 class=""
+										 value="#{pacienteMB.paciente.dataCadastro}"
+										 pt:placeholder="Data do Cadastro">
+								<f:converter converterId="dataConverter"/>
+							</h:inputText>
+						</div>
+
+
+						<div class="field">
+							<h:outputLabel for="profissao">Profissão</h:outputLabel>
+							<h:inputText id="profissao"
+										 class=""
+										 onkeyup="this.value = this.value.toUpperCase();"
+										 pt:placeholder="Profissão"
+										 value="#{pacienteMB.paciente.profissao}">
+							</h:inputText>
+						</div>
+
+						<div class="field">
+							<h:outputLabel for="convenio">Convênios</h:outputLabel>
+							<h:panelGroup id="conveniosEscolhidos">
+								<h:selectOneMenu id="convenio"
+												 class=""
+												 label="Convenio"
+												 value="#{pacienteMB.convenio.id}"
+												 valueChangeListener="#{pacienteMB.adicionaConvenio}">
+									<f:selectItem itemLabel="CONVENIO" itemValue="0"/>
+									<f:selectItems value="#{convenioMB.listarTodos}"
+												   var="convenio"
+												   itemLabel="#{convenio.nomeFantasia}"
+												   itemValue="#{convenio.id}"/>
+									<f:ajax execute="@this" event="change" render="conveniosEscolhidos"/>
+								</h:selectOneMenu>
+								<h:dataTable id="tblc"
+											 class="table"
+											 var="convenio"
+											 value="#{pacienteMB.convenios}"
+											 rendered="#{!empty pacienteMB.convenios}">
+									<h:inputHidden value="#{convenioMB.convenio.id}"/>
+									<h:column>
+										<h:outputText value="#{convenio.nomeFantasia}"/>
+									</h:column>
+									<h:column>
+										<h:commandLink class="glyphcon glyphcon-remove" title="Excluir" action="#{pacienteMB.removeConvenio}">
+											<f:ajax execute="@this" render=":frmCadastro:conveniosEscolhidos"/>
+											<center>
+												<span class="icon-minus-square"></span>
+											</center>
+											<f:setPropertyActionListener target="#{pacienteMB.convenio}" value="#{convenio}"/>
+										</h:commandLink>
+									</h:column>
+								</h:dataTable>
+							</h:panelGroup>
+						</div>
+
+						<div class="field">
+							<h:outputLabel for="matricula">Nº Convênio</h:outputLabel>
+							<h:inputText id="matricula"
+										 class=""
+										 pt:placeholder="Nº Carteira do Convênio"
+										 value="#{pacienteMB.paciente.matricula}">
+							</h:inputText>
+						</div>
+
+						<div class="field">
+							<h:outputLabel for="pacienteCivil">Estado Cívil</h:outputLabel>
+							<h:selectOneMenu id="pacienteCivil" value="#{pacienteMB.paciente.estadoCivil}" class="">
+								<f:selectItem itemLabel="Estado Civil"/>
+								<f:selectItem itemValue="Solteiro" itemLabel="Solteiro"/>
+								<f:selectItem itemValue="Casado" itemLabel="Casado"/>
+								<f:selectItem itemValue="Divorciado" itemLabel="Divorciado"/>
+								<f:selectItem itemValue="Viuvo" itemLabel="Viuvo"/>
+							</h:selectOneMenu>
+						</div>
+
+						<div class="field">
+							<h:outputLabel for="nacionalidade">Nacionalidade</h:outputLabel>
+							<h:inputText id="nacionalidade"
+										 class=""
+										 pt:placeholder="Nacionalidade"
+										 onkeyup="this.value = this.value.toUpperCase();"
+										 value="#{pacienteMB.paciente.nacionalidade}">
+							</h:inputText>
+						</div>
+
+						<div class="field">
+							<h:outputLabel for="indicacao">Indicação</h:outputLabel>
+							<h:inputText id="indicacao"
+										 class=""
+										 pt:placeholder="Indicado por"
+										 onkeyup="this.value = this.value.toUpperCase();"
+										 value="#{pacienteMB.paciente.indicacao}">
+							</h:inputText>
+						</div>
+
+						<div class="field">
+							<h:outputLabel for="observacao">Observações</h:outputLabel>
+							<h:inputTextarea id="observacao"
+											 class=""
+											 validatorMessage="Observações -> Limite de 250 Caracteres"
+											 rows="2"
+											 onkeyup="this.value = this.value.toUpperCase();"
+											 pt:placeholder="Observações"
+											 value="#{pacienteMB.paciente.observacoes}">
+								<f:validateLength maximum="240"></f:validateLength>
+							</h:inputTextarea>
+						</div>
+
+						<div class="row">
+							<!--    ////////////////////////////// LISTAGEM DOS CONTATOS TELEFONICOS  //////////////////////////   -->
+							<div class="col-sm-3">
+
+								<h:panelGrid id="pnlContatos">
+									<h:dataTable id="tblContatos"
+												 class="table table-bordered table-striped table-hover"
+												 var="contato"
+												 value="#{pacienteMB.contatos}"
+												 rendered="#{!empty pacienteMB.contatos}">
+										<h:inputHidden value="#{contato.id}"></h:inputHidden>
+
+										<f:facet name="header">
+											Contatos Telefônicos
+										</f:facet>
+
+										<h:column>
+											<h:outputText value="#{contato.tipo}"></h:outputText>
+										</h:column>
+
+										<h:column>
+											<h:outputText value="(#{contato.codArea}) #{contato.numero}"></h:outputText>
+										</h:column>
+
+										<h:column>
+											<p:commandLink id="btnEditarContato"
+														   update=":cmpContato:frmAddContato"
+														   oncomplete="$('#modalContato').modal('show');"
+														   title="Editar"
+														   immediate="true">
+												<span class="icon-edit"></span>
+												<f:setPropertyActionListener target="#{pacienteMB.contato}" value="#{contato}"/>
+											</p:commandLink>
+										</h:column>
+
+										<h:column>
+											<h:commandLink title="Excluir"
+														   action="#{pacienteMB.removeContato}">
+												<f:ajax execute="@this" render=":frmCadastro:pnlContatos"/>
+												<span class="icon-minus-square"></span>
+												<f:setPropertyActionListener target="#{pacienteMB.contato}" value="#{contato}"/>
+											</h:commandLink>
+										</h:column>
+
+									</h:dataTable>
+								</h:panelGrid>
+
+							</div>
+							<!--    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   -->
+							<!--    /////////////////////////////////// LISTAGEM DOS ENDERECOS ADICIONADOS //////////////////////////   -->
+							<div class="col-sm-3">
+								<h:panelGrid id="pnlEnderecos">
+									<h:dataTable id="tblEnderecos"
+												 class="table table-bordered table-striped table-hover"
+												 var="endereco"
+												 value="#{pacienteMB.enderecos}"
+												 rendered="#{!empty pacienteMB.enderecos}">
+										<h:inputHidden value="#{endereco.id}"/>
+										<f:facet name="header">
+											Endereço
+										</f:facet>
+										<h:column>
+											<h:outputText value="#{endereco.tipoEndereco}"/>
+										</h:column>
+										<h:column>
+											<h:outputText value="#{endereco.logradouro}, Nº #{endereco.numero} "/>
+										</h:column>
+										<h:column>
+											<p:commandLink immediate="true"
+														   oncomplete="$('#modalEndereco').modal('show');"
+														   update=":cmpEndereco:frmAddEndereco">
+												<span class="icon-edit"></span>
+												<f:setPropertyActionListener target="#{pacienteMB.endereco}" value="#{endereco}"/>
+											</p:commandLink>
+										</h:column>
+										<h:column>
+											<h:commandLink title="Excluir"
+														   action="#{pacienteMB.removeEndereco}">
+												<f:ajax execute="@this" render=":frmCadastro:pnlEnderecos"/>
+												<span class="icon-minus-square"></span>
+												<f:setPropertyActionListener target="#{pacienteMB.endereco}" value="#{endereco}"/>
+											</h:commandLink>
+										</h:column>
+									</h:dataTable>
+								</h:panelGrid>
+							</div>
+							<!--    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   -->
+							<!--    ////////////////////////////// LISTAGEM DOS EMAILS ADICIONADOS //////////////////////////   -->
+							<div class="col-sm-3">
+								<h:panelGrid id="pnlEmails">
+									<h:dataTable id="tblEmails"
+												 class="table table-bordered table-striped table-hover"
+												 var="email"
+												 value="#{pacienteMB.emails}"
+												 rendered="#{!empty pacienteMB.emails}">
+										<h:inputHidden value="#{email.id}"/>
+										<f:facet name="header">
+											E-mail
+										</f:facet>
+										<h:column>
+											<h:outputText value="#{email.tipo}"/>
+										</h:column>
+										<h:column>
+											<h:outputText value="#{email.email}"/>
+										</h:column>
+										<h:column>
+											<p:commandLink immediate="true"
+														   oncomplete="$('#modalEmail').modal('show');"
+														   title="Editar"
+														   update=":cmpEmail:frmAddEmail">
+												<span class="icon-edit"></span>
+												<f:setPropertyActionListener target="#{pacienteMB.email}" value="#{email}"/>
+											</p:commandLink>
+										</h:column>
+										<h:column>
+											<h:commandLink title="Excluir"
+														   action="#{pacienteMB.removeEmail}">
+												<f:ajax execute="@this" render=":frmCadastro:pnlEmails"/>
+												<span class="icon-minus-square"></span>
+												<f:setPropertyActionListener target="#{pacienteMB.email}" value="#{email}"/>
+											</h:commandLink>
+										</h:column>
+									</h:dataTable>
+								</h:panelGrid>
+							</div>
+							<!--    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   -->
+							<!--    ////////////////////////////// LISTAGEM DOS DOCUMENTOS ADICIONADOS //////////////////////////   -->
+							<div class="col-sm-3">
+								<h:panelGrid id="pnlDocumentos">
+
+									<h:dataTable id="tblDocumentos"
+												 class="table table-bordered table-striped table-hover"
+												 var="documento"
+												 value="#{pacienteMB.documentos}"
+												 rendered="#{!empty pacienteMB.documentos}">
+										<h:inputHidden value="#{documento.id}"/>
+										<f:facet name="header">
+											DOCUMENTOS
+										</f:facet>
+										<h:column>
+											<h:outputText value="#{documento.rg}"/>
+										</h:column>
+										<h:column>
+											<p:commandLink update=":cmpDocumento:frmAddDocumento:modalDocumento"
+														   oncomplete="PF('mDocumento').show();"
+														   title="Editar"
+														   immediate="true">
+												<span class="icon-minus-edit"></span>
+												<f:setPropertyActionListener target="#{pacienteMB.documento}"
+																			 value="#{documento}"></f:setPropertyActionListener>
+											</p:commandLink>
+										</h:column>
+									</h:dataTable>
+
+								</h:panelGrid>
+							</div>
+						</div>
+
+						<div class="row pw30 ph10">
+
+							<h:commandLink class="btn btn-link-o" action="#{pacienteMB.novo}" immediate="true"><span class="icon-plus"></span>
+								Novo Paciente
+							</h:commandLink>
+
+							<h:commandLink class="btn btn-primary pull-right" value="Salvar / Alterar"
+										   action="#{pacienteMB.inserir}"></h:commandLink>
+
+						</div>
+
+					</h:form>
+
+					<composite:contato id="cmpContato"
+									   codigo="#{pacienteMB.contato.id}"
+									   tipo="#{pacienteMB.contato.tipo}"
+									   codArea="#{pacienteMB.contato.codArea}"
+									   numero="#{pacienteMB.contato.numero}"
+									   observacao="#{pacienteMB.contato.observacao}"
+									   botaoAddText="Adicionar"
+									   botaoAddAction="#{pacienteMB.addContato}">
+					</composite:contato>
+
+					<composite:endereco id="cmpEndereco"
+										codigo="#{pacienteMB.endereco.id}"
+										tipoEndereco="#{pacienteMB.endereco.tipoEndereco}"
+										tipoLogradouro="#{pacienteMB.endereco.tipoLogradouro}"
+										logradouro="#{pacienteMB.endereco.logradouro}"
+										numero="#{pacienteMB.endereco.numero}"
+										bairro="#{pacienteMB.endereco.bairro}"
+										cep="#{pacienteMB.endereco.cep}"
+										estado="#{pacienteMB.endereco.estado}"
+										municipio="#{pacienteMB.endereco.municipio}"
+										botaoAddText="Adicionar"
+										botaoAddAction="#{pacienteMB.addEndereco}">
+					</composite:endereco>
+
+					<composite:documento id="cmpDocumento"
+										 codigo="#{pacienteMB.documento.id}"
+										 registroGeral="#{pacienteMB.documento.rg}"
+										 botaoAddText="Adicionar"
+										 botaoAddAction="#{pacienteMB.addDocumento}">
+					</composite:documento>
+
+					<composite:email id="cmpEmail"
+									 codigo="#{pacienteMB.email.id}"
+									 tipo="#{pacienteMB.email.tipo}"
+									 email="#{pacienteMB.email.email}"
+									 botaoAddText="Adicionar"
+									 botaoAddAction="#{pacienteMB.addEmail}">
+					</composite:email>
+
+					<div class="modal fade" id="modalPesquisar" tabindex="-1" role="dialog" aria-labelledby="modalPesquisarLabel"
+						 aria-hidden="true">
+
+						<div class="modal-dialog modal-lg">
+
+							<div class="modal-content">
+
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal">
+										<span aria-hidden="true">&times;</span>
+										<span class="sr-only">Fechar</span>
+									</button>
+									<h4 class="modal-title" id="modalPesquisarLabel">Pesquisar Pacientes</h4>
+								</div>
+								<!-- /.modal-header -->
+
+								<div class="modal-body">
+
+									<h:form id="frmNomePesquisa">
+										<p:focus context="frmNomePesquisa"></p:focus>
+
+										<h:inputText id="nome"
+													 onkeyup="this.value = this.value.toUpperCase();"
+													 pt:placeholder="Nome do Paciente"
+													 styleClass=""
+													 value="#{pacienteMB.paciente.nome}">
+											<f:ajax event="keyup" render=":frmListagem"></f:ajax>
+										</h:inputText>
+
+									</h:form>
+
+									<h:form id="frmListagem">
+										<div>
+											<h:dataTable id="tblPacientes"
+														 class="table table-bordered table-striped table-hover"
+														 var="c"
+														 styleClass="table"
+														 rendered="#{!empty pacienteMB.listarPorNome}"
+														 value="#{pacienteMB.listarPorNome}">
+
+												<h:inputHidden value="#{c.id}"></h:inputHidden>
+
+												<h:column>
+													<f:facet name="header">
+														<h:outputText value="Nome"></h:outputText>
+													</f:facet>
+													<h:outputText value="#{c.nome}"></h:outputText>
+												</h:column>
+
+												<h:column>
+													<f:facet name="header">
+														<h:outputText value="Editar"></h:outputText>
+													</f:facet>
+													<h:commandLink title="Editar" action="#{pacienteMB.editar}">
+														<center>
+															<span class="icon-edit"></span>
+														</center>
+														<f:setPropertyActionListener target="#{pacienteMB.paciente}"
+																					 value="#{c}"></f:setPropertyActionListener>
+													</h:commandLink>
+												</h:column>
+
+											</h:dataTable>
+
+										</div>
+
+									</h:form>
+
+								</div>
+								<!-- /.modal-body -->
+
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+								</div>
+								<!-- /.modal-footer -->
+
+							</div>
+							<!-- /.modal-content -->
+
+						</div>
+						<!-- /.modal-dialog -->
+
+					</div>
+					<!-- /.modal -->
+
+
+				</div>
+
+			</div>
+        </ui:define>
+	</ui:composition>
 
 </html>

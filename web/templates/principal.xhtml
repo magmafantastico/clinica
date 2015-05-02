@@ -38,15 +38,8 @@
 			<div id="home-holder" class="height-window bg-cover" style="background-image: url('#{resource['img:wall02.jpg']}')">
 
 				<div class="workspace">
-					<div class="window grey-200 maximized">
-						<header class="border-grey-400">
-							<ui:insert name="navbar-content"></ui:insert>
-						</header>
-						<div class="content">
-							<form action="">
-								<ui:insert name="main-content"></ui:insert>
-							</form>
-						</div>
+					<div class="container maximized">
+						<ui:insert name="main-content"></ui:insert>
 					</div>
 				</div>
 
@@ -62,6 +55,8 @@
 
 					<footer>
 						<ul class="notification-bar">
+
+							<!--<ui:insert name="search"></ui:insert>-->
 
 							<li class="item sign" data-toggle="modal" data-target="#myModal">
 								<a href="#">

@@ -4,9 +4,16 @@
  * Licensed under MIT (https://github.com/noibe/villa/blob/master/LICENSE)
 */
 
+someFunction = function() {
+    console.log('heheheheheh');
+};
+
+window.addEventListener('resize', someFunction);
+console.log(document.getElementById('home-holder'));
+
+
 // TIME AJUST
 // =========================
-
 function ajustClock() {
     var d = new Date();
     var time= ('0'	+ d.getHours()).slice(-2)+':'+('0' + d.getMinutes()).slice(-2);

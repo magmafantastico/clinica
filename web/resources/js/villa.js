@@ -74,7 +74,7 @@ function colorFactory() {
 colorFactory();
 
 // Refresh the height-window value on resize
-window.onresize = function() {
+var refreshHeight = function() {
     var a = window.innerHeight;
 
     var b = document.getElementsByClassName('min-height-window');
@@ -99,3 +99,5 @@ window.onresize = function() {
             b[c].style.maxHeight = a + 'px';
         }
 };
+
+window.addEventListener('resize', refreshHeight);
