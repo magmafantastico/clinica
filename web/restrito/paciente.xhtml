@@ -32,41 +32,57 @@
 
 					<h:form id="frmBtnComposites" class="item">
 
-						<div class="item">
-							<p:commandLink action="#{pacienteMB.novoEndereco}"
-										   oncomplete="$('#modalEndereco').modal('show');"
-										   update=":cmpEndereco:frmAddEndereco">
-								<span class="icon-home icon-label"></span>
-								Adicionar Endereço
-							</p:commandLink>
-						</div>
+                        <ul>
 
-						<div class="item">
-							<p:commandLink action="#{pacienteMB.novoContato}"
-										   oncomplete="$('#modalContato').modal('show');"
-										   update=":cmpContato:frmAddContato">
-								<span class="icon-phone icon-label"></span>
-								Adicionar Contato
-							</p:commandLink>
-						</div>
+                            <li class="item">
+                                <p:commandLink action="#{pacienteMB.novoEndereco}"
+                                               oncomplete="$('#modalEndereco').modal('show');"
+                                               update=":cmpEndereco:frmAddEndereco">
+                                    <span class="title">Endereço</span>
+                                    <span class="icon">
+                                        <span class="function">+</span>
+                                        <span class="icon-home icon-label"></span>
+                                    </span>
+                                </p:commandLink>
+                            </li>
 
-						<div class="item">
-							<p:commandLink action="#{pacienteMB.novoEmail}"
-										   oncomplete="$('#modalEmail').modal('show');"
-										   update=":cmpContato:frmAddContato">
-								<span class="icon-at icon-label"></span>
-								Adicionar E-mail
-							</p:commandLink>
-						</div>
+                            <li class="item">
+                                <p:commandLink action="#{pacienteMB.novoContato}"
+                                               oncomplete="$('#modalContato').modal('show');"
+                                               update=":cmpContato:frmAddContato">
+                                    <span class="title">Contato</span>
+                                    <span class="icon">
+                                        <span class="function">+</span>
+                                        <span class="icon-phone icon-label"></span>
+                                    </span>
+                                </p:commandLink>
+                            </li>
 
-						<div class="item">
-							<p:commandLink action="#{pacienteMB.novoDocumento}"
-										   oncomplete="$('#modalDocumento').modal('show');"
-										   update=":cmpDocumento:frmAddDocumento">
-								<span class="icon-file-o icon-label"></span>
-								Adicionar Documentos
-							</p:commandLink>
-						</div>
+                            <li class="item">
+                                <p:commandLink action="#{pacienteMB.novoEmail}"
+                                               oncomplete="$('#modalEmail').modal('show');"
+                                               update=":cmpContato:frmAddContato">
+                                    <span class="title">E-mail</span>
+                                    <span class="icon">
+                                        <span class="function">+</span>
+                                        <span class="icon-at icon-label"></span>
+                                    </span>
+                                </p:commandLink>
+                            </li>
+
+                            <li class="item">
+                                <p:commandLink action="#{pacienteMB.novoDocumento}"
+                                               oncomplete="$('#modalDocumento').modal('show');"
+                                               update=":cmpDocumento:frmAddDocumento">
+                                    <span class="title">Documentos</span>
+                                    <span class="icon">
+                                        <span class="function">+</span>
+                                        <span class="icon-file-o icon-label"></span>
+                                    </span>
+                                </p:commandLink>
+                            </li>
+
+                        </ul>
 
 					</h:form>
 
