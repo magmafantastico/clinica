@@ -184,6 +184,8 @@ body {
 }
 
 .workspace .window {
+	border-top-left-radius: 2px;
+	border-top-right-radius: 2px;
 	display: -webkit-box;
 	display: -moz-box;
 	display: -ms-flexbox;
@@ -202,13 +204,15 @@ body {
 	align-items: center;
 	border-bottom-style: solid;
 	border-bottom-width: 1px;
+	border-top-left-radius: 2px;
+	border-top-right-radius: 2px;
 	display: -webkit-box;
 	display: -moz-box;
 	display: -ms-flexbox;
 	display: -webkit-flex;
 	display: flex;
-	height: 36px;
-	min-height: 36px;
+	height: 48px;
+	min-height: 48px;
 	-moz-user-select: none;
 	-ms-user-select: none;
 	-webkit-touch-callout: none;
