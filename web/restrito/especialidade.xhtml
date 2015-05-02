@@ -9,90 +9,103 @@
 
     <ui:composition template="/templates/principal.xhtml">
 
-        <ui:define name="navbar-content">
-            <div class="item">
-                <span class="title">Especialidade</span>
+        <ui:define name="main-content">
+            <div class="window" style="min-width: 480px">
+                <header class="grey-800 font-grey-400 border-grey-400">
+
+                    <span class="title">Especialidade</span>
+
+
+                    <h:form id="frmBtnComposites" class="item">
+                        <ul>
+                            <li class="item">
+                                <h:commandLink action="#{especialidadeMB.novo}"
+                                               class="link"
+                                               immediate="true">
+                                    <span class="title">Adicionar Especialidade</span>
+                                    <span class="icon">
+                                        <span class="function">+</span>
+                                        <span class="icon-tags"></span>
+                                    </span>
+                                </h:commandLink>
+                            </li>
+                        </ul>
+                    </h:form>
+
+				</header>
+
+				<div class="content grey-100">
+
+					<!--<div class="flex-1"></div>-->
+
+					<div class="flex-1">
+
+
+						<h:form id="frmCadastro" class="form form-horizontal">
+
+							<p:focus/>
+
+							<h:inputHidden value="#{especialidadeMB.especialidade.id}"></h:inputHidden>
+
+							<div class="field">
+								<h:outputLabel class="col-sm-2 label-control">Especialidade</h:outputLabel>
+								<h:inputText id="nome"
+											 class="font-large"
+											 pt:placeholder="Nome da Especialidade"
+											 required="true"
+											 requiredMessage="Especialidade Obrigatória"
+											 onkeyup="this.value = this.value.toUpperCase();"
+											 value="#{especialidadeMB.especialidade.nome}">
+								</h:inputText>
+								<h:commandLink class="btn btn-primary pull-right"
+											   value="Salvar / Alterar" 
+											   action="#{especialidadeMB.inserir}">
+								</h:commandLink>
+							</div>
+
+						</h:form>
+
+						<h:form id="frmListagem" class="row ph15" style="margin: 0 auto; max-width: 800px;">
+							<div class="tab-content">
+								<h:dataTable id="tblEspecialidades"
+											 var="c" 
+											 styleClass="table"
+											 value="#{especialidadeMB.listaTodos}"
+											 rendered="#{!empty especialidadeMB.listaTodos}">  
+									<h:inputHidden value="#{c.id}"/>
+									<h:column>
+										<f:facet name="header">
+											<h:outputText value="Código"></h:outputText>
+										</f:facet>
+										<h:outputText value="#{c.id}"/>
+									</h:column>
+									<h:column>
+										<f:facet name="header">
+											<h:outputText value="Especialidade"></h:outputText>
+										</f:facet>
+										<h:outputText value="#{c.nome}"/>
+									</h:column>
+									<h:column>
+										<f:facet name="header">
+											<h:outputText value="Editar"></h:outputText>
+										</f:facet>
+										<h:commandLink>
+											<center>
+												<span class="icon-edit"></span>
+											</center>
+											<f:setPropertyActionListener target="#{especialidadeMB.especialidade}" value="#{c}" />
+										</h:commandLink>
+									</h:column>
+								</h:dataTable> 
+							</div>
+						</h:form>
+
+					</div>
+
+				</div>
+
             </div>
-            <div class="item pull-right">
-                <h:form>
-                    <h:commandLink action="#{especialidadeMB.novo}"
-                                   class="link"
-                                   immediate="true">
-                        <span class="icon-plus"></span> Nova Especialidade
-                    </h:commandLink>
-                </h:form>
-            </div>
-            <h:form id="frmBtnComposites" class="item pull-right"></h:form>
-        </ui:define>
 
-        <ui:define name="main-content"> 
-
-            <h:form id="frmCadastro" class="form form-horizontal">
-
-                <p:focus/>
-
-                <h:inputHidden value="#{especialidadeMB.especialidade.id}"/>
-
-                <div class="row">	
-
-                    <div class="field-group pw15 ph05">
-                        <h:outputLabel class="col-sm-2 label-control">Especialidade</h:outputLabel>
-                        <div class="col-sm-8">
-                            <h:inputText id="nome" 
-                                         class="field-control"
-                                         pt:placeholder="Nome da Especialidade"
-                                         required="true"
-                                         requiredMessage="Especialidade Obrigatória"
-                                         onkeyup="this.value = this.value.toUpperCase();"
-                                         value="#{especialidadeMB.especialidade.nome}">
-                            </h:inputText>
-                        </div>
-                        <div class="col-sm-2">
-                            <h:commandLink class="btn btn-primary pull-right" 
-                                           value="Salvar / Alterar" 
-                                           action="#{especialidadeMB.inserir}">
-                            </h:commandLink>
-                        </div>
-                    </div>
-
-                </div>
-
-            </h:form>
-
-            <h:form id="frmListagem" class="row ph15" style="margin: 0 auto; max-width: 800px;">
-                <div class="tab-content">
-                    <h:dataTable id="tblEspecialidades"
-                                 var="c" 
-                                 styleClass="table"
-                                 value="#{especialidadeMB.listaTodos}"
-                                 rendered="#{!empty especialidadeMB.listaTodos}">  
-                        <h:inputHidden value="#{c.id}"/>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="Código"></h:outputText>
-                            </f:facet>
-                            <h:outputText value="#{c.id}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="Especialidade"></h:outputText>
-                            </f:facet>
-                            <h:outputText value="#{c.nome}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="Editar"></h:outputText>
-                            </f:facet>
-                            <h:commandLink>
-                                <center>
-                                    <span class="icon-edit"></span>
-                                </center>
-                                <f:setPropertyActionListener target="#{especialidadeMB.especialidade}" value="#{c}" />
-                            </h:commandLink>
-                        </h:column>
-                    </h:dataTable> 
-                </div>
-            </h:form>
         </ui:define>
 
     </ui:composition>
